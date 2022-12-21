@@ -1,52 +1,11 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  View,
-  StatusBar,
-  Text,
-  TextInput,
-  FlatList,
-  Dimensions,
-  StyleSheet,
-  Image,
-  Pressable,
-  ScrollView,
-} from 'react-native';
+import {SafeAreaView, StatusBar, Dimensions, StyleSheet} from 'react-native';
 import COLORS from '../consts/colors';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import Tabs from './Tabs/index';
 const {width} = Dimensions.get('screen');
-import houses from '../consts/houses';
-import PaymentCard from '../Components/Cards/paymentsCard';
+
 const PaymentScreen = ({navigation}) => {
-  const optionsList = [
-    {title: 'Buy a Home', img: require('../assets/house1.jpg')},
-    {title: 'Rent a Home', img: require('../assets/house2.jpg')},
-  ];
-  const categoryList = ['Popular', 'Recommended', 'Nearest'];
-
-  const ListCategories = () => {
-    const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
-    return (
-      <View style={style.categoryListContainer}>
-        {categoryList.map((category, index) => (
-          <Pressable
-            key={index}
-            onPress={() => setSelectedCategoryIndex(index)}>
-            <Text
-              style={[
-                style.categoryListText,
-                index == selectedCategoryIndex && style.activeCategoryListText,
-              ]}>
-              {category}
-            </Text>
-          </Pressable>
-        ))}
-      </View>
-    );
-  };
-
   return (
     <SafeAreaView
       style={{
@@ -67,14 +26,8 @@ const PaymentScreen = ({navigation}) => {
         }}>
         <PropertyCard />
       </View> */}
-      <FlatList
-        snapToInterval={width - 20}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{marginVertical: 10, marginHorizontal: 10}}
-        vertical
-        data={houses}
-        renderItem={({item}) => <PaymentCard />}
-      />
+      <Tabs />
+      {/* */}
     </SafeAreaView>
   );
 };

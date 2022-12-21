@@ -79,7 +79,7 @@ const PaymentHeader = ({title}) => {
         }}
       />
 
-      <View
+      {/* <View
         style={{
           display: 'flex',
           flexDirection: 'row',
@@ -151,7 +151,7 @@ const PaymentHeader = ({title}) => {
             Documents
           </Text>
         </View>
-      </View>
+      </View> */}
     </View>
   );
 };

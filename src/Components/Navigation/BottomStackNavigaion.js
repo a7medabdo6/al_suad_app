@@ -126,7 +126,9 @@ function MyTabs() {
         options={{
           headerStyle: {
             backgroundColor: COLORS.white,
-            height: 120,
+            height: 70,
+            justifyContent:"center",
+            alignItems:"center"
           },
           headerTitle: props => (
             <PaymentHeader {...props} title="My properties" />
