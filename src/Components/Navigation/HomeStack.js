@@ -9,6 +9,7 @@ import PaymentHeader from '../Headers/PaymentHeader';
 import MyProperties from '../../screens/MyProperties';
 import HomeScreen from '../../screens/Home';
 import DetailsScreen from '../../screens/DetailsScreen';
+
 const Stack = createStackNavigator();
 
 export default function HomeStack() {
@@ -18,7 +19,7 @@ export default function HomeStack() {
         options={{
           headerShown: false,
         }}
-        name="Home"
+        name="HomeInstak"
         component={HomeScreen}
       />
       <Stack.Screen
@@ -27,7 +28,7 @@ export default function HomeStack() {
           headerBackTitleVisible: false,
           headerShown: false,
         }}
-        name="DetailsScreen"
+        name="DetailsScreenInStack"
         component={DetailsScreen}
       />
     </Stack.Navigator>
