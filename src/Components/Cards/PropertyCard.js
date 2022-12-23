@@ -2,10 +2,14 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import house from '../../consts/houses';
 import COLORS from '../../consts/colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useNavigation} from '@react-navigation/native';
+
 const PropertyCard = () => {
+  const navigation = useNavigation();
+
   return (
     <View
       style={{
@@ -140,80 +144,81 @@ const PropertyCard = () => {
           marginHorizontal: '5%',
         }}
       />
-
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          width: '100%',
-          marginVertical: 5,
-        }}>
+      <TouchableOpacity onPress={() => navigation.push('PaymentScreen')}>
         <View
           style={{
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'center',
+            justifyContent: 'space-between',
             alignItems: 'center',
+            width: '100%',
+            marginVertical: 5,
           }}>
-          <MaterialCommunityIcons
-            color={COLORS.blue}
-            size={18}
-            name="credit-card-outline"
-          />
-          <Text
+          <View
             style={{
-              color: COLORS.dark,
-              fontWeight: 'bold',
-              marginHorizontal: 5,
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}>
-            Payments
-          </Text>
-        </View>
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <MaterialCommunityIcons
-            color={COLORS.blue}
-            size={18}
-            name="hammer-screwdriver"
-          />
-          <Text
+            <MaterialCommunityIcons
+              color={COLORS.blue}
+              size={18}
+              name="credit-card-outline"
+            />
+            <Text
+              style={{
+                color: COLORS.dark,
+                fontWeight: 'bold',
+                marginHorizontal: 5,
+              }}>
+              Payments
+            </Text>
+          </View>
+          <View
             style={{
-              color: COLORS.dark,
-              fontWeight: 'bold',
-              marginHorizontal: 5,
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}>
-            Maintenance
-          </Text>
-        </View>
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <MaterialCommunityIcons
-            color={COLORS.blue}
-            size={18}
-            name="file-document-multiple-outline"
-          />
-          <Text
+            <MaterialCommunityIcons
+              color={COLORS.blue}
+              size={18}
+              name="hammer-screwdriver"
+            />
+            <Text
+              style={{
+                color: COLORS.dark,
+                fontWeight: 'bold',
+                marginHorizontal: 5,
+              }}>
+              Maintenance
+            </Text>
+          </View>
+          <View
             style={{
-              color: COLORS.dark,
-              fontWeight: 'bold',
-              marginHorizontal: 5,
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}>
-            Documents
-          </Text>
+            <MaterialCommunityIcons
+              color={COLORS.blue}
+              size={18}
+              name="file-document-multiple-outline"
+            />
+            <Text
+              style={{
+                color: COLORS.dark,
+                fontWeight: 'bold',
+                marginHorizontal: 5,
+              }}>
+              Documents
+            </Text>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };

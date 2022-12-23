@@ -2,10 +2,14 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import house from '../../consts/houses';
 import COLORS from '../../consts/colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useNavigation} from '@react-navigation/native';
+
 const PaymentCard = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={style.flexcolstart}>
       <View style={style.flexRowbtw}>
@@ -73,15 +77,16 @@ const PaymentCard = () => {
             </Text>
           </View>
         </View>
-
-        <View
-          style={{
-            backgroundColor: COLORS.backgroundblue,
-            padding: 10,
-            borderRadius: 10,
-          }}>
-          <Text style={{color: COLORS.blue}}>Pay Now</Text>
-        </View>
+        <TouchableOpacity onPress={() => navigation.push('PaymentMethod')}>
+          <View
+            style={{
+              backgroundColor: COLORS.backgroundblue,
+              padding: 10,
+              borderRadius: 10,
+            }}>
+            <Text style={{color: COLORS.blue}}>Pay Now</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );

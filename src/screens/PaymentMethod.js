@@ -46,7 +46,14 @@ const PaymentMethod = ({navigation}) => {
           Payment Details
         </Text>
         <UserInfoCard />
-        <BasicButton text="Pay" width={250} />
+        <BasicButton
+          text="Pay"
+          width={250}
+          onPress={() => {
+            console.log(navigation);
+            navigation.navigate('SuccessPaymentScreen');
+          }}
+        />
       </View>
     </SafeAreaView>
   );

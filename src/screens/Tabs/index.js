@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, {useRef} from 'react';
+
 import {
   Animated,
   View,
@@ -6,6 +7,7 @@ import {
   StyleSheet,
   StatusBar,
   Text,
+  Button,
   FlatList,
   Dimensions,
 } from 'react-native';
@@ -16,8 +18,10 @@ const {width} = Dimensions.get('screen');
 import houses from '../../consts/houses';
 import PaymentCard from '../../Components/Cards/paymentsCard';
 import MaintenanceCard from '../../Components/Cards/MaintenanceCard';
-
+import BasicButton from '../../Components/Buttons/BasicButton';
 import DocumentCard from '../../Components/Cards/DocumentCard';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import BottomSheet from '../../Components/Sheets/BottomSheet';
 
 const FirstRoute = () => (
   <FlatList
@@ -39,17 +43,24 @@ const SecondRoute = () => (
     renderItem={({item}) => <MaintenanceCard />}
   />
 );
-const ThirdRoute = () => (
-  <FlatList
-    snapToInterval={width - 20}
-    showsHorizontalScrollIndicator={false}
-    contentContainerStyle={{marginVertical: 10, marginHorizontal: 10}}
-    vertical
-    data={houses}
-    renderItem={({item}) => <DocumentCard />}
-  />
-);
+const ThirdRoute = () => {
+  const refRBSheet = useRef();
 
+  return (
+    <>
+      <FlatList
+        snapToInterval={width - 20}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{marginVertical: 10, marginHorizontal: 10}}
+        vertical
+        data={houses}
+        renderItem={({item}) => <DocumentCard />}
+      />
+
+      <BottomSheet />
+    </>
+  );
+};
 export default class TabViewExample extends React.Component {
   state = {
     index: 0,

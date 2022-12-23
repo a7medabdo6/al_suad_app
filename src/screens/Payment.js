@@ -20,6 +20,7 @@ const PaymentScreen = ({navigation}) => {
         backgroundColor={COLORS.white}
         barStyle="dark-content"
       />
+      
       {/* <View
         style={{
           width: '90%',

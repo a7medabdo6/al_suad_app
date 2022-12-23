@@ -16,36 +16,12 @@ import COLORS from '../consts/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PropertyCard from '../Components/Cards/PropertyCard';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native';
 
 const {width} = Dimensions.get('screen');
 import houses from '../consts/houses';
-const MyProperties = ({navigation}) => {
-  const optionsList = [
-    {title: 'Buy a Home', img: require('../assets/house1.jpg')},
-    {title: 'Rent a Home', img: require('../assets/house2.jpg')},
-  ];
-  const categoryList = ['Popular', 'Recommended', 'Nearest'];
-
-  const ListCategories = () => {
-    const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
-    return (
-      <View style={style.categoryListContainer}>
-        {categoryList.map((category, index) => (
-          <Pressable
-            key={index}
-            onPress={() => setSelectedCategoryIndex(index)}>
-            <Text
-              style={[
-                style.categoryListText,
-                index == selectedCategoryIndex && style.activeCategoryListText,
-              ]}>
-              {category}
-            </Text>
-          </Pressable>
-        ))}
-      </View>
-    );
-  };
+const MyProperties = ({}) => {
+  const navigation = useNavigation();
 
   return (
     <SafeAreaView
@@ -70,7 +46,7 @@ const MyProperties = ({navigation}) => {
       <FlatList
         snapToInterval={width - 20}
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{marginVertical: 10,marginHorizontal:10}}
+        contentContainerStyle={{marginVertical: 10, marginHorizontal: 10}}
         vertical
         data={houses}
         renderItem={({item}) => <PropertyCard />}

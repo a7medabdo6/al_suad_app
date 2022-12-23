@@ -24,66 +24,20 @@ const HomeScreen = ({navigation}) => {
     {title: 'Buy a Home', img: require('../assets/house1.jpg')},
     {title: 'Rent a Home', img: require('../assets/house2.jpg')},
   ];
-  const categoryList = ['Popular', 'Recommended', 'Nearest'];
-
-  const ListCategories = () => {
-    const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
-    return (
-      <View style={style.categoryListContainer}>
-        {categoryList.map((category, index) => (
-          <Pressable
-            key={index}
-            onPress={() => setSelectedCategoryIndex(index)}>
-            <Text
-              style={[
-                style.categoryListText,
-                index == selectedCategoryIndex && style.activeCategoryListText,
-              ]}>
-              {category}
-            </Text>
-          </Pressable>
-        ))}
-      </View>
-    );
-  };
-
-  const ListOptions = () => {
-    return (
-      <View style={style.optionListsContainer}>
-        {optionsList.map((option, index) => (
-          <View style={style.optionsCard} key={index}>
-            {/* House image */}
-            <Image source={option.img} style={style.optionsCardImage} />
-
-            {/* Option title */}
-            <Text style={{marginTop: 10, fontSize: 18, fontWeight: 'bold'}}>
-              {option.title}
-            </Text>
-          </View>
-        ))}
-      </View>
-    );
-  };
+ 
+ 
   const Card = ({house}) => {
     return (
       <Pressable
         activeOpacity={0.8}
         onPress={() => navigation.navigate('DetailsScreen', house)}>
         <View style={style.card}>
-          {/* House image */}
           <View style={style.allIconflex}>
             <View style={style.allIcon}>
               <View>
-                {/* <Ionicons name="heart-outline" style={style.icon} size={18} /> */}
               </View>
               <View style={style.twoIcon}>
-                {/* <Image
-                  source={require('../assets/exitIcon.png')}
-                  style={{width: 40}}
-                  size={18}
-                  
-
-                /> */}
+               
                 <Ionicons name="push-outline" style={style.icon} size={18} />
 
                 <Ionicons name="heart-outline" style={style.icon} size={18} />

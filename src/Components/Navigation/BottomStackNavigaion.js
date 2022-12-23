@@ -14,17 +14,12 @@ import Inquiry from '../../screens/Inquiry';
 import SubmitInquiry from '../../screens/SubmitInquiry';
 import MyProperties from '../../screens/MyProperties';
 import PaymentScreen from '../../screens/Payment';
+import StackNavigation from './StackNavigation';
+
 import PaymentHeader from '../Headers/PaymentHeader';
-import PaymentMethod from '../../screens/PaymentMethod';
+import HomeStack from './HomeStack';
 const Tab = createBottomTabNavigator();
 
-function SettingsScreen() {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>SettingsScreen Screen</Text>
-    </View>
-  );
-}
 function MyTabs() {
   function LogoTitle() {
     return (
@@ -97,7 +92,7 @@ function MyTabs() {
           headerShown: false,
         }}
         name="Home"
-        component={HomeScreen}
+        component={HomeStack}
       />
       <Tab.Screen
         options={{
@@ -117,59 +112,12 @@ function MyTabs() {
               />
             );
           },
-          headerShown: true,
-        }}
-        name="my_Property"
-        component={MyProperties}
-      />
-      <Tab.Screen
-        options={{
-          headerStyle: {
-            backgroundColor: COLORS.white,
-            height: 70,
-            justifyContent:"center",
-            alignItems:"center"
-          },
-          headerTitle: props => (
-            <PaymentHeader {...props} title="My properties" />
-          ),
-
-          headerShown: true,
-        }}
-        name="Payment"
-        component={PaymentScreen}
-      />
-      <Tab.Screen
-        options={{
-          headerStyle: {
-            backgroundColor: COLORS.white,
-            height: 100,
-          },
-          headerTitle: props => (
-            <BasicHeader {...props} title="Payment Method" />
-          ),
-
-          headerShown: true,
-        }}
-        name="PaymentMethod"
-        component={PaymentMethod}
-      />
-      <Tab.Screen
-        options={{
-          tabBarIcon: ({focused}) => {
-            return (
-              <Fontisto
-                name="holiday-village"
-                size={18}
-                color={focused ? COLORS.red : COLORS.dark}
-              />
-            );
-          },
           headerShown: false,
         }}
-        name="village"
-        component={DetailScreen}
+        name="my_Property"
+        component={StackNavigation}
       />
+
       <Tab.Screen
         options={{
           tabBarIcon: ({focused}) => {

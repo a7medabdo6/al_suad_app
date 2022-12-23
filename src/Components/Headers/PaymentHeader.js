@@ -14,6 +14,7 @@ const PaymentHeader = ({title}) => {
         alignItems: 'center',
         justifyContent: 'space-between',
         width: '100%',
+        height: 70,
       }}>
       <View
         style={{

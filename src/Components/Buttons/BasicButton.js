@@ -5,7 +5,7 @@ import {Text, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const Example = ({text, width, type}) => {
+const Example = ({text, width, type, onPress, color, Icon}) => {
   return (
     <NativeBaseProvider>
       <Center flex={1} px="3" style={{marginVertical: 20}}>
@@ -14,12 +14,13 @@ const Example = ({text, width, type}) => {
             base: '62%',
             md: '25%',
           }}
+          onPress={onPress}
           height={55}
           fontWeight="bold"
           fontSize={22}
           borderRadius={10}
           style={{
-            backgroundColor: COLORS.red,
+            backgroundColor: color ? color : COLORS.red,
           }}
           mx={width ? width : '180'}
           size={'lg'}>
@@ -30,6 +31,7 @@ const Example = ({text, width, type}) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
+            {Icon && Icon}
             {type && type == 'back' ? (
               <MaterialIcons
                 name="arrow-back-ios"
@@ -47,7 +49,7 @@ const Example = ({text, width, type}) => {
               }}>
               {text}
             </Text>
-            {!type && (
+            {!type && !Icon && (
               <Ionicons name="arrow-forward" size={22} color={COLORS.white} />
             )}
           </View>
