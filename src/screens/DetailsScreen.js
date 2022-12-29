@@ -48,6 +48,7 @@ const DetailsScreen = ({route}) => {
                   <MaterialIcons
                     name="arrow-back-ios"
                     size={20}
+                    color={COLORS.grey}
                     // onPress={navigation.goBack}
                   />
                 </View>
@@ -576,12 +577,12 @@ const style = StyleSheet.create({
     padding: 8,
     borderRadius: 50,
   },
+
   container: {
-    // ...StyleSheet.absoluteFillObject,
-    //the container will fill the whole screen.
+    height: 400,
+    width: "100%",
     justifyContent: 'flex-end',
     alignItems: 'center',
-    height: 200,
   },
   map: {
     ...StyleSheet.absoluteFillObject,

@@ -16,21 +16,23 @@ import COLORS from '../consts/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native';
 
 const {width} = Dimensions.get('screen');
 import houses from '../consts/houses';
-const HomeScreen = ({navigation}) => {
+const HomeScreen = () => {
   const optionsList = [
     {title: 'Buy a Home', img: require('../assets/house1.jpg')},
     {title: 'Rent a Home', img: require('../assets/house2.jpg')},
   ];
- 
+  const navigation = useNavigation();
+
  
   const Card = ({house}) => {
     return (
       <Pressable
         activeOpacity={0.8}
-        onPress={() => navigation.navigate('DetailsScreen', house)}>
+        onPress={() => navigation.push('DetailsScreenInStack')}>
         <View style={style.card}>
           <View style={style.allIconflex}>
             <View style={style.allIcon}>

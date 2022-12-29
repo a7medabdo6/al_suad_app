@@ -21,7 +21,7 @@ export default function HomeStack() {
         options={{
           headerShown: false,
         }}
-        name="Home"
+        name="HomeInstak"
         component={HomeScreen}
       />
       <Stack.Screen
@@ -30,7 +30,7 @@ export default function HomeStack() {
           headerBackTitleVisible: false,
           headerShown: false,
         }}
-        name="DetailsScreen"
+        name="DetailsScreenInStack"
         component={DetailsScreen}
       />
       <Stack.Screen
