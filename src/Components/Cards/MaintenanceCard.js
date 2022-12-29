@@ -2,64 +2,67 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import house from '../../consts/houses';
 import COLORS from '../../consts/colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, Pressable} from 'react-native';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-const MaintenanceCard = () => {
+import NewBottomSheet from '../Sheets/NewBottomSheet';
+const MaintenanceCard = ({openModal, setOpenModal,handleOpenModal}) => {
   return (
-    <View style={style.flexcolstart}>
-      <View style={style.flexRowbtw}>
-        <Text style={{color: COLORS.dark, fontWeight: 'bold'}}>MS0213</Text>
-      </View>
-      <View
-        style={{
-          borderBottomColor: 'black',
-          borderBottomWidth: 1,
-          width: '95%',
-          opacity: 0.3,
-          marginVertical: 10,
-          marginHorizontal: '2%',
-        }}
-      />
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          width: '100%',
-        }}>
+    <Pressable onPress={() => handleOpenModal()} style={{width: '100%'}}>
+      <View style={style.flexcolstart}>
+        <View style={style.flexRowbtw}>
+          <Text style={{color: COLORS.dark, fontWeight: 'bold'}}>MS0213</Text>
+        </View>
+        <View
+          style={{
+            borderBottomColor: 'black',
+            borderBottomWidth: 1,
+            width: '95%',
+            opacity: 0.3,
+            marginVertical: 10,
+            marginHorizontal: '2%',
+          }}
+        />
         <View
           style={{
             display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%',
           }}>
           <View
             style={{
-              marginVertical: 2,
-              marginHorizontal: 5,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
+              alignItems: 'flex-start',
             }}>
-            <Text
+            <View
               style={{
-                color: COLORS.grey,
-                fontWeight: '400',
-                fontWeight: 'bold',
+                marginVertical: 2,
+                marginHorizontal: 5,
               }}>
-              10/01/2021
-            </Text>
+              <Text
+                style={{
+                  color: COLORS.grey,
+                  fontWeight: '400',
+                  fontWeight: 'bold',
+                }}>
+                10/01/2021
+              </Text>
+            </View>
+          </View>
+
+          <View
+            style={{
+              padding: 10,
+            }}>
+            <Text style={{color: COLORS.blue}}>Solved</Text>
           </View>
         </View>
-
-        <View
-          style={{
-            padding: 10,
-          }}>
-          <Text style={{color: COLORS.blue}}>Solved</Text>
-        </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
@@ -85,6 +88,7 @@ const style = StyleSheet.create({
     paddingHorizontal: 10,
     backgroundColor: COLORS.white,
     paddingVertical: 5,
+    width: '82%',
   },
   flexRowbtw: {
     flexDirection: 'row',

@@ -18,13 +18,13 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import house from '../consts/houses';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native';
 
 import COLORS from '../consts/colors';
-import {Center} from 'native-base';
-import TextArea from '../Components/Inputs/TextArea';
 const {width} = Dimensions.get('screen');
-const Inquiry = ({navigation, route}) => {
+const Inquiry = ({route}) => {
   // const house = route.params;
+  const navigation = useNavigation();
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
@@ -54,7 +54,12 @@ const Inquiry = ({navigation, route}) => {
             Our team will contact you soon
           </Text>
 
-          <BasicButton text="Back to Property" type="back" width={155} />
+          <BasicButton
+            text="Back to Property"
+            type="back"
+            width={155}
+            onPress={() => navigation.push('DetailsScreen')}
+          />
         </View>
       </ScrollView>
       <View></View>

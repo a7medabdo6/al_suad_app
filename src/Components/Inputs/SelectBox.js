@@ -6,11 +6,11 @@ const Example = ({Type}) => {
   return (
     <NativeBaseProvider>
       <Center>
-        <Box maxW="300">
+        <Box maxW="308">
           <Select
             height={50}
             selectedValue={service}
-            minWidth="300"
+            minWidth="308"
             accessibilityLabel={Type}
             placeholder={Type}
             _selectedItem={{

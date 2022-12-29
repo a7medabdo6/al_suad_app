@@ -91,7 +91,7 @@ function MyTabs() {
           },
           headerShown: false,
         }}
-        name="Home"
+        name="HomeMain"
         component={HomeStack}
       />
       <Tab.Screen
@@ -131,8 +131,8 @@ function MyTabs() {
           },
           headerShown: false,
         }}
-        name="loved"
-        component={LoginScreen}
+        name="Loved"
+        component={LogoTitle}
       />
       <Tab.Screen
         options={{

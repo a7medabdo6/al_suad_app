@@ -7,6 +7,9 @@ import PaymentScreen from '../../screens/Payment';
 import COLORS from '../../consts/colors';
 import PaymentHeader from '../Headers/PaymentHeader';
 import MyProperties from '../../screens/MyProperties';
+import CreateRequestScreen from '../../screens/CreateRequest';
+import Inquiry from '../../screens/Inquiry';
+import LogoTitle from '../Headers/LogoHeader';
 const Stack = createStackNavigator();
 
 export default function MyStack() {
@@ -80,6 +83,16 @@ export default function MyStack() {
         }}
         name="SuccessPaymentScreen"
         component={SuccessPaymentScreen}
+      />
+      <Stack.Screen
+        options={{
+          header: props => <LogoTitle />,
+          headerLeft: false,
+          headerBackTitleVisible: false,
+          headerShown: true,
+        }}
+        name="CreateRequestScreen"
+        component={CreateRequestScreen}
       />
     </Stack.Navigator>
   );

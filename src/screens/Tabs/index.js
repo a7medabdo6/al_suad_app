@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 
 import {
   Animated,
@@ -10,6 +10,7 @@ import {
   Button,
   FlatList,
   Dimensions,
+  ScrollView,
 } from 'react-native';
 import {TabView, SceneMap} from 'react-native-tab-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -21,8 +22,9 @@ import MaintenanceCard from '../../Components/Cards/MaintenanceCard';
 import BasicButton from '../../Components/Buttons/BasicButton';
 import DocumentCard from '../../Components/Cards/DocumentCard';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import BottomSheet from '../../Components/Sheets/BottomSheet';
-
+// import BottomSheet from '../../Components/Sheets/BottomSheet';
+import {useNavigation} from '@react-navigation/native';
+import NewBottomSheet from '../../Components/Sheets/NewBottomSheet';
 const FirstRoute = () => (
   <FlatList
     snapToInterval={width - 20}
@@ -33,16 +35,61 @@ const FirstRoute = () => (
     renderItem={({item}) => <PaymentCard />}
   />
 );
-const SecondRoute = () => (
-  <FlatList
-    snapToInterval={width - 20}
-    showsHorizontalScrollIndicator={false}
-    contentContainerStyle={{marginVertical: 10, marginHorizontal: 10}}
-    vertical
-    data={houses}
-    renderItem={({item}) => <MaintenanceCard />}
-  />
-);
+const SecondRoute = () => {
+  const [openModal, setOpenModal] = useState(false);
+  const navigation = useNavigation();
+  const sheetRef = React.useRef(null);
+  const handleOpenModal = () => {
+    sheetRef.current.snapTo(0);
+  };
+  return (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+      <FlatList
+        snapToInterval={width - 20}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{marginVertical: 10, marginHorizontal: 10}}
+        vertical
+        data={houses}
+        renderItem={({item}) => (
+          <MaintenanceCard
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+            handleOpenModal={handleOpenModal}
+          />
+        )}
+      />
+      <View style={{position: 'absolute', bottom: 0, left: 0, right: 0}}>
+        <BasicButton
+          text="Create Request"
+          color={COLORS.blue}
+          width={150}
+          onPress={() => navigation.push('CreateRequestScreen')}
+          Icon={
+            <MaterialCommunityIcons
+              color={COLORS.white}
+              size={18}
+              name="plus-circle-outline"
+            />
+          }
+        />
+      </View>
+
+      <View
+        style={{position: 'absolute', bottom: 0, left: 0, right: 0, top: 0}}>
+        <NewBottomSheet
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+          sheetRef={sheetRef}
+        />
+      </View>
+    </View>
+  );
+};
 const ThirdRoute = () => {
   const refRBSheet = useRef();
 
@@ -57,7 +104,7 @@ const ThirdRoute = () => {
         renderItem={({item}) => <DocumentCard />}
       />
 
-      <BottomSheet />
+      {/* <BottomSheet /> */}
     </>
   );
 };

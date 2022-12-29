@@ -16,12 +16,15 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import house from '../consts/houses';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native';
 
 import COLORS from '../consts/colors';
 import FirstInput from '../Components/Inputs/FirstInput';
 import BasicButton from '../Components/Buttons/BasicButton';
 const {width} = Dimensions.get('screen');
-const SuccessPaymentScreen = ({navigation, route}) => {
+const SuccessPaymentScreen = ({route}) => {
+  const navigation = useNavigation();
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -41,7 +44,10 @@ const SuccessPaymentScreen = ({navigation, route}) => {
             You have successfully made payment
           </Text>
 
-          <BasicButton text="Back to Property" />
+          <BasicButton
+            text="Back to Property"
+            onPress={() => navigation.push('MyProperties')}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>

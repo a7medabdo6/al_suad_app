@@ -18,12 +18,14 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import house from '../consts/houses';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native';
 
 import COLORS from '../consts/colors';
 import {Center} from 'native-base';
 import TextArea from '../Components/Inputs/TextArea';
 const {width} = Dimensions.get('screen');
-const Inquiry = ({navigation, route}) => {
+const Inquiry = ({ route}) => {
+  const navigation = useNavigation();
   // const house = route.params;
 
   return (
@@ -53,8 +55,7 @@ const Inquiry = ({navigation, route}) => {
           <FirstInput text="Email Address" />
           <FirstInput text="Mopile Phone" />
           <TextArea text="Description" />
-          <BasicButton text="Inquiry" width={155} />
-
+          <BasicButton text="Inquiry" width={155} onPress={()=>navigation.push("SubmitInquiry")}/>
         </View>
       </ScrollView>
       <View></View>
@@ -76,7 +77,7 @@ const style = StyleSheet.create({
   detailsContainer: {
     // flex: 1,
     paddingHorizontal: 20,
-    marginTop: 20,
+    marginTop: 30,
     //  position: 'absolute',
     // marginHorizontal:10,
     backgroundColor: COLORS.white,

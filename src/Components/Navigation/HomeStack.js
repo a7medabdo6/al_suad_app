@@ -9,6 +9,9 @@ import PaymentHeader from '../Headers/PaymentHeader';
 import MyProperties from '../../screens/MyProperties';
 import HomeScreen from '../../screens/Home';
 import DetailsScreen from '../../screens/DetailsScreen';
+import Inquiry from '../../screens/Inquiry';
+import SubmitInquiry from '../../screens/SubmitInquiry';
+import LogoHeader from '../Headers/LogoHeader';
 const Stack = createStackNavigator();
 
 export default function HomeStack() {
@@ -29,6 +32,26 @@ export default function HomeStack() {
         }}
         name="DetailsScreen"
         component={DetailsScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerLeft: false,
+          headerBackTitleVisible: false,
+          headerShown: true,
+          header: props => <LogoHeader {...props} />,
+        }}
+        name="Inquiry"
+        component={Inquiry}
+      />
+      <Stack.Screen
+        options={{
+          headerLeft: false,
+          headerBackTitleVisible: false,
+          headerShown: true,
+          header: props => <LogoHeader {...props} />,
+        }}
+        name="SubmitInquiry"
+        component={SubmitInquiry}
       />
     </Stack.Navigator>
   );

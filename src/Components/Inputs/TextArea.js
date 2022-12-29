@@ -8,7 +8,7 @@ const Example = ({text}) => {
         <Box alignItems="center" w="100%" style={{marginTop: 15}}>
           <TextArea
             w={{
-              base: '75%',
+              base: '80%',
               md: '25%',
             }}
             mx="180"

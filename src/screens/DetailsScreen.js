@@ -10,6 +10,7 @@ import {
   Image,
   Dimensions,
   ScrollView,
+  Pressable,
 } from 'react-native';
 import AnimatedCorner from '../Components/Buttons/AnimatedCorner';
 
@@ -19,15 +20,13 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import house from '../consts/houses';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native';
 
 import COLORS from '../consts/colors';
 const {width} = Dimensions.get('screen');
-const DetailsScreen = ({navigation, route}) => {
+const DetailsScreen = ({route}) => {
+  const navigation = useNavigation();
   // const house = route.params;
-
-  const InteriorCard = ({interior}) => {
-    return <Image source={interior} style={style.interiorImage} />;
-  };
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
@@ -44,17 +43,26 @@ const DetailsScreen = ({navigation, route}) => {
             style={style.backgroundImage}
             source={house[0].image}>
             <View style={style.header}>
-              <View style={style.headerBtn}>
-                <MaterialIcons
-                  name="arrow-back-ios"
-                  size={20}
-                  // onPress={navigation.goBack}
-                />
-              </View>
-              <View style={style.twoIcon}>
+              <Pressable onPress={() => navigation.goBack()}>
                 <View style={style.headerBtn}>
-                  <Ionicons name="push-outline" style={style.icon} size={18} />
+                  <MaterialIcons
+                    name="arrow-back-ios"
+                    size={20}
+                    // onPress={navigation.goBack}
+                  />
                 </View>
+              </Pressable>
+              <View style={style.twoIcon}>
+                <Pressable onPress={() => navigation.push('Inquiry')}>
+                  <View style={style.headerBtn}>
+                    <Ionicons
+                      name="push-outline"
+                      style={style.icon}
+                      size={18}
+                    />
+                  </View>
+                </Pressable>
+
                 <View style={style.headerBtn}>
                   <Ionicons name="heart-outline" style={style.icon} size={18} />
                 </View>
@@ -385,8 +393,6 @@ const DetailsScreen = ({navigation, route}) => {
               </View>
             </View>
           </View>
-         
-
         </View>
       </ScrollView>
       <View>

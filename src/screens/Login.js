@@ -21,7 +21,7 @@ import COLORS from '../consts/colors';
 import FirstInput from '../Components/Inputs/FirstInput';
 import BasicButton from '../Components/Buttons/BasicButton';
 const {width} = Dimensions.get('screen');
-const LoginScreen = ({navigation, route}) => {
+const LoginScreen = ({navigation, route, setIsAuth}) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -66,7 +66,7 @@ const LoginScreen = ({navigation, route}) => {
               />
             }
           />
-          <BasicButton text="Login" />
+          <BasicButton text="Login" onPress={() => setIsAuth(true)} />
           <View>
             <Text
               style={{
