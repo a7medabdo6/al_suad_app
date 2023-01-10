@@ -3,7 +3,7 @@ import {Input, Box, Center, NativeBaseProvider, Icon} from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import COLORS from '../../consts/colors';
 
-const Example = ({text, Icon}) => {
+const Example = ({text, Icon,value,fun}) => {
   return (
     <NativeBaseProvider>
       <Box alignItems="center" style={{marginTop: 15}}>
@@ -17,6 +17,8 @@ const Example = ({text, Icon}) => {
           size="lg"
           height={55}
           placeholder={text}
+          value={value}
+          onChangeText={(e)=>fun(e)}
           borderRadius={10}
         />
       </Box>

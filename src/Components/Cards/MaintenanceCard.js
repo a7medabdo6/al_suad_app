@@ -2,16 +2,34 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import house from '../../consts/houses';
 import COLORS from '../../consts/colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {View, Text, Image, StyleSheet, Pressable} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Pressable,
+  Dimensions,
+} from 'react-native';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import NewBottomSheet from '../Sheets/NewBottomSheet';
-const MaintenanceCard = ({openModal, setOpenModal,handleOpenModal}) => {
+const MaintenanceCard = ({openModal, setOpenModal, handleOpenModal, item}) => {
+  const ScreenWidth = Dimensions.get('window').width;
+
   return (
-    <Pressable onPress={() => handleOpenModal()} style={{width: '100%'}}>
+    <Pressable
+      onPress={() => handleOpenModal()}
+      style={{
+        width: ScreenWidth,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
       <View style={style.flexcolstart}>
         <View style={style.flexRowbtw}>
-          <Text style={{color: COLORS.dark, fontWeight: 'bold'}}>MS0213</Text>
+          <Text style={{color: COLORS.dark, fontWeight: 'bold'}}>
+            {item?.name}
+          </Text>
         </View>
         <View
           style={{
@@ -49,7 +67,7 @@ const MaintenanceCard = ({openModal, setOpenModal,handleOpenModal}) => {
                   fontWeight: '400',
                   fontWeight: 'bold',
                 }}>
-                10/01/2021
+                {item?.create_date}
               </Text>
             </View>
           </View>
@@ -58,7 +76,11 @@ const MaintenanceCard = ({openModal, setOpenModal,handleOpenModal}) => {
             style={{
               padding: 10,
             }}>
-            <Text style={{color: COLORS.blue}}>Solved</Text>
+            {item?.is_solved ? (
+              <Text style={{color: COLORS.blue}}>Solved</Text>
+            ) : (
+              <Text style={{color: COLORS.red}}>Pending</Text>
+            )}
           </View>
         </View>
       </View>
@@ -85,10 +107,9 @@ const style = StyleSheet.create({
     justifyContent: 'flex-start',
     borderRadius: 15,
     marginVertical: 10,
-    paddingHorizontal: 10,
     backgroundColor: COLORS.white,
     paddingVertical: 5,
-    width: '82%',
+    width: '92%',
   },
   flexRowbtw: {
     flexDirection: 'row',
@@ -98,7 +119,7 @@ const style = StyleSheet.create({
     borderRadius: 12,
     marginVertical: 5,
     marginHorizontal: 6,
-    width: '100%',
+    width: '92%',
   },
 });
 export default MaintenanceCard;

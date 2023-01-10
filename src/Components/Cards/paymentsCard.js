@@ -2,91 +2,106 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import house from '../../consts/houses';
 import COLORS from '../../consts/colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
+const ScreenWidth = Dimensions.get('window').width;
 
 const PaymentCard = () => {
   const navigation = useNavigation();
 
   return (
-    <View style={style.flexcolstart}>
-      <View style={style.flexRowbtw}>
-        <Text style={{color: COLORS.dark, fontWeight: 'bold'}}>
-          1st Payment
-        </Text>
-        <Text style={{color: COLORS.blue, marginHorizontal: 5}}>Paid</Text>
+    <View
+      style={{
+        width: ScreenWidth,
+      }}>
+      <View style={style.flexcolstart}>
+        <View style={style.flexRowbtw}>
+          <Text style={{color: COLORS.dark, fontWeight: 'bold'}}>
+            1st Payment
+          </Text>
+          {/* <Text style={{color: COLORS.blue, marginHorizontal: 5}}>Paid</Text> */}
 
-        <View style={{marginHorizontal: 5}}>
-          <Text>10/01/2021</Text>
+          <View style={{marginHorizontal: 5}}>
+            <Text style={{color: COLORS.grey, fontWeight: 'bold'}}>
+              10/01/2021
+            </Text>
+          </View>
         </View>
-      </View>
-      <View
-        style={{
-          borderBottomColor: 'black',
-          borderBottomWidth: 1,
-          width: '95%',
-          opacity: 0.3,
-          marginVertical: 20,
-          marginHorizontal: '2%',
-        }}
-      />
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          width: '100%',
-        }}>
+        <View
+          style={{
+            borderBottomColor: 'black',
+            borderBottomWidth: 1,
+            width: '95%',
+            opacity: 0.3,
+            marginVertical: 20,
+            marginHorizontal: '2%',
+          }}
+        />
         <View
           style={{
             display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%',
           }}>
           <View
             style={{
               display: 'flex',
-              flexDirection: 'row',
-              marginVertical: 2,
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
+              alignItems: 'flex-start',
             }}>
-            <Text
+            <View
               style={{
+                display: 'flex',
+                flexDirection: 'row',
+                marginVertical: 2,
+              }}>
+              <Text
+                style={{
+                  marginHorizontal: 5,
+                  color: COLORS.dark,
+                  fontWeight: 'bold',
+                }}>
+                Amount:
+              </Text>
+            </View>
+            <View
+              style={{
+                marginVertical: 2,
                 marginHorizontal: 5,
-                color: COLORS.dark,
-                fontWeight: 'bold',
               }}>
-              Amount:
-            </Text>
+              <Text
+                style={{
+                  color: COLORS.grey,
+                  fontWeight: '400',
+                  fontWeight: 'bold',
+                }}>
+                AED 3000.00
+              </Text>
+            </View>
           </View>
-          <View
-            style={{
-              marginVertical: 2,
-              marginHorizontal: 5,
-            }}>
-            <Text
+          <TouchableOpacity onPress={() => navigation.push('PaymentMethod')}>
+            <View
               style={{
-                color: COLORS.grey,
-                fontWeight: '400',
-                fontWeight: 'bold',
+                backgroundColor: COLORS.backgroundblue,
+                padding: 10,
+                borderRadius: 10,
               }}>
-              AED 3000.00
-            </Text>
-          </View>
+              <Text style={{color: COLORS.blue}}>Pay Now</Text>
+            </View>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => navigation.push('PaymentMethod')}>
-          <View
-            style={{
-              backgroundColor: COLORS.backgroundblue,
-              padding: 10,
-              borderRadius: 10,
-            }}>
-            <Text style={{color: COLORS.blue}}>Pay Now</Text>
-          </View>
-        </TouchableOpacity>
       </View>
     </View>
   );
@@ -114,6 +129,7 @@ const style = StyleSheet.create({
     paddingHorizontal: 10,
     backgroundColor: COLORS.white,
     paddingVertical: 5,
+    width: '92%',
   },
   flexRowbtw: {
     flexDirection: 'row',
@@ -122,7 +138,7 @@ const style = StyleSheet.create({
     backgroundColor: COLORS.white,
     borderRadius: 12,
     marginVertical: 5,
-    width: '100%',
+    width: '92%',
   },
 });
 export default PaymentCard;

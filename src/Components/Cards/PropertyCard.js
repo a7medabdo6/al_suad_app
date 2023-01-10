@@ -7,7 +7,7 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
 
-const PropertyCard = () => {
+const PropertyCard = ({item}) => {
   const navigation = useNavigation();
 
   return (
@@ -54,15 +54,15 @@ const PropertyCard = () => {
           <View>
             <Text style={{color: COLORS.blue, marginHorizontal: 5}}>
               {' '}
-              Villa No.12 - 55 B Street
+              {item?.name}
             </Text>
             <Text style={{color: COLORS.dark, marginHorizontal: 5}}>
               {' '}
-              Old Dubai Hwy No 12
+              {item?.project_id[1]}
             </Text>
             <Text
               style={{color: COLORS.grey, marginHorizontal: 8, fontSize: 12}}>
-              Ref: 365668
+              Ref: {item?.code}
             </Text>
           </View>
         </View>
@@ -85,7 +85,7 @@ const PropertyCard = () => {
             color: COLORS.dark,
             fontWeight: '400',
           }}>
-          AED 3000.00 /year
+          AED {item?.rent_value} / {item?.rent_type}
         </Text>
       </View>
       <View
@@ -144,7 +144,7 @@ const PropertyCard = () => {
           marginHorizontal: '5%',
         }}
       />
-      <TouchableOpacity onPress={() => navigation.push('PaymentScreen')}>
+      <TouchableOpacity onPress={() => navigation.push('PaymentScreen',{flat:item.id})}>
         <View
           style={{
             display: 'flex',

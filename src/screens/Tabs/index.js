@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 
 import {
   Animated,
@@ -21,21 +21,72 @@ import PaymentCard from '../../Components/Cards/paymentsCard';
 import MaintenanceCard from '../../Components/Cards/MaintenanceCard';
 import BasicButton from '../../Components/Buttons/BasicButton';
 import DocumentCard from '../../Components/Cards/DocumentCard';
-import RBSheet from 'react-native-raw-bottom-sheet';
-// import BottomSheet from '../../Components/Sheets/BottomSheet';
+import BottomSheet from '../../Components/Sheets/BottomSheet';
 import {useNavigation} from '@react-navigation/native';
 import NewBottomSheet from '../../Components/Sheets/NewBottomSheet';
-const FirstRoute = () => (
-  <FlatList
-    snapToInterval={width - 20}
-    showsHorizontalScrollIndicator={false}
-    contentContainerStyle={{marginVertical: 10, marginHorizontal: 10}}
-    vertical
-    data={houses}
-    renderItem={({item}) => <PaymentCard />}
-  />
-);
+import {useMaintianenceApi, usePaymentsForTenantApi} from '../../apis/Home';
+import {useSelector} from 'react-redux';
+import Spinner from '../../Components/Spinner';
+const FirstRoute = () => {
+  const userInfo = useSelector(state => state.userinfo.userInfo);
+
+  const {mutate: PaymentsForTenantApi, isLoading} = usePaymentsForTenantApi();
+  const {Payments} = useSelector(state => state.Payments);
+  useEffect(() => {
+    PaymentsForTenantApi({
+      partner_type: userInfo?.partner[0].is_tenant ? 'tenant' : 'owner',
+      partner: userInfo.partner_id,
+      flat: 452,
+    });
+
+    return () => {};
+  }, []);
+  console.log(userInfo, 'userInfo');
+
+  return (
+    <>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+          display: 'flex',
+        }}>
+        {isLoading ? (
+          <Spinner />
+        ) : Payments.length > 0 ? (
+          <FlatList
+            snapToInterval={width - 20}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{marginVertical: 10, marginHorizontal: 10}}
+            vertical
+            data={houses}
+            renderItem={({item}) => <PaymentCard />}
+          />
+        ) : (
+          <Text style={{color: 'black', fontWeight: 'bold'}}>No Data</Text>
+        )}
+      </View>
+    </>
+  );
+};
 const SecondRoute = () => {
+  const {mutate: MaintianenceApi, isLoading} = useMaintianenceApi();
+  const userInfo = useSelector(state => state.userinfo.userInfo);
+
+  const {Maintainence} = useSelector(state => state.Maintainence);
+  useEffect(() => {
+    MaintianenceApi({
+      partner_type: userInfo?.partner[0].is_tenant ? 'tenant' : 'owner',
+      partner: 852,
+      flat: 662,
+    });
+
+    return () => {};
+  }, []);
+  // console.log(Maintainence, 'Maintainence');
+
   const [openModal, setOpenModal] = useState(false);
   const navigation = useNavigation();
   const sheetRef = React.useRef(null);
@@ -48,21 +99,33 @@ const SecondRoute = () => {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        width: '100%',
+        display: 'flex',
       }}>
-      <FlatList
-        snapToInterval={width - 20}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{marginVertical: 10, marginHorizontal: 10}}
-        vertical
-        data={houses}
-        renderItem={({item}) => (
-          <MaintenanceCard
-            openModal={openModal}
-            setOpenModal={setOpenModal}
-            handleOpenModal={handleOpenModal}
-          />
-        )}
-      />
+      {isLoading ? (
+        <Spinner />
+      ) : Maintainence.length > 0 ? (
+        <FlatList
+          snapToInterval={width - 20}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            marginVertical: 10,
+          }}
+          vertical
+          data={Maintainence}
+          renderItem={({item}) => (
+            <MaintenanceCard
+              openModal={openModal}
+              item={item}
+              setOpenModal={setOpenModal}
+              handleOpenModal={handleOpenModal}
+            />
+          )}
+        />
+      ) : (
+        <Text style={{color: 'black', fontWeight: 'bold'}}>No Data</Text>
+      )}
+
       <View style={{position: 'absolute', bottom: 0, left: 0, right: 0}}>
         <BasicButton
           text="Create Request"
@@ -104,7 +167,7 @@ const ThirdRoute = () => {
         renderItem={({item}) => <DocumentCard />}
       />
 
-      {/* <BottomSheet /> */}
+      <BottomSheet />
     </>
   );
 };
@@ -212,11 +275,7 @@ export default class TabViewExample extends React.Component {
               inputIndex === i ? 1 : 0.5,
             ),
           });
-          {
-            console.log('///////');
 
-            console.log(opacity.outputRange);
-          }
           return (
             <TouchableOpacity
               style={styles.tabItem}

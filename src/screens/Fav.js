@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {
   SafeAreaView,
   View,
@@ -11,77 +11,39 @@ import {
   Image,
   Pressable,
   ScrollView,
-  BackHandler,
 } from 'react-native';
 import COLORS from '../consts/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useDispatch, useSelector} from 'react-redux';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 
 const {width} = Dimensions.get('screen');
 import houses from '../consts/houses';
-import {useHomeApi} from '../apis/Home';
+import {useFavApi} from '../apis/Home';
+import {useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Skeleton from '../Components/Skeleton';
-import {setHomeDetailedData} from '../Store/HomeData/HomeSlice';
 
-const HomeScreen = () => {
-  const {data, isLoading} = useHomeApi();
-  const [AllLoved, setAllLoved] = useState([]);
-  const {userInfo} = useSelector(state => state.userinfo);
-  const HomeData = useSelector(state => state.Home.data);
-  const dispatch = useDispatch();
+const FavScreen = () => {
+  const optionsList = [
+    {title: 'Buy a Home', img: require('../assets/house1.jpg')},
+    {title: 'Rent a Home', img: require('../assets/house2.jpg')},
+  ];
   const navigation = useNavigation();
 
-  useEffect(() => {
-    console.log(userInfo, 'userInfo');
-    if (!userInfo) {
-      // console.log(login, 'login');
-      navigation.push('login');
-    }
-  }, [userInfo]);
-  const handleHomeClick = house => {
-    dispatch(setHomeDetailedData(house));
-    navigation.push('DetailsScreenInStack');
-  };
-
-  const HandleFavClick = async id => {
-    setAllLoved(old => [...old, id]);
-    const oldfav = await AsyncStorage.removeItem('User');
-    let concated = '';
-    if (!oldfav) {
-      const fav = await AsyncStorage.setItem('Fav', id.toString());
-      console.log(JSON.parse(fav), 'fav', id.toString());
-
-      return;
-    }
-    concated = oldfav.concat(',', id);
-
-    const fav = await AsyncStorage.setItem('Fav', concated);
-    console.log(concated, 'oldfav', id);
-  };
   const Card = ({house}) => {
     return (
-      <Pressable activeOpacity={0.8} onPress={() => handleHomeClick(house)}>
+      <Pressable
+        activeOpacity={0.8}
+        onPress={() => navigation.push('DetailsScreenInStack')}>
         <View style={style.card}>
           <View style={style.allIconflex}>
             <View style={style.allIcon}>
               <View></View>
               <View style={style.twoIcon}>
                 <Ionicons name="push-outline" style={style.icon} size={18} />
-                <Pressable onPress={() => HandleFavClick(house.id)}>
-                  <View style={{...style.icon}}>
-                    <Ionicons
-                      name="heart"
-                      style={{
-                        color: AllLoved.includes(house.id) ? 'red' : 'grey',
-                      }}
-                      size={18}
-                    />
-                  </View>
-                </Pressable>
+
+                {/* <Ionicons name="heart-outline" style={style.icon} size={18} /> */}
               </View>
             </View>
           </View>
@@ -131,7 +93,6 @@ const HomeScreen = () => {
                 fontSize: 12,
                 marginTop: 5,
                 fontWeight: '500',
-                textAlign: 'left',
               }}>
               {house.building_id[1]} - {house.state_id[1]}
             </Text>
@@ -175,15 +136,19 @@ const HomeScreen = () => {
       </Pressable>
     );
   };
-  if (isLoading) {
-    return (
-      <>
-        <Skeleton />
-        <Skeleton />
-        <Skeleton />
-      </>
-    );
-  }
+  const {mutate: Favpi} = useFavApi();
+  const fav = useSelector(state => state.Home.fav);
+  const getFav = async () => {
+    return await AsyncStorage.getItem('Fav');
+  };
+  const IsFocused = useIsFocused();
+
+  useEffect(() => {
+    console.log(fav, 'favfavfav');
+    Favpi(getFav());
+
+    return () => {};
+  }, [IsFocused]);
   return (
     <SafeAreaView style={{backgroundColor: COLORS.white, flex: 1}}>
       {/* Customise status bar */}
@@ -219,23 +184,42 @@ const HomeScreen = () => {
             4,612 results
           </Text>
         </View>
-        <Pressable onPress={() => navigation.push('FilterScreen')}>
-          <View style={style.sortBtn}>
-            <Icon
-              name="tune-variant"
-              color={COLORS.dark}
-              style={{
-                borderWidth: 1,
-                padding: 5,
-                borderColor: COLORS.grey,
-                borderRadius: 4,
-              }}
-              size={18}
-            />
-          </View>
-        </Pressable>
-      </View>
 
+        <View style={style.sortBtn}>
+          <Icon
+            name="tune-variant"
+            color={COLORS.dark}
+            style={{
+              borderWidth: 1,
+              padding: 5,
+              borderColor: COLORS.grey,
+              borderRadius: 4,
+            }}
+            size={18}
+          />
+        </View>
+      </View>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+          display: 'flex',
+        }}>
+        {fav?.length > 0 ? (
+          <FlatList
+            snapToInterval={width - 20}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
+            vertical
+            data={fav}
+            renderItem={({item}) => <Card house={item} />}
+          />
+        ) : (
+          <Text style={{color: 'black', fontWeight: 'bold'}}>No Data</Text>
+        )}
+      </View>
       {/* Render list options */}
       {/* <ListOptions /> */}
 
@@ -243,14 +227,6 @@ const HomeScreen = () => {
       {/* <ListCategories /> */}
 
       {/* Render Card */}
-      <FlatList
-        snapToInterval={width - 20}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
-        vertical
-        data={HomeData}
-        renderItem={({item}) => <Card house={item} />}
-      />
     </SafeAreaView>
   );
 };
@@ -392,4 +368,4 @@ const style = StyleSheet.create({
     marginHorizontal: 3,
   },
 });
-export default HomeScreen;
+export default FavScreen;

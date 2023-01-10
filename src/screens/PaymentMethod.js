@@ -50,7 +50,7 @@ const PaymentMethod = ({navigation}) => {
           text="Pay"
           width={250}
           onPress={() => {
-            console.log(navigation);
+            // console.log(navigation);
             navigation.navigate('SuccessPaymentScreen');
           }}
         />

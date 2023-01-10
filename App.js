@@ -1,25 +1,42 @@
 import {NavigationContainer} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useColorScheme} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import MyTabs from './src/Components/Navigation/BottomStackNavigaion';
 import 'react-native-gesture-handler';
 import LoginScreen from './src/screens/Login';
-const App = () => {
+import {LogBox} from 'react-native';
+import {Provider} from 'react-redux';
+import {store} from './src/Store/index';
+import {QueryClient, QueryClientProvider} from 'react-query';
+import SignupScreen from './src/screens/SignUp';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import AllStack from './src/Components/Navigation/AllStack';
+import {setuserInfo} from './src/Store/Message/MessageSlice';
+import {useSelector, useDispatch} from 'react-redux';
+
+function App() {
   const isDarkMode = useColorScheme() === 'dark';
   const [isAuth, setIsAuth] = useState(false);
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const [user, setuser] = useState(false);
+  const [login, setLogin] = useState(false);
+
+  const [isRegister, setisRegister] = useState(false);
+  const dispatch = useDispatch();
+
+  const getAuth = async () => {
+    const res = await AsyncStorage.getItem('User');
+    const parsedUser = JSON.parse(res);
+    console.log(parsedUser, 'parsedUser');
+    if (parsedUser) {
+      dispatch(setuserInfo(parsedUser));
+    }
+    return parsedUser;
   };
-
-  return (
-    // <ScrollView style={backgroundStyle}>
-    <NavigationContainer>
-      {isAuth ? <MyTabs /> : <LoginScreen setIsAuth={setIsAuth} />}
-    </NavigationContainer>
-
-    // </ScrollView>
-  );
-};
+  useEffect(() => {
+    getAuth();
+  }, []);
+  return <AllStack />;
+}
 
 export default App;

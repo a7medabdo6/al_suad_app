@@ -3,21 +3,34 @@ import house from '../../consts/houses';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import COLORS from '../../consts/colors';
-import {View, Text, Image, Button, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  Button,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import {useNavigation} from '@react-navigation/native';
+const {width} = Dimensions.get('screen');
 
 const BasicHeader = ({title, Icon}) => {
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity onPress={() => navigation.goBack()}>
+    <TouchableOpacity
+      style={{width: '100%'}}
+      onPress={() => navigation.goBack()}>
       <View
         style={{
-          height: 350,
+          height: '100%',
           flexDirection: 'row',
           alignItems: 'center',
-          justifyContent: 'center',
+          justifyContent: 'flex-start',
+          backgroundColor: COLORS.backgroundblue,
+          paddingHorizontal: 10,
+          width: width,
         }}>
         {Icon && Icon}
         <View

@@ -73,12 +73,12 @@ const SheetCard = ({openModal, setOpenModal}) => {
               padding: 20,
             }}>
             <Text style={{marginVertical: 5}}>12/02/2021, 2:36 PM</Text>
-            <Text style={{marginBottom: 15}}>
+            <Text style={{marginBottom: 15,color:COLORS.dark}}>
               Because of my late flight Hamila was very friendly for waiting for
               me until I arrived. Checking in and out was easy with the code. I
               personally prefer it over door keys.
             </Text>
-            <Text>
+            <Text style={{color:COLORS.dark}}>
               I like the area in Peckham, it was nice and quite. Easy to grab
               busses close by anytime, but it takes around 30-40min to central
               of London.
@@ -129,7 +129,7 @@ const SheetCard = ({openModal, setOpenModal}) => {
               padding: 20,
               marginVertical: 20,
             }}>
-            <Text style={{marginVertical: 5}}>12/02/2021, 2:36 PM</Text>
+            <Text style={{marginVertical: 5,color:COLORS.grey}}>12/02/2021, 2:36 PM</Text>
             <Text
               style={{
                 marginVertical: 15,
@@ -142,12 +142,12 @@ const SheetCard = ({openModal, setOpenModal}) => {
               The flat is located in a quiet and well-equipped neighborhood in
               terms of transport.
             </Text>
-            <Text>
+            <Text style={{color:COLORS.dark}}>
               There is no shortage of parks and places where you can eat and
               it's about twenty minutes by bus from a supermarket, really easy
               to reach.
             </Text>
-            <Text>
+            <Text style={{color:COLORS.dark}}>
               They are very welcoming, the apartment is nice and kept in order:
               what can I say I can only recommend this place, I hope to be back
               soon.
@@ -266,6 +266,7 @@ const style = StyleSheet.create({
     width: '100%',
     borderColor: '#DCDCDC',
     borderRadius: 8,
+    color:COLORS.grey
   },
 });
 export default SheetCard;

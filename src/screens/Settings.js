@@ -14,14 +14,19 @@ import {
 import FirstInput from '../Components/Inputs/FirstInput';
 import BasicButton from '../Components/Buttons/BasicButton';
 
-
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import house from '../consts/houses';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 
 import COLORS from '../consts/colors';
+import {Center} from 'native-base';
+import TextArea from '../Components/Inputs/TextArea';
 const {width} = Dimensions.get('screen');
-const Inquiry = ({route}) => {
-  // const house = route.params;
+const SettingScreen = ({route}) => {
   const navigation = useNavigation();
+  // const house = route.params;
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
@@ -34,29 +39,33 @@ const Inquiry = ({route}) => {
         />
 
         <View style={style.detailsContainer}>
-          <Image
-            style={{marginVertical: 10}}
-            source={require('../assets/inquiry.png')}
-          />
-          <Text style={style.text}>Thank you for your inquiry </Text>
-          <Text
+          <View
             style={{
-              ...style.text,
-              color: COLORS.grey,
-              fontWeight: '500',
-              fontSize: 14,
-              marginTop: 5,
-              marginBottom: 10,
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
             }}>
-            Our team will contact you soon
-          </Text>
-
-          <BasicButton
-            text="Back to Property"
-            type="back"
-            width={155}
-            onPress={() => navigation.push('DetailsScreenInStack')}
-          />
+            <Image
+              style={{width: 100, height: 90, borderRadius: 100}}
+              source={require('../assets/person.jpg')}
+            />
+            <Text style={style.text}>Fill in the form </Text>
+          </View>
+          <View style={style.bluebox}>
+            <Text style={style.blueboxtext}>
+              <Ionicons
+                name="information-circle-outline"
+                size={12}
+                style={{marginHorizontal: 3}}
+                color={COLORS.blue}
+              />
+              You have already sent an SettingScreen: 14th of July
+            </Text>
+          </View>
+          <FirstInput text="Name" />
+          <FirstInput text="Email Address" />
+          <FirstInput text="Mopile Phone" />
+          <TextArea text="Description" />
         </View>
       </ScrollView>
       <View></View>
@@ -78,11 +87,12 @@ const style = StyleSheet.create({
   detailsContainer: {
     // flex: 1,
     paddingHorizontal: 20,
-    marginTop: 20,
+    marginTop: 30,
     //  position: 'absolute',
     // marginHorizontal:10,
     backgroundColor: COLORS.white,
     zIndex: 5,
+    width: '100%',
     borderRadius: 25,
     paddingTop: 20,
     display: 'flex',
@@ -121,8 +131,8 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    marginVertical: 10,
+    marginBottom: 15,
   },
 });
 
-export default Inquiry;
+export default SettingScreen;

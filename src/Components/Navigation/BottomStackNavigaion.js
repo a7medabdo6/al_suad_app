@@ -15,9 +15,10 @@ import SubmitInquiry from '../../screens/SubmitInquiry';
 import MyProperties from '../../screens/MyProperties';
 import PaymentScreen from '../../screens/Payment';
 import StackNavigation from './StackNavigation';
-
+import FavScreen from '../../screens/Fav';
 import PaymentHeader from '../Headers/PaymentHeader';
 import HomeStack from './HomeStack';
+import SettingScreen from '../../screens/Settings';
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
@@ -96,13 +97,13 @@ function MyTabs() {
       />
       <Tab.Screen
         options={{
+          headerLeft: false,
+          headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor: COLORS.white,
             height: 80,
           },
-          headerTitle: props => (
-            <BasicHeader {...props} title="My properties" />
-          ),
+          header: props => <BasicHeader {...props} title="My properties" />,
           tabBarIcon: ({focused}) => {
             return (
               <Fontisto
@@ -132,15 +133,14 @@ function MyTabs() {
           headerShown: false,
         }}
         name="Loved"
-        component={LogoTitle}
+        component={FavScreen}
       />
       <Tab.Screen
         options={{
           headerStyle: {
             backgroundColor: COLORS.backgroundblue,
-            height: 120,
           },
-          headerTitle: props => <LogoTitle {...props} />,
+          headerTitle: props => <BasicHeader title={'Settings'} {...props} />,
           tabBarIcon: ({focused}) => {
             return (
               <Ionicons
@@ -155,7 +155,7 @@ function MyTabs() {
           headerShown: true,
         }}
         name="settings"
-        component={SubmitInquiry}
+        component={SettingScreen}
       />
     </Tab.Navigator>
   );

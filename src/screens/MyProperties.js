@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   SafeAreaView,
   View,
@@ -17,12 +17,32 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PropertyCard from '../Components/Cards/PropertyCard';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import Skeleton from '../Components/Skeleton';
 
 const {width} = Dimensions.get('screen');
 import houses from '../consts/houses';
+import {useMyPropertyApi} from '../apis/Home';
 const MyProperties = ({}) => {
   const navigation = useNavigation();
+  const {mutate: GetmyProp, isLoading} = useMyPropertyApi();
+  const userInfo = useSelector(state => state.userinfo.userInfo);
 
+  const MyPropertiesData = useSelector(state => state.MyProperties.data);
+  useEffect(() => {
+    GetmyProp({partner_id: userInfo.partner_id});
+    return () => {};
+  }, []);
+
+  if (isLoading) {
+    return (
+      <>
+        <Skeleton />
+        <Skeleton />
+        <Skeleton />
+      </>
+    );
+  }
   return (
     <SafeAreaView
       style={{
@@ -48,8 +68,8 @@ const MyProperties = ({}) => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{marginVertical: 10, marginHorizontal: 10}}
         vertical
-        data={houses}
-        renderItem={({item}) => <PropertyCard />}
+        data={MyPropertiesData}
+        renderItem={({item}) => <PropertyCard item={item} />}
       />
     </SafeAreaView>
   );

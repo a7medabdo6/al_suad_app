@@ -1,7 +1,7 @@
 import React from 'react';
 import {TextArea, Box, Center, NativeBaseProvider} from 'native-base';
 
-const Example = ({text}) => {
+const Example = ({text,value,fun}) => {
   return (
     <NativeBaseProvider>
       <Center flex={1} px="3">
@@ -14,6 +14,8 @@ const Example = ({text}) => {
             mx="180"
             size="xl"
             placeholder={text}
+            value={value}
+            onChangeText={(e)=>fun(e)}
             borderRadius={10}
             h={20}
           />

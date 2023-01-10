@@ -1,14 +1,74 @@
-import React, {useRef} from 'react';
-import {View, Button, Text, Image} from 'react-native';
+import React, {useRef, useState} from 'react';
+import {View, Button, Text, Image, Pressable} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import SelectBox from '../Inputs/SelectBox';
 import BasicButton from '../Buttons/BasicButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Box, Progress, Center, NativeBaseProvider} from 'native-base';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import FirstInput from '../Inputs/FirstInput';
 
+import axios from 'axios';
 import COLORS from '../../consts/colors';
 export default function Example() {
   const refRBSheet = useRef();
+  const [pic, setpic] = useState('');
+  const [picName, setpicName] = useState('');
+
+  const [percentage, setPercentage] = useState(0);
+
+  const uploadProgress = progressEvent => {
+    var Percentage = Math.round(
+      (progressEvent.loaded / progressEvent.total) * 100,
+    );
+    setPercentage(Percentage);
+    // console.log(progressEvent.loaded, progressEvent.total);
+    // console.log(
+    //   'Upload progress: ' +
+    //     Math.round((progressEvent.loaded / progressEvent.total) * 100) +
+    //     '%',
+    // );
+  };
+  const UploadImage = () => {
+    let options = {
+      mediaType: 'photo',
+      quality: 1,
+      includeBase64: true,
+    };
+    launchImageLibrary(options, async res => {
+      if (res.didCancel) {
+      } else if (res.errorCode == 'permission') {
+      } else if (res.errorCode == 'others') {
+      } else {
+        setpic(res.assets[0].base64);
+        // setpicName(res.assets[0].fileName);
+        // console.log(res.assets[0].fileName, res.assets[0]);
+        axios({
+          method: 'POST',
+          url: 'https://odooerp-ae-property2.odoo.com/api/property_create_document',
+          data: {
+            params: {
+              flat_id: 451,
+              file_name: picName,
+              binary_file: `data:image/png;base64,${res.assets[0].base64}`,
+            },
+          },
+          headers: {},
+          onUploadProgress: uploadProgress,
+        })
+          .then(res => {
+            if (res.data) {
+              console.log(res.data, 'err2');
+              refRBSheet.current.close();
+              setPercentage(0);
+              setpicName('');
+              setpic('');
+            }
+          })
+          .catch(err => console.log(err));
+      }
+    });
+  };
   return (
     <View
       style={{
@@ -48,28 +108,31 @@ export default function Example() {
         <View
           style={{
             flexDirection: 'column',
-            justifyContent: 'flex-start',
+            justifyContent: 'center',
             alignItems: 'center',
             height: '100%',
           }}>
           <View style={{height: 70}}>
+            <FirstInput text="Name" value={picName} fun={e => setpicName(e)} />
+          </View>
+          {/* <View style={{height: 70}}>
             <SelectBox Type="Type" />
           </View>
           <View style={{height: 70}}>
             <SelectBox Type="Expiry date" />
-          </View>
-          <View
+          </View> */}
+          <Pressable
+            onPress={() => UploadImage()}
+            disabled={picName ? false : true}
             style={{
-              borderColor: COLORS.grey,
-              borderWidth: 1,
-              width: '78%',
-              height: 120,
-              borderRadius: 10,
+              backgroundColor: COLORS.blue,
+              padding: 15,
               display: 'flex',
-              justifyContent: 'flex-start',
-              alignItems: 'flex-start',
-              padding: 5,
-              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '80%',
+              borderRadius: 10,
+              marginVertical: 15,
             }}>
             <View
               style={{
@@ -77,74 +140,93 @@ export default function Example() {
                 justifyContent: 'flex-start',
                 alignItems: 'flex-start',
                 flexDirection: 'row',
-                marginBottom: 15,
               }}>
               <MaterialCommunityIcons
-                color={COLORS.grey}
+                color={COLORS.white}
                 size={18}
                 name="plus-circle-outline"
               />
-              <Text style={{marginHorizontal: 5}}>Upload file</Text>
+              <Text style={{marginHorizontal: 5, color: COLORS.white}}>
+                Upload file
+              </Text>
             </View>
+          </Pressable>
+          {percentage > 0 && (
             <View
               style={{
+                borderColor: COLORS.grey,
+                borderWidth: 1,
+                width: '78%',
+                height: 80,
+                borderRadius: 10,
                 display: 'flex',
-                justifyContent: 'space-between',
+                justifyContent: 'center',
                 alignItems: 'center',
-                flexDirection: 'row',
-                width: '100%',
+                padding: 5,
+                flexDirection: 'column',
               }}>
-              <View>
-                <Image
-                  source={require('../../assets/house3.jpg')}
-                  style={{width: 50, height: 50, borderRadius: 10}}
-                />
-              </View>
-
               <View
                 style={{
                   display: 'flex',
-                  justifyContent: 'flex-start',
-                  alignItems: 'flex-start',
-                  flexDirection: 'column',
-                  marginHorizontal: 10,
-                  height: 50,
-                  width: '60%',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                  width: '100%',
                 }}>
+                <View>
+                  <Image
+                    source={{uri: 'data:image/png;base64,' + pic}}
+                    style={{width: 50, height: 50, borderRadius: 10}}
+                  />
+                </View>
+
                 <View
                   style={{
                     display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    flexDirection: 'row',
-                    width: '100%',
-                    marginVertical: 5,
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
+                    flexDirection: 'column',
+                    marginHorizontal: 10,
+                    height: 50,
+                    width: '60%',
                   }}>
-                  <Text>heel</Text>
-                  <Text>76%</Text>
+                  <View
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      flexDirection: 'row',
+                      width: '100%',
+                      marginVertical: 5,
+                    }}>
+                    <Text style={{color: COLORS.dark}}>{'Photo'}</Text>
+                    <Text style={{color: COLORS.dark}}>{percentage}%</Text>
+                  </View>
+                  <View style={{width: '100%'}}>
+                    <NativeBaseProvider>
+                      <Box w="100%" maxW="400">
+                        <Progress size="xs" value={percentage} />
+                      </Box>
+                    </NativeBaseProvider>
+                  </View>
                 </View>
-                <View style={{width: '100%'}}>
-                  <NativeBaseProvider>
-                    <Box w="100%" maxW="400">
-                      <Progress size="xs" value={45} />
-                    </Box>
-                  </NativeBaseProvider>
+                <View
+                  style={{
+                    width: '20%',
+                    justifyContent: 'center',
+                    marginHorizontal: 20,
+                  }}>
+                  {/* <Pressable onPress={() => refRBSheet.current.close()}>
+                    <MaterialCommunityIcons
+                      name="close"
+                      size={20}
+                      color={COLORS.red}
+                    />
+                  </Pressable> */}
                 </View>
-              </View>
-              <View
-                style={{
-                  width: '20%',
-                  justifyContent: 'center',
-                  marginHorizontal: 20,
-                }}>
-                <MaterialCommunityIcons
-                  name="close"
-                  size={20}
-                  color={COLORS.red}
-                />
               </View>
             </View>
-          </View>
+          )}
         </View>
       </RBSheet>
     </View>

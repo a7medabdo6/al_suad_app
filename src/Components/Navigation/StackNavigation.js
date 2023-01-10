@@ -17,12 +17,23 @@ export default function MyStack() {
     <Stack.Navigator>
       <Stack.Screen
         options={{
+          headerLeft: false,
           headerStyle: {
-            backgroundColor: COLORS.white,
-            height: 80,
+            backgroundColor: COLORS.backgroundblue,
           },
           headerTitle: props => (
-            <BasicHeader {...props} title="My properties" />
+            <BasicHeader
+              {...props}
+              title="My properties"
+              Icon={
+                <MaterialIcons
+                  name="arrow-back-ios"
+                  size={20}
+                  color="black"
+                  // onPress={navigation.goBack}
+                />
+              }
+            />
           ),
           tabBarIcon: ({focused}) => {
             return (
@@ -57,17 +68,7 @@ export default function MyStack() {
       <Stack.Screen
         options={{
           headerTitle: props => (
-            <BasicHeader
-              {...props}
-              title="Payment Method"
-              // Icon={
-              //   <MaterialIcons
-              //     name="arrow-back-ios"
-              //     size={20}
-              //     // onPress={navigation.goBack}
-              //   />
-              // }
-            />
+            <BasicHeader {...props} title="Payment Method" />
           ),
           headerShown: true,
         }}
@@ -86,7 +87,7 @@ export default function MyStack() {
       />
       <Stack.Screen
         options={{
-          header: props => <LogoTitle />,
+          header: props => <LogoTitle {...props} />,
           headerLeft: false,
           headerBackTitleVisible: false,
           headerShown: true,

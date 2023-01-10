@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   ImageBackground,
   SafeAreaView,
@@ -13,6 +13,7 @@ import {
   Pressable,
 } from 'react-native';
 import AnimatedCorner from '../Components/Buttons/AnimatedCorner';
+import {useDispatch, useSelector} from 'react-redux';
 
 import MapView, {Marker} from 'react-native-maps';
 
@@ -26,7 +27,12 @@ import COLORS from '../consts/colors';
 const {width} = Dimensions.get('screen');
 const DetailsScreen = ({route}) => {
   const navigation = useNavigation();
-  // const house = route.params;
+  const HomeDetailedData = useSelector(state => state.Home.Detailed);
+  useEffect(() => {
+    console.log(HomeDetailedData, 'HomeDetailedData');
+
+    return () => {};
+  }, [HomeDetailedData]);
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
@@ -41,7 +47,11 @@ const DetailsScreen = ({route}) => {
         <View style={style.backgroundImageContainer}>
           <ImageBackground
             style={style.backgroundImage}
-            source={house[0].image}>
+            source={
+              HomeDetailedData.image_128
+                ? {uri: `data:image/jpeg;base64,${HomeDetailedData.image_128}`}
+                : require('../assets/unknown.jpg')
+            }>
             <View style={style.header}>
               <Pressable onPress={() => navigation.goBack()}>
                 <View style={style.headerBtn}>
@@ -54,7 +64,10 @@ const DetailsScreen = ({route}) => {
                 </View>
               </Pressable>
               <View style={style.twoIcon}>
-                <Pressable onPress={() => navigation.push('Inquiry')}>
+                <Pressable
+                  onPress={() =>
+                    navigation.push('Inquiry', {id: HomeDetailedData.id})
+                  }>
                   <View style={style.headerBtn}>
                     <Ionicons
                       name="push-outline"
@@ -90,7 +103,7 @@ const DetailsScreen = ({route}) => {
                 </Text>
                 <Text
                   style={{fontWeight: '500', color: COLORS.grey, fontSize: 12}}>
-                  Ref No. 245532
+                  Ref No. {HomeDetailedData.code}
                 </Text>
               </View>
 
@@ -101,7 +114,7 @@ const DetailsScreen = ({route}) => {
                   marginTop: 5,
                   fontWeight: 'bold',
                 }}>
-                3000.00 AED/mo
+                {HomeDetailedData.rent_value}
               </Text>
               <Text
                 style={{
@@ -110,7 +123,8 @@ const DetailsScreen = ({route}) => {
                   marginTop: 5,
                   fontWeight: '500',
                 }}>
-                Villa No.12 - 55 B Street - Dubai
+                {HomeDetailedData.building_id[1]} -
+                {HomeDetailedData.state_id[1]}
               </Text>
               {/* Facilities container */}
               <View style={{flexDirection: 'column'}}>
@@ -121,7 +135,10 @@ const DetailsScreen = ({route}) => {
                       size={18}
                       color={COLORS.dark}
                     />
-                    <Text style={style.facilityText}> 3 Rooms</Text>
+                    <Text style={style.facilityText}>
+                      {' '}
+                      {HomeDetailedData.room_no} Rooms
+                    </Text>
                   </View>
                   <View style={style.facility}>
                     <Icon
@@ -129,7 +146,10 @@ const DetailsScreen = ({route}) => {
                       size={18}
                       color={COLORS.dark}
                     />
-                    <Text style={style.facilityText}>2 Bathrooms</Text>
+                    <Text style={style.facilityText}>
+                      {' '}
+                      {HomeDetailedData.bathroom_no} Bathrooms
+                    </Text>
                   </View>
                   <View style={style.facility}>
                     <Ionicons
@@ -137,7 +157,10 @@ const DetailsScreen = ({route}) => {
                       size={18}
                       color={COLORS.dark}
                     />
-                    <Text style={style.facilityText}>250 ft2</Text>
+                    <Text style={style.facilityText}>
+                      {' '}
+                      {HomeDetailedData.area} ft2
+                    </Text>
                   </View>
                 </View>
                 <View style={style.bluebox}>
@@ -206,10 +229,12 @@ const DetailsScreen = ({route}) => {
                 </Text>
                 <Text
                   style={{fontWeight: '500', color: COLORS.grey, fontSize: 14}}>
-                  Villa No.12 - 55 B Street - Dubai
+                  {HomeDetailedData.building_id[1]} -
+                  {HomeDetailedData.state_id[1]}
                 </Text>
                 <View style={style.container}>
                   {/*Render our MapView*/}
+
                   <MapView
                     style={style.map}
                     //specify our coordinates.
@@ -580,7 +605,7 @@ const style = StyleSheet.create({
 
   container: {
     height: 400,
-    width: "100%",
+    width: '100%',
     justifyContent: 'flex-end',
     alignItems: 'center',
   },

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   ImageBackground,
   SafeAreaView,
@@ -10,6 +10,7 @@ import {
   Image,
   Dimensions,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import FirstInput from '../Components/Inputs/FirstInput';
 import BasicButton from '../Components/Buttons/BasicButton';
@@ -23,10 +24,44 @@ import {useNavigation} from '@react-navigation/native';
 import COLORS from '../consts/colors';
 import {Center} from 'native-base';
 import TextArea from '../Components/Inputs/TextArea';
+import {useCreateVistApi} from '../apis/Home';
+import {useValidation} from 'react-native-form-validator';
+
 const {width} = Dimensions.get('screen');
-const Inquiry = ({ route}) => {
+const Inquiry = ({route}) => {
   const navigation = useNavigation();
-  // const house = route.params;
+  const {mutate: createVisit, isLoading} = useCreateVistApi();
+
+  const [name, setname] = useState('');
+  const [email, setemail] = useState('');
+  const [mobile, setmobile] = useState('');
+  const [description, setdescription] = useState('');
+
+  const [flat, setflat] = useState(route.params.id);
+  const {validate, isFieldInError, getErrorsInField, getErrorMessages} =
+    useValidation({
+      state: {email, name, mobile, description},
+    });
+  const HandleSubmitInquiry = async () => {
+    validate({
+      name: {required: true},
+      email: {required: true},
+      mobile: {required: true},
+      description: {required: true},
+    });
+    // const res = await getErrorMessages();
+    console.log(await getErrorsInField('name'), 'getErrorMessages()');
+    if (!name || !email || !mobile) {
+      return;
+    } else {
+      createVisit({name, mobile, email, flat, description});
+      // showToast();
+    }
+  };
+  // useEffect(() => {
+  //   console.log(flat, 'flat');
+  //   return () => {};
+  // }, [flat]);
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
@@ -51,11 +86,57 @@ const Inquiry = ({ route}) => {
               You have already sent an Inquiry: 14th of July
             </Text>
           </View>
-          <FirstInput text="Name" />
-          <FirstInput text="Email Address" />
-          <FirstInput text="Mopile Phone" />
-          <TextArea text="Description" />
-          <BasicButton text="Inquiry" width={155} onPress={()=>navigation.push("SubmitInquiry")}/>
+          <FirstInput text="Name" value={name} fun={e => setname(e)} />
+          {isFieldInError('name') &&
+            getErrorsInField('name').map(errorMessage => (
+              <Text key={errorMessage} style={{color: 'red'}}>
+                {errorMessage}
+              </Text>
+            ))}
+          <FirstInput
+            text="Email Address"
+            value={email}
+            fun={e => setemail(e)}
+          />
+          {isFieldInError('email') &&
+            getErrorsInField('email').map(errorMessage => (
+              <Text key={errorMessage} style={{color: 'red'}}>
+                {errorMessage}
+              </Text>
+            ))}
+          <FirstInput
+            text="Mopile Phone"
+            value={mobile}
+            fun={e => setmobile(e)}
+          />
+          {isFieldInError('mobile') &&
+            getErrorsInField('mobile').map(errorMessage => (
+              <Text key={errorMessage} style={{color: 'red'}}>
+                {errorMessage}
+              </Text>
+            ))}
+          <TextArea
+            text="Description"
+            value={description}
+            fun={e => setdescription(e)}
+          />
+          {isFieldInError('descriptions') &&
+            getErrorsInField('descriptions').map(errorMessage => (
+              <Text key={errorMessage} style={{color: 'red'}}>
+                {errorMessage}
+              </Text>
+            ))}
+          <BasicButton
+            text={
+              isLoading ? (
+                <ActivityIndicator size="large" color="white" />
+              ) : (
+                'Inquiry'
+              )
+            }
+            width={155}
+            onPress={() => HandleSubmitInquiry()}
+          />
         </View>
       </ScrollView>
       <View></View>

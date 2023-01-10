@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   ImageBackground,
   SafeAreaView,
@@ -12,86 +12,99 @@ import {
   ScrollView,
 } from 'react-native';
 import {Box, Progress, NativeBaseProvider} from 'native-base';
-
 import FirstInput from '../Components/Inputs/FirstInput';
+
 import BasicButton from '../Components/Buttons/BasicButton';
 import SelectBox from '../Components/Inputs/SelectBox';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import house from '../consts/houses';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-
 import COLORS from '../consts/colors';
-import {Center} from 'native-base';
 import TextArea from '../Components/Inputs/TextArea';
-import LogoTitle from '../Components/Headers/LogoHeader';
 const {width} = Dimensions.get('screen');
-const Card = () => {
-  return (
-    <View
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        flexDirection: 'row',
-        width: '100%',
-        marginVertical: 10,
-      }}>
-      <View>
-        <Image
-          source={house[0].image}
-          style={{width: 50, height: 50, borderRadius: 10}}
-        />
-      </View>
+import {api} from '../axios';
 
+const CreateRequestScreen = () => {
+  const [RequestTypeData, setRequestTypeData] = useState([]);
+  const callRquestTypes = async () => {
+    try {
+      const result = await api.post('api/generic/helpdesk.ticket.type', {});
+      setRequestTypeData(result.data.result);
+      // console.log(result, 'helpdesk');
+    } catch (error) {
+      console.log(error, 'error helpdesk');
+    }
+  };
+  useEffect(() => {
+    callRquestTypes();
+    return () => {};
+  }, []);
+
+  // const house = route.params;
+  const [name, setname] = useState('');
+
+  const Card = () => {
+    return (
       <View
         style={{
           display: 'flex',
-          justifyContent: 'flex-start',
-          alignItems: 'flex-start',
-          flexDirection: 'column',
-          marginHorizontal: 10,
-          height: 50,
-          width: '60%',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexDirection: 'row',
+          width: '100%',
+          marginVertical: 10,
         }}>
+        <View>
+          <Image
+            source={house[0].image}
+            style={{width: 50, height: 50, borderRadius: 10}}
+          />
+        </View>
+
         <View
           style={{
             display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexDirection: 'row',
-            width: '100%',
-            marginVertical: 5,
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+            flexDirection: 'column',
+            marginHorizontal: 10,
+            height: 50,
+            width: '60%',
           }}>
-          <Text style={{color: COLORS.dark}}>je5542.jpg</Text>
-          <Text>76%</Text>
+          <View
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexDirection: 'row',
+              width: '100%',
+              marginVertical: 5,
+            }}>
+            <Text style={{color: COLORS.dark}}>je5542222.jpg</Text>
+            <Text>76%</Text>
+          </View>
+          <View style={{width: '100%'}}>
+            <NativeBaseProvider>
+              <Box w="100%" maxW="400">
+                <Progress size="xs" value={45} />
+              </Box>
+            </NativeBaseProvider>
+          </View>
         </View>
-        <View style={{width: '100%'}}>
-          <NativeBaseProvider>
-            <Box w="100%" maxW="400">
-              <Progress size="xs" value={45} />
-            </Box>
-          </NativeBaseProvider>
+        <View
+          style={{
+            width: '20%',
+            justifyContent: 'center',
+            marginHorizontal: 20,
+          }}>
+          <MaterialCommunityIcons name="close" size={20} color={COLORS.red} />
         </View>
       </View>
-      <View
-        style={{
-          width: '20%',
-          justifyContent: 'center',
-          marginHorizontal: 20,
-        }}>
-        <MaterialCommunityIcons name="close" size={20} color={COLORS.red} />
-      </View>
-    </View>
-  );
-};
-const CreateRequestScreen = ({navigation, route}) => {
-  // const house = route.params;
-
+    );
+  };
   return (
     <SafeAreaView style={{backgroundColor: COLORS.white}}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {/* House image */}
+      <ScrollView>
         <StatusBar
           barStyle="light-content"
           backgroundColor="transparent"
@@ -100,12 +113,9 @@ const CreateRequestScreen = ({navigation, route}) => {
 
         <View>
           <View style={style.detailsContainer}>
-            {/* <Image
-            style={{marginVertical: 10}}
-            source={require('../assets/CreateRequestScreen.png')}
-          /> */}
             <Text style={style.text}>Create Request</Text>
-            <SelectBox Type="Select Maintenance Type" />
+            <FirstInput text="Name" value={name} fun={e => setname(e)} />
+            <SelectBox Type="Select  Type" data={RequestTypeData} />
             <TextArea text="Brief Description" />
             <View
               style={{
@@ -194,7 +204,6 @@ const CreateRequestScreen = ({navigation, route}) => {
           </View>
         </View>
       </ScrollView>
-      <View></View>
     </SafeAreaView>
   );
 };

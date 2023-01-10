@@ -1,6 +1,4 @@
-import React, {useState, useEffect} from 'react';
-import {useIsFocused} from '@react-navigation/native';
-
+import React, {useEffect, useState} from 'react';
 import {
   ImageBackground,
   SafeAreaView,
@@ -15,79 +13,57 @@ import {
   Pressable,
   ActivityIndicator,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-// import Toast from 'react-native-toast-message';
 
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import house from '../consts/houses';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useValidation} from 'react-native-form-validator';
+
 import COLORS from '../consts/colors';
 import FirstInput from '../Components/Inputs/FirstInput';
 import BasicButton from '../Components/Buttons/BasicButton';
 const {width} = Dimensions.get('screen');
-import {useLoginApi} from '../apis/Auth/index';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
-  const [email, setEmail] = useState(null);
-  const [password, setpassword] = useState(null);
-  const isFocused = useIsFocused();
+import {useCreateUserHook} from '../apis/Auth/index';
+const SignupScreen = ({navigation, route, setIsAuth, setisRegister}) => {
+  const [Name, setName] = useState('');
+  const [mobile, setmobile] = useState('');
+  const [type, settype] = useState('');
 
-  const {mutate: LoginApi, isLoading} = useLoginApi();
+  const [email, setEmail] = useState('');
+  const [password, setpassword] = useState('');
+
+  const {mutate: CreateUserApi, isLoading} = useCreateUserHook();
   const {validate, isFieldInError, getErrorsInField, getErrorMessages} =
     useValidation({
-      state: {email, password},
+      state: {email, password, Name, mobile, type},
     });
-  // const showToast = () => {
-  //   Toast.show({
-  //     type: 'success',
-  //     text1: 'Hello',
-  //     text2: 'This is some something 👋',
+  // useEffect(() => {
+  //   validate({
+  //     password: {required: true, minlength: 3},
+  //     email: {required: true, minlength: 3},
+  //     mobile: {numbers: true, minlength: 3},
+  //     Name: {required: true, minlength: 3},
+  //     type: {required: true, minlength: 3},
   //   });
-  // };
-  const [login, setLogin] = useState(false);
-  const [refresh, setrefresh] = useState(false);
-  const {userInfo} = useSelector(state => state.userinfo);
-
-  const HandleLogin = async event => {
+  // }, []);
+  const HandleSignUp = async event => {
     validate({
-      password: {required: true, minlength: 5},
-      email: {required: true, minlength: 5},
+      password: {required: true, minlength: 3},
+      email: {required: true, minlength: 3},
+      mobile: {numbers: true, minlength: 3},
+      Name: {required: true, minlength: 3},
+      type: {required: true, minlength: 3},
     });
 
-    // console.log(getErrorMessages());
+    // console.log(getErrorMessages(), 'error');
     if (getErrorMessages()) {
       return;
-    } else {
-      const result = await LoginApi({email, password});
-      // showToast();
     }
-    // setIsAuth(!isAuth);
+    const result = await CreateUserApi({email, password, mobile, type, Name});
+    // console.log(result, 'rrrrrr');
+    // setIsAuth(true);
   };
-  const getMyObject = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('User');
-      // console.log(JSON.parse(jsonValue), 'JSON.parse(jsonValue)');
-      setLogin(JSON.parse(jsonValue));
-      setrefresh(!refresh);
-      return JSON.parse(jsonValue);
-    } catch (e) {
-      // read error
-    }
-
-    // console.log('Done.');
-  };
-
-  useEffect(() => {
-    getMyObject();
-  }, []);
-  useEffect(() => {
-    if (userInfo) {
-      // console.log(login, 'login');
-      navigation.push('main');
-    }
-  }, [login, userInfo, navigation, isFocused]);
-  // useEffect(() => {
-  //   navigation.push('main');
-  // }, [navigation]);
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
@@ -106,11 +82,29 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
         </View>
         <View style={style.detailsContainer}>
           <Image
-            style={{marginVertical: 10}}
+            style={{marginVertical: 5}}
             source={require('../assets/logo.png')}
           />
-          <Text style={style.text}>Login to manage </Text>
-          <Text style={style.text}> and explore properties</Text>
+          <Text style={style.text}>Register </Text>
+          <FirstInput
+            text="Name"
+            value={Name}
+            fun={e => setName(e)}
+            Icon={
+              <Ionicons
+                name="at"
+                size={25}
+                style={{marginHorizontal: 7}}
+                color={COLORS.red}
+              />
+            }
+          />
+          {isFieldInError('Name') &&
+            getErrorsInField('Name').map(errorMessage => (
+              <Text key={errorMessage} style={{color: 'red'}}>
+                {errorMessage}
+              </Text>
+            ))}
           <FirstInput
             text="Email addres"
             value={email}
@@ -126,6 +120,25 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
           />
           {isFieldInError('email') &&
             getErrorsInField('email').map(errorMessage => (
+              <Text key={errorMessage} style={{color: 'red'}}>
+                {errorMessage}
+              </Text>
+            ))}
+          <FirstInput
+            text="Mobile"
+            value={mobile}
+            fun={e => setmobile(e)}
+            Icon={
+              <Ionicons
+                name="at"
+                size={25}
+                style={{marginHorizontal: 7}}
+                color={COLORS.red}
+              />
+            }
+          />
+          {isFieldInError('mobile') &&
+            getErrorsInField('mobile').map(errorMessage => (
               <Text key={errorMessage} style={{color: 'red'}}>
                 {errorMessage}
               </Text>
@@ -149,36 +162,37 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
                 {errorMessage}
               </Text>
             ))}
-          <Text style={{color: 'red'}}>
-            {userInfo && userInfo.result == 'Invalid credentials.'
-              ? userInfo.result
-              : null}
-          </Text>
-
+          <FirstInput
+            text="type"
+            value={type}
+            fun={e => settype(e)}
+            Icon={
+              <Ionicons
+                name="at"
+                size={25}
+                style={{marginHorizontal: 7}}
+                color={COLORS.red}
+              />
+            }
+          />
+          {isFieldInError('type') &&
+            getErrorsInField('type').map(errorMessage => (
+              <Text key={errorMessage} style={{color: 'red'}}>
+                {errorMessage}
+              </Text>
+            ))}
           <BasicButton
             text={
               isLoading ? (
                 <ActivityIndicator size="large" color="white" />
               ) : (
-                'Login'
+                'Signup'
               )
             }
-            onPress={() => HandleLogin()}
+            onPress={() => HandleSignUp()}
           />
-
           <View>
-            <Text
-              style={{
-                color: COLORS.dark,
-                fontWeight: 'bold',
-                fontSize: 16,
-                textDecorationLine: 'underline',
-              }}>
-              Forgot password?
-            </Text>
-          </View>
-          <View>
-            <Pressable onPress={() => navigation.push('signup')}>
+            <Pressable onPress={() => navigation.push('login')}>
               <Text
                 style={{
                   color: COLORS.dark,
@@ -186,11 +200,11 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
                   fontSize: 16,
                   textDecorationLine: 'underline',
                 }}>
-                Register?
+                Already Have An Account?
               </Text>
             </Pressable>
           </View>
-          <View style={style.bluebox}>
+          {/* <View style={style.bluebox}>
             <View style={style.blueboxtext}>
               <Ionicons
                 name="home-outline"
@@ -202,7 +216,7 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
                 Explore Properties as a Guest
               </Text>
             </View>
-          </View>
+          </View> */}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -215,7 +229,7 @@ const style = StyleSheet.create({
     // marginHorizontal: 20,
     // marginTop: 20,
     alignItems: 'center',
-    height: 250,
+    height: 150,
     zIndex: 1,
   },
   backgroundImage: {
@@ -284,7 +298,7 @@ const style = StyleSheet.create({
   detailsContainer: {
     // flex: 1,
     paddingHorizontal: 20,
-    marginTop: 40,
+    marginTop: 20,
     margin: 'auto',
     //  position: 'absolute',
     // marginHorizontal:10,
@@ -355,4 +369,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default SignupScreen;

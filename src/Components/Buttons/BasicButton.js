@@ -12,7 +12,8 @@ const Example = ({text, width, type, onPress, color, Icon}) => {
         <Button
           w={{
             base: '62%',
-            md: '25%',
+            base: type == 'filter' ? '92%' : '62%',
+            md: type == 'filter' ? '15%' : '25%',
           }}
           onPress={onPress}
           height={55}
@@ -21,6 +22,8 @@ const Example = ({text, width, type, onPress, color, Icon}) => {
           borderRadius={10}
           style={{
             backgroundColor: color ? color : COLORS.red,
+            borderColor: color ? COLORS.grey : 'transparent',
+            borderWidth: 1,
           }}
           mx={width ? width : '180'}
           size={'lg'}>

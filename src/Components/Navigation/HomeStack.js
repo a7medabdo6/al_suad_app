@@ -12,6 +12,7 @@ import DetailsScreen from '../../screens/DetailsScreen';
 import Inquiry from '../../screens/Inquiry';
 import SubmitInquiry from '../../screens/SubmitInquiry';
 import LogoHeader from '../Headers/LogoHeader';
+import FilterScreen from '../../screens/FilterScreen';
 const Stack = createStackNavigator();
 
 export default function HomeStack() {
@@ -52,6 +53,29 @@ export default function HomeStack() {
         }}
         name="SubmitInquiry"
         component={SubmitInquiry}
+      />
+      <Stack.Screen
+        options={{
+          headerLeft: false,
+          headerBackTitleVisible: false,
+          headerShown: true,
+          header: props => (
+            <BasicHeader
+              {...props}
+              title="Filters"
+              
+              Icon={
+                <MaterialIcons
+                  name="arrow-back-ios"
+                  size={20}
+                  // onPress={navigation.goBack}
+                />
+              }
+            />
+          ),
+        }}
+        name="FilterScreen"
+        component={FilterScreen}
       />
     </Stack.Navigator>
   );
