@@ -80,7 +80,7 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
     getMyObject();
   }, []);
   useEffect(() => {
-    if (userInfo) {
+    if (userInfo?.uid) {
       // console.log(login, 'login');
       navigation.push('main');
     }
@@ -150,9 +150,7 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
               </Text>
             ))}
           <Text style={{color: 'red'}}>
-            {userInfo && userInfo.result == 'Invalid credentials.'
-              ? userInfo.result
-              : null}
+            {userInfo && userInfo == 'Invalid credentials.' ? userInfo : null}
           </Text>
 
           <BasicButton

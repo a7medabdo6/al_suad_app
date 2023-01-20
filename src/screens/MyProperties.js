@@ -28,7 +28,9 @@ const MyProperties = ({}) => {
   const {mutate: GetmyProp, isLoading} = useMyPropertyApi();
   const userInfo = useSelector(state => state.userinfo.userInfo);
 
-  const MyPropertiesData = useSelector(state => state.MyProperties.data);
+  const MyPropertiesData = useSelector(
+    state => state.MyProperties.myproperties,
+  );
   useEffect(() => {
     GetmyProp({partner_id: userInfo.partner_id});
     return () => {};

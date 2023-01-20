@@ -50,7 +50,7 @@ const Inquiry = ({route}) => {
       description: {required: true},
     });
     // const res = await getErrorMessages();
-    console.log(await getErrorsInField('name'), 'getErrorMessages()');
+    // console.log(await getErrorsInField('name'), 'getErrorMessages()');
     if (!name || !email || !mobile) {
       return;
     } else {

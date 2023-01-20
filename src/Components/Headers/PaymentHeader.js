@@ -3,10 +3,16 @@ import house from '../../consts/houses';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import COLORS from '../../consts/colors';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, Pressable} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native';
+import {setselectedProp} from '../../Store/MyProperty/MyPropertySlice';
+import {useDispatch} from 'react-redux';
 
-const PaymentHeader = ({title}) => {
+const PaymentHeader = ({title, item}) => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
   return (
     <View
       style={{
@@ -47,26 +53,40 @@ const PaymentHeader = ({title}) => {
                 alignItems: 'center',
                 marginHorizontal: 3,
               }}
-              source={house[0].image}
+              source={
+                item.image_128
+                  ? {
+                      uri: `data:image/jpeg;base64,${HomeDetailedData.image_128}`,
+                    }
+                  : require('../../assets/unknown.jpg')
+              }
             />
           </View>
           <View>
             <Text style={{color: COLORS.blue, marginHorizontal: 5}}>
               {' '}
-              Villa No.12 - 55 B Street
+              {item?.name}
             </Text>
             <Text style={{color: COLORS.dark, marginHorizontal: 5}}>
               {' '}
-              Old Dubai Hwy No 12
+              {item?.project_id[1]}
             </Text>
           </View>
         </View>
         <View>
-          <Ionicons
-            name="information-circle-outline"
-            style={style.icon}
-            size={18}
-          />
+          <Pressable
+            onPress={() => {
+              // console.log('DetailsScreenInStackDetailsScreenInStack');
+              dispatch(setselectedProp(item));
+
+              navigation.push('DetailsScreenInStack2');
+            }}>
+            <Ionicons
+              name="information-circle-outline"
+              style={style.icon}
+              size={18}
+            />
+          </Pressable>
         </View>
       </View>
       <View

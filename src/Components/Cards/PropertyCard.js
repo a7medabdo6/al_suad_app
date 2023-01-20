@@ -6,10 +6,12 @@ import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
+import {setselectedProp} from '../../Store/MyProperty/MyPropertySlice';
+import {useDispatch} from 'react-redux';
 
 const PropertyCard = ({item}) => {
   const navigation = useNavigation();
-
+  const dispatch = useDispatch();
   return (
     <View
       style={{
@@ -49,7 +51,11 @@ const PropertyCard = ({item}) => {
               alignItems: 'center',
               marginHorizontal: 3,
             }}
-            source={house[0].image}
+            source={
+              item.image_128
+                ? {uri: `data:image/jpeg;base64,${HomeDetailedData.image_128}`}
+                : require('../../assets/unknown.jpg')
+            }
           />
           <View>
             <Text style={{color: COLORS.blue, marginHorizontal: 5}}>
@@ -144,15 +150,20 @@ const PropertyCard = ({item}) => {
           marginHorizontal: '5%',
         }}
       />
-      <TouchableOpacity onPress={() => navigation.push('PaymentScreen',{flat:item.id})}>
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            width: '100%',
-            marginVertical: 5,
+
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          width: '100%',
+          marginVertical: 5,
+        }}>
+        <TouchableOpacity
+          onPress={() => {
+            dispatch(setselectedProp(item));
+            navigation.push('PaymentScreen', {flat: item.id, index: 0});
           }}>
           <View
             style={{
@@ -175,6 +186,12 @@ const PropertyCard = ({item}) => {
               Payments
             </Text>
           </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            dispatch(setselectedProp(item));
+            navigation.push('PaymentScreen', {flat: item.id, index: 1});
+          }}>
           <View
             style={{
               display: 'flex',
@@ -196,6 +213,12 @@ const PropertyCard = ({item}) => {
               Maintenance
             </Text>
           </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            dispatch(setselectedProp(item));
+            navigation.push('PaymentScreen', {flat: item.id, index: 2});
+          }}>
           <View
             style={{
               display: 'flex',
@@ -217,8 +240,8 @@ const PropertyCard = ({item}) => {
               Documents
             </Text>
           </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

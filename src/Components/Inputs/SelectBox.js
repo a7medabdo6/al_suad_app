@@ -4,9 +4,9 @@ import COLORS from '../../consts/colors';
 
 const countries = ['Egypt', 'Canada', 'Australia', 'Ireland'];
 
-const Example = ({Type, data}) => {
+const Example = ({Type, data, settype, type}) => {
   const [service, setService] = React.useState('');
-  console.log(data, 'data');
+  // console.log(data, 'data');
   return (
     <SelectDropdown
       data={data}
@@ -23,9 +23,11 @@ const Example = ({Type, data}) => {
       defaultButtonText={Type}
       onSelect={(selectedItem, index) => {
         // console.log(selectedItem, index);
+        settype(selectedItem.id);
       }}
       buttonTextAfterSelection={(selectedItem, index) => {
         // text represented after item is selected
+
         // if data array is an array of objects then return selectedItem.property to render after item is selected
         return selectedItem.name;
       }}

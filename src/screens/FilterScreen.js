@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useState, useEffect} from 'react';
 import {
   SafeAreaView,
   View,
@@ -9,10 +9,11 @@ import {
   Dimensions,
   StyleSheet,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import RangeSlider from 'rn-range-slider';
-
+import SelectBox from '../Components/Inputs/SelectBox';
 import COLORS from '../consts/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import UserInfoCard from '../Components/Cards/UserInfoCard';
@@ -23,12 +24,25 @@ import Rail from '../Components/Slider/Rail';
 import RailSelected from '../Components/Slider/RailSelected';
 import Label from '../Components/Slider/Label';
 import Notch from '../Components/Slider/Notch';
-
+import {api} from '../axios';
+import {useNavigation} from '@react-navigation/native';
 const {width} = Dimensions.get('screen');
 import houses from '../consts/houses';
-const FilterScreen = ({navigation}) => {
+import {Pressable} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {setHomeData, setDontMakeAnotherCall} from '../Store/HomeData/HomeSlice';
+const FilterScreen = ({}) => {
   const [low, setLow] = useState(0);
-  const [high, setHigh] = useState(100);
+  const [high, setHigh] = useState(100000);
+  const [room_no, setroom_no] = useState(0);
+  const [Cities, setCities] = useState([]);
+
+  const [isLoading, setisLoading] = useState(false);
+  const [isLoadingReset, setisLoadingReset] = useState(false);
+
+  const [state_id, setstate_id] = useState(1);
+
+  const navigation = useNavigation();
   const renderThumb = useCallback(() => <Thumb />, []);
   const renderRail = useCallback(() => <Rail />, []);
   const renderRailSelected = useCallback(() => <RailSelected />, []);
@@ -38,6 +52,50 @@ const FilterScreen = ({navigation}) => {
     setLow(low);
     setHigh(high);
   }, []);
+  const dispatch = useDispatch();
+
+  const reset = async () => {
+    setisLoadingReset(true);
+
+    const res = await api.post('/api/generic/property.flat', {});
+    console.log(res.data, 'ressss');
+    dispatch(setHomeData(res.data.result));
+    dispatch(setDontMakeAnotherCall(false));
+    if (res) {
+      setisLoadingReset(false);
+    }
+    navigation.navigate('HomeInstak');
+  };
+  const allCities = async () => {
+    const res = await api.post('/api/generic/res.country.state', {});
+    console.log(res.data, 'ressss');
+    setCities(res.data.result);
+  };
+  useEffect(() => {
+    allCities();
+
+    return () => {};
+  }, []);
+
+  const getFilters = async () => {
+    setisLoading(true);
+    const res = await api.post('/api/filter_properties', {
+      params: {
+        price_to: high,
+        price_from: low,
+        room_no,
+        state_id,
+      },
+    });
+    // console.log(res.data, 'ressss');
+    if (res) {
+      setisLoading(false);
+    }
+    dispatch(setHomeData(res.data.result));
+    dispatch(setDontMakeAnotherCall(true));
+
+    navigation.push('HomeInstak');
+  };
   return (
     <SafeAreaView
       style={{
@@ -54,7 +112,7 @@ const FilterScreen = ({navigation}) => {
       />
       <ScrollView
         style={{
-          width: '90%',
+          width: width - 20,
         }}>
         <View
           style={{
@@ -81,22 +139,34 @@ const FilterScreen = ({navigation}) => {
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'flex-start',
+                flexWrap: 'wrap',
+                width: '100%',
               }}>
-              <Text
-                style={{
-                  padding: 15,
-                  borderRadius: 10,
-                  backgroundColor: COLORS.backgroundblue,
-                  color: COLORS.blue,
-                  width: 100,
-                  borderColor: '#185894',
-                  fontWeight: 'bold',
-                  borderWidth: 2,
-                  marginHorizontal: 5,
-                  textAlign: 'center',
-                }}>
-                Dubai
-              </Text>
+              <SelectBox
+                data={Cities}
+                Type="Select City"
+                settype={setstate_id}
+              />
+              {/* {Cities.map(item => {
+                return (
+                  <Text
+                    style={{
+                      padding: 15,
+                      borderRadius: 10,
+                      backgroundColor: COLORS.backgroundblue,
+                      color: COLORS.blue,
+                      width: 100,
+                      borderColor: '#185894',
+                      fontWeight: 'bold',
+                      borderWidth: 2,
+                      marginHorizontal: 5,
+                      textAlign: 'center',
+                    }}>
+                    Dubai
+                  </Text>
+                );
+              })} */}
+              {/* 
               <Text
                 style={{
                   marginHorizontal: 5,
@@ -111,9 +181,9 @@ const FilterScreen = ({navigation}) => {
                   textAlign: 'center',
                 }}>
                 Abudhabi
-              </Text>
+              </Text> */}
             </View>
-            <Text
+            {/* <Text
               style={{
                 fontSize: 18,
                 fontWeight: 'bold',
@@ -122,20 +192,21 @@ const FilterScreen = ({navigation}) => {
                 color: COLORS.dark,
               }}>
               Type
-            </Text>
-            <View
+            </Text> */}
+            {/* <View
               style={{
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'flex-start',
+                maxWidth: width - 20,
               }}>
               <Text
                 style={{
-                  padding: 15,
+                  padding: 10,
                   borderRadius: 10,
                   backgroundColor: COLORS.backgroundblue,
                   color: COLORS.blue,
-                  width: 140,
+                  width: 120,
                   borderColor: '#185894',
                   fontWeight: 'bold',
                   borderWidth: 2,
@@ -152,7 +223,7 @@ const FilterScreen = ({navigation}) => {
               </Text>
               <Text
                 style={{
-                  padding: 15,
+                  padding: 10,
                   borderRadius: 10,
                   backgroundColor: COLORS.white,
                   color: COLORS.dark,
@@ -172,7 +243,7 @@ const FilterScreen = ({navigation}) => {
               </Text>
               <Text
                 style={{
-                  padding: 15,
+                  padding: 10,
                   borderRadius: 10,
                   backgroundColor: COLORS.white,
                   color: COLORS.dark,
@@ -194,7 +265,7 @@ const FilterScreen = ({navigation}) => {
                 />
                 <Text>Villa</Text>
               </Text>
-            </View>
+            </View> */}
             <View
               style={{
                 padding: 15,
@@ -225,7 +296,7 @@ const FilterScreen = ({navigation}) => {
               <RangeSlider
                 style={style.slider}
                 min={0}
-                max={100}
+                max={100000}
                 step={1}
                 floatingLabel
                 renderThumb={renderThumb}
@@ -247,34 +318,34 @@ const FilterScreen = ({navigation}) => {
                 <Text
                   style={{
                     marginHorizontal: 5,
-                    padding: 15,
+                    padding: 10,
                     borderRadius: 10,
                     backgroundColor: COLORS.white,
                     color: COLORS.dark,
-                    width: 140,
+                    width: 120,
                     borderColor: COLORS.grey,
                     fontWeight: 'bold',
                     borderWidth: 1,
                   }}>
-                  1000
+                  {low}
                 </Text>
                 <Text
                   style={{
                     marginHorizontal: 5,
-                    padding: 15,
+                    padding: 10,
                     borderRadius: 10,
                     backgroundColor: COLORS.white,
                     color: COLORS.dark,
-                    width: 140,
+                    width: 120,
                     borderColor: COLORS.grey,
                     fontWeight: 'bold',
                     borderWidth: 1,
                   }}>
-                  1000
+                  {high}
                 </Text>
               </View>
             </View>
-            <Text
+            {/* <Text
               style={{
                 fontSize: 18,
                 fontWeight: 'bold',
@@ -283,8 +354,8 @@ const FilterScreen = ({navigation}) => {
                 color: COLORS.dark,
               }}>
               Neighborhood
-            </Text>
-            <View
+            </Text> */}
+            {/* <View
               style={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -292,11 +363,11 @@ const FilterScreen = ({navigation}) => {
               }}>
               <Text
                 style={{
-                  padding: 15,
+                  padding: 10,
                   borderRadius: 10,
                   backgroundColor: COLORS.backgroundblue,
                   color: COLORS.blue,
-                  width: 140,
+                  width: 120,
                   borderColor: '#185894',
                   fontWeight: 'bold',
                   borderWidth: 2,
@@ -313,11 +384,11 @@ const FilterScreen = ({navigation}) => {
               <Text
                 style={{
                   marginHorizontal: 5,
-                  padding: 15,
+                  padding: 10,
                   borderRadius: 10,
                   backgroundColor: COLORS.white,
                   color: COLORS.blue,
-                  width: 140,
+                  width: 120,
                   borderColor: COLORS.grey,
                   fontWeight: 'bold',
                   borderWidth: 1,
@@ -330,7 +401,7 @@ const FilterScreen = ({navigation}) => {
                 }}>
                 Dubai Marina
               </Text>
-            </View>
+            </View> */}
             <Text
               style={{
                 fontSize: 18,
@@ -347,82 +418,94 @@ const FilterScreen = ({navigation}) => {
                 flexDirection: 'row',
                 justifyContent: 'flex-start',
               }}>
-              <Text
-                style={{
-                  padding: 15,
-                  borderRadius: 10,
-                  backgroundColor: COLORS.backgroundblue,
-                  color: COLORS.blue,
-                  borderColor: '#185894',
-                  fontWeight: 'bold',
-                  borderWidth: 2,
-                  marginHorizontal: 5,
-                  textAlign: 'center',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  alignSelf: 'center',
-                  alignContent: 'center',
-                }}>
-                <Text>+1</Text>
-              </Text>
-              <Text
-                style={{
-                  padding: 15,
-                  borderRadius: 10,
-                  backgroundColor: COLORS.white,
-                  color: COLORS.dark,
-                  borderColor: COLORS.grey,
-                  fontWeight: 'bold',
-                  borderWidth: 1,
-                  marginHorizontal: 5,
-                  textAlign: 'center',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  alignSelf: 'center',
-                  alignContent: 'center',
-                }}>
-                <Text>+2</Text>
-              </Text>
-              <Text
-                style={{
-                  padding: 15,
-                  borderRadius: 10,
-                  backgroundColor: COLORS.white,
-                  color: COLORS.dark,
-                  borderColor: COLORS.grey,
-                  fontWeight: 'bold',
-                  borderWidth: 1,
-                  marginHorizontal: 5,
-                  textAlign: 'center',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  alignSelf: 'center',
-                  alignContent: 'center',
-                }}>
-                <Text>+3</Text>
-              </Text>
-              <Text
-                style={{
-                  padding: 15,
-                  borderRadius: 10,
-                  backgroundColor: COLORS.white,
-                  color: COLORS.dark,
-                  borderColor: COLORS.grey,
-                  fontWeight: 'bold',
-                  borderWidth: 1,
-                  marginHorizontal: 5,
-                  textAlign: 'center',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  alignSelf: 'center',
-                  alignContent: 'center',
-                }}>
-                <Text>+4</Text>
-              </Text>
+              <Pressable onPress={() => setroom_no(1)}>
+                <Text
+                  style={{
+                    padding: 15,
+                    borderRadius: 10,
+                    backgroundColor:
+                      room_no == 1 ? COLORS.backgroundblue : 'white',
+                    color: room_no == 1 ? COLORS.blue : COLORS.dark,
+                    borderColor: room_no == 1 ? '#185894' : COLORS.grey,
+                    fontWeight: 'bold',
+                    borderWidth: 1,
+                    marginHorizontal: 5,
+                    textAlign: 'center',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    alignSelf: 'center',
+                    alignContent: 'center',
+                  }}>
+                  <Text>+1</Text>
+                </Text>
+              </Pressable>
+              <Pressable onPress={() => setroom_no(2)}>
+                <Text
+                  style={{
+                    padding: 15,
+                    borderRadius: 10,
+                    backgroundColor:
+                      room_no == 2 ? COLORS.backgroundblue : 'white',
+                    color: room_no == 2 ? COLORS.blue : COLORS.dark,
+                    borderColor: room_no == 2 ? '#185894' : COLORS.grey,
+                    fontWeight: 'bold',
+                    borderWidth: 1,
+                    marginHorizontal: 5,
+                    textAlign: 'center',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    alignSelf: 'center',
+                    alignContent: 'center',
+                  }}>
+                  <Text>+2</Text>
+                </Text>
+              </Pressable>
+              <Pressable onPress={() => setroom_no(3)}>
+                <Text
+                  style={{
+                    padding: 15,
+                    borderRadius: 10,
+                    backgroundColor:
+                      room_no == 3 ? COLORS.backgroundblue : 'white',
+                    color: room_no == 3 ? COLORS.blue : COLORS.dark,
+                    borderColor: room_no == 3 ? '#185894' : COLORS.grey,
+                    fontWeight: 'bold',
+                    borderWidth: 1,
+                    marginHorizontal: 5,
+                    textAlign: 'center',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    alignSelf: 'center',
+                    alignContent: 'center',
+                  }}>
+                  <Text>+3</Text>
+                </Text>
+              </Pressable>
+              <Pressable onPress={() => setroom_no(4)}>
+                <Text
+                  style={{
+                    padding: 15,
+                    borderRadius: 10,
+                    backgroundColor:
+                      room_no == 4 ? COLORS.backgroundblue : 'white',
+                    color: room_no == 4 ? COLORS.blue : COLORS.dark,
+                    borderColor: room_no == 4 ? '#185894' : COLORS.grey,
+                    fontWeight: 'bold',
+                    borderWidth: 1,
+                    marginHorizontal: 5,
+                    textAlign: 'center',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    alignSelf: 'center',
+                    alignContent: 'center',
+                  }}>
+                  <Text>+4</Text>
+                </Text>
+              </Pressable>
             </View>
             <View
               style={{
@@ -432,20 +515,34 @@ const FilterScreen = ({navigation}) => {
                 flexDirection: 'row',
               }}>
               <BasicButton
-                text="reset"
+                text={
+                  isLoadingReset ? (
+                    <ActivityIndicator size="large" color="white" />
+                  ) : (
+                    'Reset'
+                  )
+                }
                 width={250}
                 onPress={() => {
                   // console.log(navigation);
+                  reset();
                 }}
                 type="filter"
-                color={COLORS.white}
+                color={COLORS.blue}
               />
               <BasicButton
-                text="Apply"
+                text={
+                  isLoading ? (
+                    <ActivityIndicator size="large" color="white" />
+                  ) : (
+                    'Apply'
+                  )
+                }
                 width={250}
                 onPress={() => {
                   // console.log(navigation);
-                  navigation.navigate('HomeInstak');
+                  getFilters();
+                  // navigation.navigate('HomeInstak');
                 }}
                 type="filter"
               />

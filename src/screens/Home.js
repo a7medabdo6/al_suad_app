@@ -26,17 +26,21 @@ import {useHomeApi} from '../apis/Home';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Skeleton from '../Components/Skeleton';
 import {setHomeDetailedData} from '../Store/HomeData/HomeSlice';
+import {api} from '../axios';
 
-const HomeScreen = () => {
+const HomeScreen = ({route}) => {
   const {data, isLoading} = useHomeApi();
   const [AllLoved, setAllLoved] = useState([]);
   const {userInfo} = useSelector(state => state.userinfo);
   const HomeData = useSelector(state => state.Home.data);
+
+  const {DontMakeAnotherCall} = useSelector(state => state.Home);
+
   const dispatch = useDispatch();
   const navigation = useNavigation();
-
+  const dontRefresh = route.params;
   useEffect(() => {
-    console.log(userInfo, 'userInfo');
+    console.log(HomeData, 'HomeData');
     if (!userInfo) {
       // console.log(login, 'login');
       navigation.push('login');
@@ -46,14 +50,15 @@ const HomeScreen = () => {
     dispatch(setHomeDetailedData(house));
     navigation.push('DetailsScreenInStack');
   };
+  console.log(dontRefresh, 'dontRefresh');
 
   const HandleFavClick = async id => {
     setAllLoved(old => [...old, id]);
-    const oldfav = await AsyncStorage.removeItem('User');
+    const oldfav = await AsyncStorage.getItem('Fav');
     let concated = '';
     if (!oldfav) {
       const fav = await AsyncStorage.setItem('Fav', id.toString());
-      console.log(JSON.parse(fav), 'fav', id.toString());
+      // console.log(JSON.parse(fav), 'fav', id.toString());
 
       return;
     }
@@ -243,14 +248,27 @@ const HomeScreen = () => {
       {/* <ListCategories /> */}
 
       {/* Render Card */}
-      <FlatList
-        snapToInterval={width - 20}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
-        vertical
-        data={HomeData}
-        renderItem={({item}) => <Card house={item} />}
-      />
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+          display: 'flex',
+        }}>
+        {HomeData.length > 0 ? (
+          <FlatList
+            snapToInterval={width - 20}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
+            vertical
+            data={HomeData}
+            renderItem={({item}) => <Card house={item} />}
+          />
+        ) : (
+          <Text style={{color: 'black', fontWeight: 'bold'}}>No Data</Text>
+        )}
+      </View>
     </SafeAreaView>
   );
 };

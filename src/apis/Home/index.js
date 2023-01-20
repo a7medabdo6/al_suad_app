@@ -72,6 +72,7 @@ const postCreateUserrequest = async data => {
 const useHomeApi = data => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const {DontMakeAnotherCall} = useSelector(state => state.Home);
 
   return useQuery(['home'], getHomeData, {
     onSuccess: res => {
@@ -82,7 +83,9 @@ const useHomeApi = data => {
       // };
       // console.log(res.data?.result.reverse(), 'result');
       let reversed = [...res.data?.result];
-      dispatch(setHomeData(reversed.reverse()));
+      if (!DontMakeAnotherCall) {
+        dispatch(setHomeData(reversed.reverse()));
+      }
       return res.data;
     },
     onError: err => {
@@ -123,11 +126,11 @@ const useCreateVistApi = data => {
 
   return useMutation(CreateVist, {
     onSuccess: res => {
-      console.log(res.data, 'res.data?.result');
+      // console.log(res.data, 'res.data?.result');
 
       if (res.data?.result) {
         // let reversed = [...res.data?.result];
-        console.log(res.data?.result, 'res.data?.result');
+        // console.log(res.data?.result, 'res.data?.result');
 
         navigation.push('SubmitInquiry');
         dispatch(setCreateVisit(res.data?.result));
@@ -135,7 +138,7 @@ const useCreateVistApi = data => {
       return res.data;
     },
     onError: err => {
-      console.log(err, 'err');
+      // console.log(err, 'err');
     },
   });
 };
@@ -173,7 +176,7 @@ const usePaymentsForTenantApi = data => {
       //   headers: res.headers,
       //   data: res.data,
       // };
-      console.log(res.data, 'result');
+      // console.log(res.data, 'result');
       dispatch(setPayments(res.data?.result));
       return res.data;
     },
@@ -236,5 +239,5 @@ export {
   useMaintianenceApi,
   usePaymentsForTenantApi,
   useCreateUserHook,
-  useFavApi
+  useFavApi,
 };

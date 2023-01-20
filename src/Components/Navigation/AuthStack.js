@@ -18,7 +18,7 @@ const Stack = createStackNavigator();
 export default function MyStack() {
   return (
     <Stack.Navigator>
-      {/* <Stack.Screen
+      <Stack.Screen
         options={{
           headerStyle: {
             backgroundColor: COLORS.white,
@@ -43,20 +43,6 @@ export default function MyStack() {
         }}
         name="signup"
         component={SignupScreen}
-      /> */}
-      <Stack.Screen
-        options={{
-          headerStyle: {
-            backgroundColor: COLORS.white,
-            height: 70,
-          },
-
-          headerLeft: false,
-          headerBackTitleVisible: false,
-          headerShown: false,
-        }}
-        name="main"
-        component={MyTabs}
       />
     </Stack.Navigator>
   );

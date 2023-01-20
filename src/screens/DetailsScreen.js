@@ -28,11 +28,11 @@ const {width} = Dimensions.get('screen');
 const DetailsScreen = ({route}) => {
   const navigation = useNavigation();
   const HomeDetailedData = useSelector(state => state.Home.Detailed);
-  useEffect(() => {
-    console.log(HomeDetailedData, 'HomeDetailedData');
+  // useEffect(() => {
+  //   console.log(HomeDetailedData, 'HomeDetailedData');
 
-    return () => {};
-  }, [HomeDetailedData]);
+  //   return () => {};
+  // }, [HomeDetailedData]);
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
@@ -48,8 +48,8 @@ const DetailsScreen = ({route}) => {
           <ImageBackground
             style={style.backgroundImage}
             source={
-              HomeDetailedData.image_128
-                ? {uri: `data:image/jpeg;base64,${HomeDetailedData.image_128}`}
+              HomeDetailedData?.image_128
+                ? {uri: `data:image/jpeg;base64,${HomeDetailedData?.image_128}`}
                 : require('../assets/unknown.jpg')
             }>
             <View style={style.header}>
@@ -66,7 +66,7 @@ const DetailsScreen = ({route}) => {
               <View style={style.twoIcon}>
                 <Pressable
                   onPress={() =>
-                    navigation.push('Inquiry', {id: HomeDetailedData.id})
+                    navigation.push('Inquiry', {id: HomeDetailedData?.id})
                   }>
                   <View style={style.headerBtn}>
                     <Ionicons
@@ -103,7 +103,7 @@ const DetailsScreen = ({route}) => {
                 </Text>
                 <Text
                   style={{fontWeight: '500', color: COLORS.grey, fontSize: 12}}>
-                  Ref No. {HomeDetailedData.code}
+                  Ref No. {HomeDetailedData?.code}
                 </Text>
               </View>
 
@@ -114,7 +114,7 @@ const DetailsScreen = ({route}) => {
                   marginTop: 5,
                   fontWeight: 'bold',
                 }}>
-                {HomeDetailedData.rent_value}
+                {HomeDetailedData?.rent_value}
               </Text>
               <Text
                 style={{
@@ -123,8 +123,8 @@ const DetailsScreen = ({route}) => {
                   marginTop: 5,
                   fontWeight: '500',
                 }}>
-                {HomeDetailedData.building_id[1]} -
-                {HomeDetailedData.state_id[1]}
+                {HomeDetailedData?.building_id?.[1]} -
+                {HomeDetailedData?.state_id?.[1]}
               </Text>
               {/* Facilities container */}
               <View style={{flexDirection: 'column'}}>
@@ -137,7 +137,7 @@ const DetailsScreen = ({route}) => {
                     />
                     <Text style={style.facilityText}>
                       {' '}
-                      {HomeDetailedData.room_no} Rooms
+                      {HomeDetailedData?.room_no} Rooms
                     </Text>
                   </View>
                   <View style={style.facility}>
@@ -148,7 +148,7 @@ const DetailsScreen = ({route}) => {
                     />
                     <Text style={style.facilityText}>
                       {' '}
-                      {HomeDetailedData.bathroom_no} Bathrooms
+                      {HomeDetailedData?.bathroom_no} Bathrooms
                     </Text>
                   </View>
                   <View style={style.facility}>
@@ -159,7 +159,7 @@ const DetailsScreen = ({route}) => {
                     />
                     <Text style={style.facilityText}>
                       {' '}
-                      {HomeDetailedData.area} ft2
+                      {HomeDetailedData?.area} ft2
                     </Text>
                   </View>
                 </View>
@@ -229,8 +229,8 @@ const DetailsScreen = ({route}) => {
                 </Text>
                 <Text
                   style={{fontWeight: '500', color: COLORS.grey, fontSize: 14}}>
-                  {HomeDetailedData.building_id[1]} -
-                  {HomeDetailedData.state_id[1]}
+                  {HomeDetailedData?.building_id?.[1]} -
+                  {HomeDetailedData?.state_id?.[1]}
                 </Text>
                 <View style={style.container}>
                   {/*Render our MapView*/}
@@ -274,148 +274,45 @@ const DetailsScreen = ({route}) => {
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    width: '100%',
+                    width: '90%',
+                    flexWrap: 'wrap',
                     marginVertical: 5,
                   }}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      alignItems: 'flex-start',
-                    }}>
-                    <Icon
-                      name="cupboard-outline"
-                      size={20}
-                      color={COLORS.dark}
-                    />
-                    <Text
-                      style={{
-                        color: COLORS.dark,
-                        fontSize: 16,
-                        marginHorizontal: 4,
-                      }}>
-                      Furnished
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'flex-start',
-                      alignItems: 'flex-start',
-                      width: 115,
-                    }}>
-                    <Icon name="greenhouse" size={22} color={COLORS.dark} />
-                    <Text
-                      style={{
-                        color: COLORS.dark,
-                        fontSize: 16,
-                        marginHorizontal: 4,
-                      }}>
-                      Balcony
-                    </Text>
-                  </View>
+                  {HomeDetailedData?.amenities_compile &&
+                    HomeDetailedData.amenities_compile.split(',').map(e => {
+                      return (
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'flex-start',
+                            alignItems: 'flex-start',
+                            width: '50%',
+                            marginVertical: 10,
+                          }}>
+                          <Icon
+                            name="cupboard-outline"
+                            size={20}
+                            color={COLORS.dark}
+                          />
+                          <Text
+                            style={{
+                              color: COLORS.dark,
+                              fontSize: 16,
+                              marginHorizontal: 4,
+                            }}>
+                            {e}
+                          </Text>
+                        </View>
+                      );
+                    })}
                 </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    width: '100%',
-                    marginVertical: 5,
-                  }}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      alignItems: 'flex-start',
-                    }}>
-                    <MaterialIcons
-                      name="fitness-center"
-                      size={20}
-                      color={COLORS.dark}
-                    />
-                    <Text
-                      style={{
-                        color: COLORS.dark,
-                        fontSize: 16,
-                        marginHorizontal: 4,
-                      }}>
-                      Shared Gym
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'flex-start',
-                      alignItems: 'flex-start',
-                      width: 115,
-                    }}>
-                    <Icon name="pool" size={22} color={COLORS.dark} />
-                    <Text
-                      style={{
-                        color: COLORS.dark,
-                        fontSize: 16,
-                        marginHorizontal: 4,
-                      }}>
-                      Pool
-                    </Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    width: '100%',
-                    marginVertical: 5,
-                  }}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}>
-                    <Icon
-                      name="car-brake-parking"
-                      size={20}
-                      color={COLORS.dark}
-                    />
-                    <Text
-                      style={{
-                        color: COLORS.dark,
-                        fontSize: 16,
-                        marginHorizontal: 4,
-                      }}>
-                      Covered Parking
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}>
-                    <Icon
-                      name="weather-snowy-heavy"
-                      size={22}
-                      color={COLORS.dark}
-                    />
-                    <Text
-                      style={{
-                        color: COLORS.dark,
-                        fontSize: 16,
-                        marginHorizontal: 4,
-                      }}>
-                      Central A/C
-                    </Text>
-                  </View>
-                </View>
-                <View>
+
+                {/* <View>
                   <Text
                     style={{color: COLORS.blue, fontSize: 16, marginTop: 20}}>
                     Show all 17 amenities
                   </Text>
-                </View>
+                </View> */}
               </View>
             </View>
           </View>

@@ -20,7 +20,7 @@ const BasicHeader = ({title, Icon}) => {
 
   return (
     <TouchableOpacity
-      style={{width: '100%'}}
+      style={{width: '100%', height: 50}}
       onPress={() => navigation.goBack()}>
       <View
         style={{

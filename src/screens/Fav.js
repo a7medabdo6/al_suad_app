@@ -41,7 +41,7 @@ const FavScreen = () => {
             <View style={style.allIcon}>
               <View></View>
               <View style={style.twoIcon}>
-                <Ionicons name="push-outline" style={style.icon} size={18} />
+                {/* <Ionicons name="push-outline" style={style.icon} size={18} /> */}
 
                 {/* <Ionicons name="heart-outline" style={style.icon} size={18} /> */}
               </View>
@@ -144,7 +144,7 @@ const FavScreen = () => {
   const IsFocused = useIsFocused();
 
   useEffect(() => {
-    console.log(fav, 'favfavfav');
+    // console.log(fav, 'favfavfav');
     Favpi(getFav());
 
     return () => {};
@@ -171,34 +171,7 @@ const FavScreen = () => {
         />
       </View> */}
       {/* Input and sort button container */}
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          paddingHorizontal: 20,
-        }}>
-        <View style={style.searchInputContainer}>
-          {/* <Icon name="search" color={COLORS.grey} size={25} /> */}
-          {/* <TextInput placeholder="Search address, city, location" /> */}
-          <Text style={{fontWeight: '600', color: COLORS.dark, fontSize: 14}}>
-            4,612 results
-          </Text>
-        </View>
 
-        <View style={style.sortBtn}>
-          <Icon
-            name="tune-variant"
-            color={COLORS.dark}
-            style={{
-              borderWidth: 1,
-              padding: 5,
-              borderColor: COLORS.grey,
-              borderRadius: 4,
-            }}
-            size={18}
-          />
-        </View>
-      </View>
       <View
         style={{
           flex: 1,

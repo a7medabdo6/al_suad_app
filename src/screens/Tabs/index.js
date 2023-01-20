@@ -29,19 +29,19 @@ import {useSelector} from 'react-redux';
 import Spinner from '../../Components/Spinner';
 const FirstRoute = () => {
   const userInfo = useSelector(state => state.userinfo.userInfo);
-
+  const selectedProp = useSelector(state => state.MyProperties.selectedProp);
   const {mutate: PaymentsForTenantApi, isLoading} = usePaymentsForTenantApi();
   const {Payments} = useSelector(state => state.Payments);
   useEffect(() => {
     PaymentsForTenantApi({
       partner_type: userInfo?.partner[0].is_tenant ? 'tenant' : 'owner',
       partner: userInfo.partner_id,
-      flat: 452,
+      flat: selectedProp.id,
     });
 
     return () => {};
   }, []);
-  console.log(userInfo, 'userInfo');
+  // console.log(userInfo, 'userInfo');
 
   return (
     <>
@@ -74,13 +74,13 @@ const FirstRoute = () => {
 const SecondRoute = () => {
   const {mutate: MaintianenceApi, isLoading} = useMaintianenceApi();
   const userInfo = useSelector(state => state.userinfo.userInfo);
-
+  const selectedProp = useSelector(state => state.MyProperties.selectedProp);
   const {Maintainence} = useSelector(state => state.Maintainence);
   useEffect(() => {
     MaintianenceApi({
       partner_type: userInfo?.partner[0].is_tenant ? 'tenant' : 'owner',
-      partner: 852,
-      flat: 662,
+      partner: userInfo.partner_id,
+      flat: selectedProp.id,
     });
 
     return () => {};
@@ -104,7 +104,7 @@ const SecondRoute = () => {
       }}>
       {isLoading ? (
         <Spinner />
-      ) : Maintainence.length > 0 ? (
+      ) : Maintainence && Maintainence.length > 0 ? (
         <FlatList
           snapToInterval={width - 20}
           showsHorizontalScrollIndicator={false}
@@ -155,7 +155,7 @@ const SecondRoute = () => {
 };
 const ThirdRoute = () => {
   const refRBSheet = useRef();
-
+  const selectedProp = useSelector(state => state.MyProperties.selectedProp);
   return (
     <>
       <FlatList
@@ -173,7 +173,7 @@ const ThirdRoute = () => {
 };
 export default class TabViewExample extends React.Component {
   state = {
-    index: 0,
+    index: this.props.index,
     routes: [
       {
         id: 0,

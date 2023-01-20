@@ -7,7 +7,7 @@ import {Dimensions} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 const ScreenWidth = Dimensions.get('window').width;
-export default function LogoTitle() {
+export default function LogoTitle({item}) {
   const navigation = useNavigation();
 
   return (
@@ -49,17 +49,23 @@ export default function LogoTitle() {
               alignItems: 'center',
               marginHorizontal: 3,
             }}
-            source={house[0].image}
+            source={
+              item.image_128
+                ? {
+                    uri: `data:image/jpeg;base64,${HomeDetailedData.image_128}`,
+                  }
+                : require('../../assets/unknown.jpg')
+            }
           />
         </View>
         <View>
           <Text style={{color: COLORS.blue, marginHorizontal: 5}}>
             {' '}
-            Villa No.12 - 55 B Street
+            {item?.name}
           </Text>
           <Text style={{color: COLORS.dark, marginHorizontal: 5}}>
             {' '}
-            Old Dubai Hwy No 12
+            {item?.project_id[1]}
           </Text>
         </View>
       </View>

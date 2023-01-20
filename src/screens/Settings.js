@@ -1,138 +1,193 @@
-import React from 'react';
-import {
-  ImageBackground,
-  SafeAreaView,
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  StatusBar,
-  Image,
-  Dimensions,
-  ScrollView,
-} from 'react-native';
-import FirstInput from '../Components/Inputs/FirstInput';
-import BasicButton from '../Components/Buttons/BasicButton';
-
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import house from '../consts/houses';
+import React, {useState} from 'react';
+import {StyleSheet, Text, View, Image, ImageBackground} from 'react-native';
+import {Button, Center} from 'native-base';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {useNavigation} from '@react-navigation/native';
-
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import COLORS from '../consts/colors';
-import {Center} from 'native-base';
-import TextArea from '../Components/Inputs/TextArea';
-const {width} = Dimensions.get('screen');
-const SettingScreen = ({route}) => {
-  const navigation = useNavigation();
-  // const house = route.params;
 
+const Setting = () => {
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {/* House image */}
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor="transparent"
-          translucent={true}
-        />
+    <View style={{padding: 0, width: '100%'}}>
+      <View
+        style={{width: '100%', paddingLeft: 50, backgroundColor: COLORS.red}}>
+        <Text style={styles.text}>Setting</Text>
+        <View>
+          <View
+            style={{display: 'flex', flexDirection: 'row', paddingBottom: 20}}>
+            <View>
+              <Image
+                style={styles.tinyLogo}
+                source={require('../assets/bg_login.png')}
+              />
+            </View>
 
-        <View style={style.detailsContainer}>
+            <View
+              style={{
+                paddingLeft: 20,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'flex-start',
+              }}>
+              <Text style={{fontSize: 15, color: 'white', fontWeight: 'bold'}}>
+                Jonas mike
+              </Text>
+              <Text style={{fontSize: 10, color: 'white', fontWeight: 'bold'}}>
+                EGYPT AL.EST USA
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row-reverse',
+          justifyContent: 'space-between',
+          paddingTop: 15,
+          alignItems: 'center',
+        }}>
+        <View style={{paddingRight: 20}}>
+          <Icon
+            style={{marginTop: 5}}
+            name="angle-right"
+            size={30}
+            color="#1F1F1F"
+          />
+        </View>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            paddingHorizontal: 20,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
           <View
             style={{
+              backgroundColor: '#7CD2F9',
+              borderRadius: 50,
+              width: 50,
+              height: 50,
               display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}>
-            <Image
-              style={{width: 100, height: 90, borderRadius: 100}}
-              source={require('../assets/person.jpg')}
-            />
-            <Text style={style.text}>Fill in the form </Text>
+            <Icon name="user" size={30} color="white" />
           </View>
-          <View style={style.bluebox}>
-            <Text style={style.blueboxtext}>
-              <Ionicons
-                name="information-circle-outline"
-                size={12}
-                style={{marginHorizontal: 3}}
-                color={COLORS.blue}
-              />
-              You have already sent an SettingScreen: 14th of July
-            </Text>
-          </View>
-          <FirstInput text="Name" />
-          <FirstInput text="Email Address" />
-          <FirstInput text="Mopile Phone" />
-          <TextArea text="Description" />
+          <Text style={{color: '#1F1F1F', paddingLeft: 20, marginTop: 5}}>
+            Change info
+          </Text>
         </View>
-      </ScrollView>
-      <View></View>
-    </SafeAreaView>
+      </View>
+
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row-reverse',
+          justifyContent: 'space-between',
+          paddingTop: 15,
+          alignItems: 'center',
+        }}>
+        <View style={{paddingRight: 20}}>
+          <Icon
+            style={{marginTop: 5}}
+            name="angle-right"
+            size={30}
+            color="#1F1F1F"
+          />
+        </View>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            paddingHorizontal: 20,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <View
+            style={{
+              backgroundColor: '#FF8A65',
+              borderRadius: 50,
+              width: 50,
+              height: 50,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Icon name="bluetooth-b" size={30} color="white" />
+          </View>
+          <Text style={{color: '#1F1F1F', paddingLeft: 20, marginTop: 5}}>
+            Change Password
+          </Text>
+        </View>
+      </View>
+
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row-reverse',
+          justifyContent: 'space-between',
+          paddingTop: 15,
+          alignItems: 'center',
+        }}>
+        <View style={{paddingRight: 20}}>
+          <Icon
+            style={{marginTop: 5}}
+            name="angle-right"
+            size={30}
+            color="#1F1F1F"
+          />
+        </View>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            paddingHorizontal: 20,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <View
+            style={{
+              backgroundColor: '#91A5AF',
+              borderRadius: 50,
+              width: 50,
+              height: 50,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Ionicons name="settings-outline" size={30} color="white" />
+          </View>
+          <Text style={{color: '#1F1F1F', paddingLeft: 20, marginTop: 5}}>
+            Setting
+          </Text>
+        </View>
+      </View>
+    </View>
   );
 };
 
-const style = StyleSheet.create({
-  headerBtn: {
-    height: 50,
-    width: 50,
-    backgroundColor: COLORS.white,
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 3,
-  },
-
-  detailsContainer: {
-    // flex: 1,
-    paddingHorizontal: 20,
-    marginTop: 30,
-    //  position: 'absolute',
-    // marginHorizontal:10,
-    backgroundColor: COLORS.white,
-    zIndex: 5,
-    width: '100%',
-    borderRadius: 25,
-    paddingTop: 20,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  bluebox: {
-    width: '85%',
-
-    backgroundColor: COLORS.backgroundblue,
-    borderRadius: 3,
-    marginVertical: 8,
-    paddingVertical: 3,
-  },
-  blueboxtext: {
-    color: COLORS.blue,
-    fontSize: 12,
-    marginHorizontal: 3,
-  },
-
+const styles = StyleSheet.create({
   container: {
-    // ...StyleSheet.absoluteFillObject,
-    //the container will fill the whole screen.
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    height: 200,
-  },
-
-  text: {
-    color: COLORS.dark,
-    fontWeight: 'bold',
-    fontSize: 18,
-    // width: '50%',
-    alignSelf: 'center',
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row',
-    marginBottom: 15,
+  },
+  tinyLogo: {
+    width: 75,
+    height: 75,
+    borderWidth: 3,
+    borderColor: 'white',
+    borderRadius: 50,
+  },
+  text: {
+    color: 'white',
+    fontSize: 30,
+    lineHeight: 80,
+    fontWeight: '100',
   },
 });
 
-export default SettingScreen;
+export default Setting;

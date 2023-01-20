@@ -12,6 +12,7 @@ import {QueryClient, QueryClientProvider} from 'react-query';
 import SignupScreen from './src/screens/SignUp';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AllStack from './src/Components/Navigation/AllStack';
+import AuthStack from './src/Components/Navigation/AuthStack';
 import {setuserInfo} from './src/Store/Message/MessageSlice';
 import {useSelector, useDispatch} from 'react-redux';
 
@@ -20,6 +21,7 @@ function App() {
   const [isAuth, setIsAuth] = useState(false);
   const [user, setuser] = useState(false);
   const [login, setLogin] = useState(false);
+  const {userInfo} = useSelector(state => state.userinfo);
 
   const [isRegister, setisRegister] = useState(false);
   const dispatch = useDispatch();
@@ -36,7 +38,7 @@ function App() {
   useEffect(() => {
     getAuth();
   }, []);
-  return <AllStack />;
+  return userInfo?.uid ? <AllStack /> : <AuthStack />;
 }
 
 export default App;

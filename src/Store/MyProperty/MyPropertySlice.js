@@ -4,10 +4,14 @@ const MyPropertySlice = createSlice({
   name: 'myproperties',
   initialState: {
     myproperties: [],
+    selectedProp: null,
   },
   reducers: {
     setmyproperties(state, action) {
-      state.data = action.payload;
+      state.myproperties = action.payload;
+    },
+    setselectedProp(state, action) {
+      state.selectedProp = action.payload;
     },
     // setHomeDetailedData(state, action) {
     //   state.Detailed = action.payload;
@@ -15,5 +19,5 @@ const MyPropertySlice = createSlice({
   },
 });
 
-export const {setmyproperties} = MyPropertySlice.actions;
+export const {setmyproperties, setselectedProp} = MyPropertySlice.actions;
 export default MyPropertySlice.reducer;

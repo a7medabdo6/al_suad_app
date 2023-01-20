@@ -58,7 +58,7 @@ export default function Example() {
         })
           .then(res => {
             if (res.data) {
-              console.log(res.data, 'err2');
+              // console.log(res.data, 'err2');
               refRBSheet.current.close();
               setPercentage(0);
               setpicName('');

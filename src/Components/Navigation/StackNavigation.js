@@ -10,9 +10,13 @@ import MyProperties from '../../screens/MyProperties';
 import CreateRequestScreen from '../../screens/CreateRequest';
 import Inquiry from '../../screens/Inquiry';
 import LogoTitle from '../Headers/LogoHeader';
+import {useSelector} from 'react-redux';
+import DetailsScreen from '../../screens/DetailsScreen';
 const Stack = createStackNavigator();
 
 export default function MyStack() {
+  const selectedProp = useSelector(state => state.MyProperties.selectedProp);
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -56,7 +60,11 @@ export default function MyStack() {
             height: 70,
           },
           headerTitle: props => (
-            <PaymentHeader {...props} title="My properties" />
+            <PaymentHeader
+              {...props}
+              title="My properties"
+              item={selectedProp}
+            />
           ),
           headerLeft: false,
           headerBackTitleVisible: false,
@@ -87,7 +95,16 @@ export default function MyStack() {
       />
       <Stack.Screen
         options={{
-          header: props => <LogoTitle {...props} />,
+          headerLeft: false,
+          headerBackTitleVisible: false,
+          headerShown: false,
+        }}
+        name="DetailsScreenInStack2"
+        component={DetailsScreen}
+      />
+      <Stack.Screen
+        options={{
+          header: props => <LogoTitle {...props}  item={selectedProp} />,
           headerLeft: false,
           headerBackTitleVisible: false,
           headerShown: true,

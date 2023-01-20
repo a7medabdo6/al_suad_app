@@ -140,7 +140,6 @@ function MyTabs() {
           headerStyle: {
             backgroundColor: COLORS.backgroundblue,
           },
-          headerTitle: props => <BasicHeader title={'Settings'} {...props} />,
           tabBarIcon: ({focused}) => {
             return (
               <Ionicons
@@ -152,7 +151,7 @@ function MyTabs() {
             );
           },
 
-          headerShown: true,
+          headerShown: false,
         }}
         name="settings"
         component={SettingScreen}

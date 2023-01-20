@@ -63,11 +63,11 @@ export default function HomeStack() {
             <BasicHeader
               {...props}
               title="Filters"
-              
               Icon={
                 <MaterialIcons
                   name="arrow-back-ios"
                   size={20}
+                  color="black"
                   // onPress={navigation.goBack}
                 />
               }

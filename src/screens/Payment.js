@@ -1,11 +1,13 @@
 import React from 'react';
 import {SafeAreaView, StatusBar, Dimensions, StyleSheet} from 'react-native';
+import {useSelector} from 'react-redux';
 import COLORS from '../consts/colors';
 
 import Tabs from './Tabs/index';
 const {width} = Dimensions.get('screen');
 
-const PaymentScreen = ({navigation}) => {
+const PaymentScreen = ({route, navigation}) => {
+  console.log(route.params, 'navigationnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn');
   return (
     <SafeAreaView
       style={{
@@ -20,14 +22,14 @@ const PaymentScreen = ({navigation}) => {
         backgroundColor={COLORS.white}
         barStyle="dark-content"
       />
-      
+
       {/* <View
         style={{
           width: '90%',
         }}>
         <PropertyCard />
       </View> */}
-      <Tabs />
+      <Tabs index={route.params.index} />
       {/* */}
     </SafeAreaView>
   );
