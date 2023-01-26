@@ -21,7 +21,7 @@ function App() {
   const [isAuth, setIsAuth] = useState(false);
   const [user, setuser] = useState(false);
   const [login, setLogin] = useState(false);
-  const {userInfo} = useSelector(state => state.userinfo);
+  const {userInfo, logout} = useSelector(state => state.userinfo);
 
   const [isRegister, setisRegister] = useState(false);
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ function App() {
   };
   useEffect(() => {
     getAuth();
-  }, []);
+  }, [logout]);
   return userInfo?.uid ? <AllStack /> : <AuthStack />;
 }
 

@@ -123,6 +123,7 @@ const useMyPropertyApi = data => {
 const useCreateVistApi = data => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const QueryClient = useQueryClient();
 
   return useMutation(CreateVist, {
     onSuccess: res => {
@@ -134,6 +135,7 @@ const useCreateVistApi = data => {
 
         navigation.push('SubmitInquiry');
         dispatch(setCreateVisit(res.data?.result));
+        // QueryClient.invalidateQueries('allMaintainence');
       }
       return res.data;
     },

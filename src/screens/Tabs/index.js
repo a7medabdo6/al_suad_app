@@ -25,6 +25,8 @@ import BottomSheet from '../../Components/Sheets/BottomSheet';
 import {useNavigation} from '@react-navigation/native';
 import NewBottomSheet from '../../Components/Sheets/NewBottomSheet';
 import {useMaintianenceApi, usePaymentsForTenantApi} from '../../apis/Home';
+import {useIsFocused} from '@react-navigation/native';
+
 import {useSelector} from 'react-redux';
 import Spinner from '../../Components/Spinner';
 const FirstRoute = () => {
@@ -73,6 +75,8 @@ const FirstRoute = () => {
 };
 const SecondRoute = () => {
   const {mutate: MaintianenceApi, isLoading} = useMaintianenceApi();
+  const IsFocused = useIsFocused();
+
   const userInfo = useSelector(state => state.userinfo.userInfo);
   const selectedProp = useSelector(state => state.MyProperties.selectedProp);
   const {Maintainence} = useSelector(state => state.Maintainence);
@@ -84,7 +88,7 @@ const SecondRoute = () => {
     });
 
     return () => {};
-  }, []);
+  }, [IsFocused]);
   // console.log(Maintainence, 'Maintainence');
 
   const [openModal, setOpenModal] = useState(false);
