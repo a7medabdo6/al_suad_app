@@ -2,6 +2,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import SuccessPaymentScreen from '../../screens/SuccessPayments';
 import PaymentMethod from '../../screens/PaymentMethod';
 import BasicHeader from '../Headers/BasicHeader';
+import ContactHeader from '../Headers/ContactHeader';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import PaymentScreen from '../../screens/Payment';
 import COLORS from '../../consts/colors';
@@ -12,6 +13,7 @@ import Inquiry from '../../screens/Inquiry';
 import LogoTitle from '../Headers/LogoHeader';
 import {useSelector} from 'react-redux';
 import DetailsScreen from '../../screens/DetailsScreen';
+import ContractDetails from '../../screens/ContractDetails';
 const Stack = createStackNavigator();
 
 export default function MyStack() {
@@ -75,6 +77,22 @@ export default function MyStack() {
       />
       <Stack.Screen
         options={{
+          headerStyle: {
+            backgroundColor: COLORS.white,
+            height: 70,
+          },
+          headerTitle: props => (
+            <ContactHeader {...props} title="Contract" item={selectedProp} />
+          ),
+          headerLeft: false,
+          headerBackTitleVisible: false,
+          headerShown: true,
+        }}
+        name="ContractDetails"
+        component={ContractDetails}
+      />
+      <Stack.Screen
+        options={{
           headerTitle: props => (
             <BasicHeader {...props} title="Payment Method" />
           ),
@@ -104,7 +122,7 @@ export default function MyStack() {
       />
       <Stack.Screen
         options={{
-          header: props => <LogoTitle {...props}  item={selectedProp} />,
+          header: props => <LogoTitle {...props} item={selectedProp} />,
           headerLeft: false,
           headerBackTitleVisible: false,
           headerShown: true,

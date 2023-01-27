@@ -76,7 +76,7 @@ export default function Example() {
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-      <BasicButton
+      {/* <BasicButton
         text="Upload"
         color={COLORS.blue}
         width={150}
@@ -88,7 +88,7 @@ export default function Example() {
             name="plus-circle-outline"
           />
         }
-      />
+      /> */}
       <RBSheet
         ref={refRBSheet}
         closeOnDragDown={true}

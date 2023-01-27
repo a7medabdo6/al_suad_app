@@ -4,7 +4,7 @@ import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
 import SheetCard from '../Cards/SheetCard';
 import {ScrollView} from 'react-native-gesture-handler';
-export default function App({openModal, sheetRef}) {
+export default function App({openModal, sheetRef,MaintainenceSelceted}) {
   const [open, setOpen] = React.useState(false);
   const handleOpenModal = () => {
     if (openModal) {
@@ -21,7 +21,7 @@ export default function App({openModal, sheetRef}) {
         padding: 16,
         height: 450,
       }}>
-      <SheetCard />
+      <SheetCard MaintainenceSelceted={MaintainenceSelceted}/>
     </View>
   );
 

@@ -40,7 +40,6 @@ const HomeScreen = ({route}) => {
   const navigation = useNavigation();
   const dontRefresh = route.params;
   useEffect(() => {
-    console.log(HomeData, 'HomeData');
     if (!userInfo) {
       // console.log(login, 'login');
       navigation.push('login');

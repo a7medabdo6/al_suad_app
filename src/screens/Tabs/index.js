@@ -80,6 +80,7 @@ const SecondRoute = () => {
   const userInfo = useSelector(state => state.userinfo.userInfo);
   const selectedProp = useSelector(state => state.MyProperties.selectedProp);
   const {Maintainence} = useSelector(state => state.Maintainence);
+  const [MaintainenceSelceted, setMaintainenceSelceted] = useState({});
   useEffect(() => {
     MaintianenceApi({
       partner_type: userInfo?.partner[0].is_tenant ? 'tenant' : 'owner',
@@ -122,6 +123,7 @@ const SecondRoute = () => {
               openModal={openModal}
               item={item}
               setOpenModal={setOpenModal}
+              setMaintainenceSelceted={setMaintainenceSelceted}
               handleOpenModal={handleOpenModal}
             />
           )}
@@ -152,6 +154,7 @@ const SecondRoute = () => {
           openModal={openModal}
           setOpenModal={setOpenModal}
           sheetRef={sheetRef}
+          MaintainenceSelceted={MaintainenceSelceted}
         />
       </View>
     </View>
@@ -167,8 +170,8 @@ const ThirdRoute = () => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{marginVertical: 10, marginHorizontal: 10}}
         vertical
-        data={houses}
-        renderItem={({item}) => <DocumentCard />}
+        data={selectedProp?.contract?.documents}
+        renderItem={({item}) => <DocumentCard item={item} />}
       />
 
       <BottomSheet />

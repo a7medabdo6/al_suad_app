@@ -12,6 +12,18 @@ import {useDispatch} from 'react-redux';
 const PropertyCard = ({item}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const Diff = () => {
+    const currentDate = new Date();
+    const futureDate = new Date(item?.contract.date_to);
+    // let day = date.getDate();
+    // let month = date.getMonth() + 1;
+    // let year = date.getFullYear();
+    // let currentDate = `${year}-${month}-${day}`;
+    const diffTime = Math.abs(futureDate - currentDate);
+    console.log(diffTime, 'diffTime');
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  };
   return (
     <View
       style={{
@@ -91,7 +103,7 @@ const PropertyCard = ({item}) => {
             color: COLORS.dark,
             fontWeight: '400',
           }}>
-          AED {item?.rent_value} / {item?.rent_type}
+          AED {item?.contract.total_value} / {item?.contract.rent_period_type}
         </Text>
       </View>
       <View
@@ -118,7 +130,7 @@ const PropertyCard = ({item}) => {
               color: COLORS.dark,
               fontWeight: '400',
             }}>
-            12/03/2023
+            {item?.contract.date_to}
           </Text>
         </View>
 
@@ -130,7 +142,7 @@ const PropertyCard = ({item}) => {
             alignItems: 'center',
           }}>
           <Text style={{color: COLORS.blue, marginHorizontal: 5}}>
-            Due in 122 day
+            Due in {Diff()} days
           </Text>
           <MaterialCommunityIcons
             color={COLORS.blue}

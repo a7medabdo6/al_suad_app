@@ -1,13 +1,35 @@
-import React from 'react';
-import {SafeAreaView, StatusBar, Dimensions, StyleSheet} from 'react-native';
-import {useSelector} from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {
+  SafeAreaView,
+  View,
+  StatusBar,
+  Text,
+  Dimensions,
+  StyleSheet,
+} from 'react-native';
 import COLORS from '../consts/colors';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useDispatch, useSelector} from 'react-redux';
 
-import Tabs from './Tabs/index';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native';
+
 const {width} = Dimensions.get('screen');
 
-const PaymentScreen = ({route, navigation}) => {
-  // console.log(route.params, 'navigationnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn');
+const ContractDetails = ({route, navigation}) => {
+  const selectedProp = useSelector(state => state.MyProperties.selectedProp);
+  const Diff = () => {
+    const currentDate = new Date();
+    const futureDate = new Date(selectedProp?.contract.date_to);
+    // let day = date.getDate();
+    // let month = date.getMonth() + 1;
+    // let year = date.getFullYear();
+    // let currentDate = `${year}-${month}-${day}`;
+    const diffTime = Math.abs(futureDate - currentDate);
+    console.log(diffTime, 'diffTime');
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  };
   return (
     <SafeAreaView
       style={{
@@ -22,15 +44,60 @@ const PaymentScreen = ({route, navigation}) => {
         backgroundColor={COLORS.white}
         barStyle="dark-content"
       />
+      <View style={style.card}>
+        <View style={{marginTop: 10}}>
+          {/* Title and price container */}
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'flex-start',
+              marginTop: 10,
+            }}>
+            <Text style={{fontSize: 12, fontWeight: '500', color: COLORS.dark}}>
+              {selectedProp?.contract?.name}
+            </Text>
+          </View>
 
-      {/* <View
-        style={{
-          width: '90%',
-        }}>
-        <PropertyCard />
-      </View> */}
-      <Tabs index={route.params.index} />
-      {/* */}
+          {/* Location text */}
+
+          <Text
+            style={{
+              color: COLORS.blue,
+              fontSize: 14,
+              marginTop: 5,
+              fontWeight: 'bold',
+            }}>
+            {selectedProp?.contract?.total_value} /{' '}
+            {selectedProp?.contract?.rent_period_type}
+          </Text>
+          <Text
+            style={{
+              color: COLORS.grey,
+              fontSize: 12,
+              marginTop: 5,
+              fontWeight: '500',
+              textAlign: 'left',
+            }}>
+            Contract End : {selectedProp?.contract?.date_to}
+          </Text>
+          {/* Facilities container */}
+          <View style={{flexDirection: 'column'}}>
+            <View style={style.bluebox}>
+              <Text style={style.blueboxtext}>
+                <Ionicons
+                  name="information-circle-outline"
+                  size={12}
+                  style={{marginHorizontal: 3}}
+                  color={COLORS.blue}
+                />
+                Due In {Diff()} Days
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View style={style.line}></View>
+      </View>
     </SafeAreaView>
   );
 };
@@ -66,7 +133,6 @@ const style = StyleSheet.create({
     marginLeft: 10,
   },
   optionsCard: {
-    height: 210,
     width: width / 2 - 30,
     elevation: 15,
     alignItems: 'center',
@@ -104,16 +170,16 @@ const style = StyleSheet.create({
     paddingHorizontal: 40,
   },
   card: {
-    height: 340,
     backgroundColor: COLORS.white,
     // elevation: 10,
-    width: width - 40,
-    marginRight: 20,
+    width: '90%',
     padding: 0,
-    borderRadius: 20,
+    // borderRadius: 20,
     // borderBottomColor: COLORS.dark,
     // borderWidth: 1,
     // borderColor: '#fff',
+    paddingHorizontal: 10,
+    marginVertical: 10,
   },
   cardImage: {
     width: '100%',
@@ -170,6 +236,7 @@ const style = StyleSheet.create({
     color: COLORS.blue,
     fontSize: 12,
     marginHorizontal: 3,
+    padding: 5,
   },
 });
-export default PaymentScreen;
+export default ContractDetails;

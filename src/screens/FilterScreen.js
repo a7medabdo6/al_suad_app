@@ -67,7 +67,7 @@ const FilterScreen = ({}) => {
     navigation.navigate('HomeInstak');
   };
   const allCities = async () => {
-    const res = await api.post('/api/generic/res.country.state', {});
+    const res = await api.post('/api/emirates_states_only', {});
     console.log(res.data, 'ressss');
     setCities(res.data.result);
   };

@@ -34,24 +34,15 @@ const Setting = () => {
           <View
             style={{display: 'flex', flexDirection: 'row', paddingBottom: 20}}>
             <View>
+              {console.log(userInfo.partner[0], 'userInfo.partner[0]')}
               <Image
                 style={styles.tinyLogo}
-                source={
-                  userInfo?.partner[0]
-                    ? {
-                        uri: `data:image/png;base64,${userInfo.partner[0].avatar_128}`,
-                      }
-                    : {
-                        uri: `data:image/png;base64,${userInfo.partner[0].avatar_128}`,
-                      }
-                }
+                source={{
+                  uri: `data:image/png;base64,${userInfo.partner[0].avatar_128}`,
+                }}
               />
             </View>
-            {console.log(
-              '=============================================================',
-              userInfo.partner[0].display_name,
-              'userInfo',
-            )}
+
             <View
               style={{
                 paddingLeft: 20,
@@ -59,17 +50,17 @@ const Setting = () => {
                 justifyContent: 'center',
                 alignItems: 'flex-start',
               }}>
-              <Text style={{fontSize: 15, color: 'white', fontWeight: 'bold'}}>
+              <Text style={{fontSize: 20, color: 'white', fontWeight: 'bold'}}>
                 {userInfo?.name}
               </Text>
-              <Text style={{fontSize: 10, color: 'white', fontWeight: 'bold'}}>
-                {userInfo?.partner[0].contact_address}
+              <Text style={{fontSize: 15, color: 'white', fontWeight: 'bold'}}>
+                {userInfo?.partner[0].email}
               </Text>
             </View>
           </View>
         </View>
       </View>
-
+      {/* 
       <View
         style={{
           display: 'flex',
@@ -194,7 +185,7 @@ const Setting = () => {
             Setting
           </Text>
         </View>
-      </View>
+      </View> */}
       {/***************************************/}
       <Pressable onPress={() => logout()}>
         <View

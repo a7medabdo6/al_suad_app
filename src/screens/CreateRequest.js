@@ -43,7 +43,7 @@ const CreateRequestScreen = () => {
 
   const callRquestTypes = async () => {
     try {
-      const result = await api.post('api/generic/helpdesk.ticket.type', {});
+      const result = await api.post('api/generic/maintenance.request.type', {});
       setRequestTypeData(result.data.result);
       // console.log(result, 'helpdesk');
     } catch (error) {

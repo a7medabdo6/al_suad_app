@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 import {ScrollView} from 'react-native-gesture-handler';
-const SheetCard = ({openModal, setOpenModal}) => {
+const SheetCard = ({openModal, setOpenModal, MaintainenceSelceted}) => {
   return (
     <View>
       <ScrollView>
@@ -17,7 +17,7 @@ const SheetCard = ({openModal, setOpenModal}) => {
           <View style={style.flexRowbtw}>
             <View style={style.flexcolstart2}>
               <Text style={{color: COLORS.dark, fontWeight: 'bold'}}>
-                MS0213
+                {MaintainenceSelceted?.name}
               </Text>
               <Text
                 style={{
@@ -25,7 +25,7 @@ const SheetCard = ({openModal, setOpenModal}) => {
                   fontWeight: '400',
                   fontWeight: 'bold',
                 }}>
-                10/01/2021
+                {MaintainenceSelceted?.request_date}
               </Text>
             </View>
 
@@ -50,7 +50,10 @@ const SheetCard = ({openModal, setOpenModal}) => {
                     marginHorizontal: 5,
                   }}>
                   <Text style={{color: COLORS.dark, fontWeight: 'bold'}}>
-                    Status : <Text style={{color: 'green'}}>Solved</Text>
+                    Status :{' '}
+                    <Text style={{color: 'green'}}>
+                      {MaintainenceSelceted?.stage_id?.[1]}
+                    </Text>
                   </Text>
                 </View>
                 <View
@@ -58,7 +61,11 @@ const SheetCard = ({openModal, setOpenModal}) => {
                     padding: 5,
                   }}>
                   <Text style={{color: COLORS.blue}}>
-                    Type : <Text>Electrical</Text>
+                    Type :{' '}
+                    <Text>
+                      {' '}
+                      {MaintainenceSelceted?.maintenance_request_type_id?.[1]}
+                    </Text>
                   </Text>
                 </View>
               </View>
@@ -66,59 +73,46 @@ const SheetCard = ({openModal, setOpenModal}) => {
           </View>
           <View
             style={{
-              borderColor: "#DCDCDC",
+              borderColor: '#DCDCDC',
               borderWidth: 2,
               borderRadius: 25,
               width: '100%',
               padding: 20,
             }}>
             <Text style={{marginVertical: 5}}>12/02/2021, 2:36 PM</Text>
-            <Text style={{marginBottom: 15,color:COLORS.dark}}>
-              Because of my late flight Hamila was very friendly for waiting for
-              me until I arrived. Checking in and out was easy with the code. I
-              personally prefer it over door keys.
+            <Text style={{marginBottom: 15, color: COLORS.dark}}>
+              {MaintainenceSelceted?.description}
             </Text>
-            <Text style={{color:COLORS.dark}}>
+            {/* <Text style={{color: COLORS.dark}}>
               I like the area in Peckham, it was nice and quite. Easy to grab
               busses close by anytime, but it takes around 30-40min to central
               of London.
-            </Text>
-            <Text
-              style={{
-                marginVertical: 15,
-                fontWeight: 'bold',
-                color: COLORS.dark,
-              }}>
-              Attachments
-            </Text>
+            </Text> */}
+            {MaintainenceSelceted?.attachments?.length > 0 && (
+              <Text
+                style={{
+                  marginVertical: 15,
+                  fontWeight: 'bold',
+                  color: COLORS.dark,
+                }}>
+                Attachments
+              </Text>
+            )}
+
             <View style={{display: 'flex', flexDirection: 'row'}}>
-              <Image
-                style={{
-                  width: 50,
-                  height: 50,
-                  borderRadius: 5,
-                  marginRight: 5,
-                }}
-                source={require('../../assets/house1.jpg')}
-              />
-              <Image
-                style={{
-                  width: 50,
-                  height: 50,
-                  borderRadius: 5,
-                  marginHorizontal: 5,
-                }}
-                source={require('../../assets/house1.jpg')}
-              />
-              <Image
-                style={{
-                  width: 50,
-                  height: 50,
-                  borderRadius: 5,
-                  marginHorizontal: 5,
-                }}
-                source={require('../../assets/house1.jpg')}
-              />
+              {MaintainenceSelceted?.attachments?.map(attach => {
+                return (
+                  <Image
+                    style={{
+                      width: 50,
+                      height: 50,
+                      borderRadius: 5,
+                      marginRight: 5,
+                    }}
+                    source={{uri: `data:image/png;base64,${attach.datas}`}}
+                  />
+                );
+              })}
             </View>
           </View>
           <View
@@ -129,7 +123,9 @@ const SheetCard = ({openModal, setOpenModal}) => {
               padding: 20,
               marginVertical: 20,
             }}>
-            <Text style={{marginVertical: 5,color:COLORS.grey}}>12/02/2021, 2:36 PM</Text>
+            <Text style={{marginVertical: 5, color: COLORS.grey}}>
+              {MaintainenceSelceted?.request_date}
+            </Text>
             <Text
               style={{
                 marginVertical: 15,
@@ -138,20 +134,11 @@ const SheetCard = ({openModal, setOpenModal}) => {
               }}>
               Tenant Feedback
             </Text>
-            <Text style={{marginBottom: 15}}>
-              The flat is located in a quiet and well-equipped neighborhood in
-              terms of transport.
-            </Text>
-            <Text style={{color:COLORS.dark}}>
-              There is no shortage of parks and places where you can eat and
-              it's about twenty minutes by bus from a supermarket, really easy
-              to reach.
-            </Text>
-            <Text style={{color:COLORS.dark}}>
-              They are very welcoming, the apartment is nice and kept in order:
-              what can I say I can only recommend this place, I hope to be back
-              soon.
-            </Text>
+            {MaintainenceSelceted?.comments?.map(comment => {
+              return (
+                <Text style={{color: COLORS.dark}}>{comment.description}</Text>
+              );
+            })}
           </View>
           <View style={{width: '95%', marginBottom: 50}}>
             <TextInput placeholder=" Write a message..." style={style.input} />
@@ -235,7 +222,7 @@ const style = StyleSheet.create({
     marginVertical: 10,
     backgroundColor: COLORS.white,
     paddingVertical: 5,
-    width: '85%',
+    width: '72%',
   },
   flexcolstart: {
     height: 'auto',
@@ -266,7 +253,7 @@ const style = StyleSheet.create({
     width: '100%',
     borderColor: '#DCDCDC',
     borderRadius: 8,
-    color:COLORS.grey
+    color: COLORS.grey,
   },
 });
 export default SheetCard;

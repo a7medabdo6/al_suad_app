@@ -62,7 +62,10 @@ const PaymentHeader = ({title, item}) => {
               }
             />
           </View>
-          <View>
+          <View
+            style={{
+              width: '80%',
+            }}>
             <Text style={{color: COLORS.blue, marginHorizontal: 5}}>
               {' '}
               {item?.name}
@@ -73,7 +76,7 @@ const PaymentHeader = ({title, item}) => {
             </Text>
           </View>
         </View>
-        <View>
+        {/* <View>
           <Pressable
             onPress={() => {
               // console.log('DetailsScreenInStackDetailsScreenInStack');
@@ -87,16 +90,15 @@ const PaymentHeader = ({title, item}) => {
               size={18}
             />
           </Pressable>
-        </View>
+        </View> */}
       </View>
       <View
         style={{
           borderBottomColor: 'black',
           borderBottomWidth: 1,
-          width: '90%',
+          width: '100%',
           opacity: 0.3,
           marginVertical: 10,
-          marginHorizontal: '5%',
         }}
       />
 

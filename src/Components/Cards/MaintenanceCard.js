@@ -13,12 +13,15 @@ import {
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import NewBottomSheet from '../Sheets/NewBottomSheet';
-const MaintenanceCard = ({openModal, setOpenModal, handleOpenModal, item}) => {
+const MaintenanceCard = ({openModal, setOpenModal, handleOpenModal, item,setMaintainenceSelceted}) => {
   const ScreenWidth = Dimensions.get('window').width;
 
   return (
     <Pressable
-      onPress={() => handleOpenModal()}
+      onPress={() => {
+        handleOpenModal()
+        setMaintainenceSelceted(item)
+      }}
       style={{
         width: ScreenWidth,
         display: 'flex',

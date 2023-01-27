@@ -5,7 +5,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-const DocumentCard = () => {
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
+const DocumentCard = ({item}) => {
   return (
     <View style={style.flexRowbtw}>
       <View
@@ -17,7 +19,11 @@ const DocumentCard = () => {
         }}>
         <View>
           <Text style={style.icon}>
-            <MaterialIcons name="photo" size={25} />
+            {/* <Image
+              style={{width: 15, height: 10}}
+              source={{uri: `data:image/png;base64,${item.datas}`}}
+            /> */}
+            <FontAwesome name="file-pdf-o" color="black" size={25} />
           </Text>
         </View>
         <View style={style.flexcolstart}>
@@ -27,7 +33,7 @@ const DocumentCard = () => {
               fontWeight: '200',
               fontWeight: 'bold',
             }}>
-            Passport
+            {item.name}
           </Text>
           <Text
             style={{
@@ -36,7 +42,7 @@ const DocumentCard = () => {
               fontWeight: 'bold',
               fontSize: 16,
             }}>
-            Passport.png
+            {/* {item.name} */}
           </Text>
         </View>
       </View>
@@ -51,15 +57,15 @@ const DocumentCard = () => {
           alignItems: 'center',
           width: '30%',
         }}>
-        <Text
+        {/* <Text
           style={{
             color: COLORS.red,
             fontWeight: '400',
             fontWeight: 'bold',
           }}>
           Expired
-        </Text>
-        <MaterialIcons name="close" color={COLORS.red} size={18} />
+        </Text> */}
+        {/* <MaterialIcons name="close" color={COLORS.red} size={18} /> */}
       </View>
     </View>
   );
