@@ -37,7 +37,7 @@ const Inquiry = ({route}) => {
   const [mobile, setmobile] = useState('');
   const [description, setdescription] = useState('');
 
-  const [flat, setflat] = useState(route.params.id);
+  const [flat, setflat] = useState(route?.params?.id);
   const {validate, isFieldInError, getErrorsInField, getErrorMessages} =
     useValidation({
       state: {email, name, mobile, description},
