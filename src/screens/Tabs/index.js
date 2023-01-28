@@ -63,8 +63,8 @@ const FirstRoute = () => {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{marginVertical: 10, marginHorizontal: 10}}
             vertical
-            data={houses}
-            renderItem={({item}) => <PaymentCard />}
+            data={Payments}
+            renderItem={({item}) => <PaymentCard Item={item}/>}
           />
         ) : (
           <Text style={{color: 'black', fontWeight: 'bold'}}>No Data</Text>
