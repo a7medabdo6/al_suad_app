@@ -50,7 +50,7 @@ export default function LogoTitle({item}) {
               marginHorizontal: 3,
             }}
             source={
-              item.image_128
+              item?.image_128
                 ? {
                     uri: `data:image/jpeg;base64,${HomeDetailedData.image_128}`,
                   }

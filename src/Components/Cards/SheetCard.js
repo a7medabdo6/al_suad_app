@@ -166,12 +166,14 @@ const SheetCard = ({openModal, setOpenModal, MaintainenceSelceted}) => {
             alignItems: 'center',
             display: 'flex',
             marginHorizontal: 5,
+            display: 'none',
           }}>
           <Text
             style={{
               fontWeight: 'bold',
               backgroundColor: COLORS.dark,
               color: COLORS.white,
+              display: 'none',
             }}>
             Not Yet
           </Text>
@@ -186,6 +188,7 @@ const SheetCard = ({openModal, setOpenModal, MaintainenceSelceted}) => {
             alignItems: 'center',
             display: 'flex',
             marginHorizontal: 5,
+            display: 'none',
           }}>
           <Text
             style={{
