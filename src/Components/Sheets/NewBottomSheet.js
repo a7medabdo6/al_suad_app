@@ -21,7 +21,7 @@ export default function App({openModal, sheetRef,MaintainenceSelceted}) {
         padding: 16,
         height: 450,
       }}>
-      <SheetCard MaintainenceSelceted={MaintainenceSelceted}/>
+      <SheetCard setOpen={setOpen} MaintainenceSelceted={MaintainenceSelceted}/>
     </View>
   );
 

@@ -7,9 +7,40 @@ import {
   Pressable,
   TextInput,
 } from 'react-native';
+import Toast from 'react-native-simple-toast';
 
 import {ScrollView} from 'react-native-gesture-handler';
-const SheetCard = ({openModal, setOpenModal, MaintainenceSelceted}) => {
+import {api} from '../../axios';
+import {useSelector} from 'react-redux';
+import {useState} from 'react';
+const SheetCard = ({
+  openModal,
+  setOpenModal,
+  MaintainenceSelceted,
+  setOpen,
+}) => {
+  const [comment, setcomment] = useState('');
+  const {userInfo} = useSelector(state => state.userinfo);
+  const [response, setresponse] = useState(false);
+
+  const Submit = async () => {
+    try {
+      const res = await api.post(`api/property_send_feed_back`, {
+        params: {
+          author_id: userInfo?.partner_id,
+          comment,
+          request_id: MaintainenceSelceted?.id,
+        },
+      });
+      Toast.show('Comments Sent Succefully.', Toast.LONG, {
+        backgroundColor: 'orange',
+      });
+      setresponse(res.data);
+      setOpen(false);
+    } catch (error) {
+      console.log(error.response, 'error');
+    }
+  };
   return (
     <View>
       <ScrollView>
@@ -141,7 +172,11 @@ const SheetCard = ({openModal, setOpenModal, MaintainenceSelceted}) => {
             })}
           </View>
           <View style={{width: '95%', marginBottom: 50}}>
-            <TextInput placeholder=" Write a message..." style={style.input} />
+            <TextInput
+              onChangeText={e => setcomment(e)}
+              placeholder=" Write a message..."
+              style={style.input}
+            />
           </View>
         </View>
       </ScrollView>
@@ -188,15 +223,15 @@ const SheetCard = ({openModal, setOpenModal, MaintainenceSelceted}) => {
             alignItems: 'center',
             display: 'flex',
             marginHorizontal: 5,
-            display: 'none',
-          }}>
+          }}
+          onPress={() => Submit()}>
           <Text
             style={{
               fontWeight: 'bold',
               backgroundColor: '#14AD2F',
               color: COLORS.white,
             }}>
-            Solved
+            Submit
           </Text>
         </Pressable>
       </View>
