@@ -15,7 +15,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {useNavigation} from '@react-navigation/native';
 const ScreenWidth = Dimensions.get('window').width;
 
-const PaymentCard = () => {
+const PaymentCard = ({Item}) => {
   const navigation = useNavigation();
 
   return (
@@ -26,13 +26,13 @@ const PaymentCard = () => {
       <View style={style.flexcolstart}>
         <View style={style.flexRowbtw}>
           <Text style={{color: COLORS.dark, fontWeight: 'bold'}}>
-            1st Payment
+           { Item?.name}
           </Text>
           {/* <Text style={{color: COLORS.blue, marginHorizontal: 5}}>Paid</Text> */}
 
           <View style={{marginHorizontal: 5}}>
             <Text style={{color: COLORS.grey, fontWeight: 'bold'}}>
-              10/01/2021
+              {Item?.date}
             </Text>
           </View>
         </View>
@@ -87,7 +87,7 @@ const PaymentCard = () => {
                   fontWeight: '400',
                   fontWeight: 'bold',
                 }}>
-                AED 3000.00
+                AED {Item?.amount}
               </Text>
             </View>
           </View>
