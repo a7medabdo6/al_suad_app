@@ -5,7 +5,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-const UserInfoCard = () => {
+import {useSelector} from 'react-redux';
+const UserInfoCard = ({Item}) => {
+  const {userInfo} = useSelector(state => state.userinfo);
+
   return (
     <View
       style={{
@@ -47,7 +50,7 @@ const UserInfoCard = () => {
               fontWeight: '400',
               fontSize: 14,
             }}>
-            Elton Williams
+            {userInfo?.name}
           </Text>
         </View>
       </View>
@@ -79,7 +82,7 @@ const UserInfoCard = () => {
               fontWeight: '400',
               fontSize: 14,
             }}>
-            2nd Payment
+            {Item?.name}
           </Text>
         </View>
       </View>
@@ -111,7 +114,7 @@ const UserInfoCard = () => {
               fontWeight: '400',
               fontSize: 14,
             }}>
-            Digital Payment
+            {Item?.description}
           </Text>
         </View>
       </View>
@@ -154,7 +157,8 @@ const UserInfoCard = () => {
               fontWeight: 'bold',
               fontSize: 16,
             }}>
-            3600.00 AED
+            {Item?.amount}
+            AED
           </Text>
         </View>
       </View>

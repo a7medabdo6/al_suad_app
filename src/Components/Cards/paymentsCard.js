@@ -26,7 +26,7 @@ const PaymentCard = ({Item}) => {
       <View style={style.flexcolstart}>
         <View style={style.flexRowbtw}>
           <Text style={{color: COLORS.dark, fontWeight: 'bold'}}>
-           { Item?.name}
+            {Item?.name}
           </Text>
           {/* <Text style={{color: COLORS.blue, marginHorizontal: 5}}>Paid</Text> */}
 
@@ -91,16 +91,21 @@ const PaymentCard = ({Item}) => {
               </Text>
             </View>
           </View>
-          <TouchableOpacity onPress={() => navigation.push('PaymentMethod')}>
-            <View
-              style={{
-                backgroundColor: COLORS.backgroundblue,
-                padding: 10,
-                borderRadius: 10,
-              }}>
-              <Text style={{color: COLORS.blue}}>Pay Now</Text>
-            </View>
-          </TouchableOpacity>
+          {Item?.state == 'draft' ? (
+            <TouchableOpacity
+              onPress={() => navigation.push('PaymentMethod', {Item})}>
+              <View
+                style={{
+                  backgroundColor: COLORS.backgroundblue,
+                  padding: 10,
+                  borderRadius: 10,
+                }}>
+                <Text style={{color: COLORS.blue}}>Pay Now</Text>
+              </View>
+            </TouchableOpacity>
+          ) : (
+            <Text style={{color: COLORS.red}}>{Item?.state}</Text>
+          )}
         </View>
       </View>
     </View>

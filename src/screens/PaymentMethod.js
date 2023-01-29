@@ -16,7 +16,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import BasicButton from '../Components/Buttons/BasicButton';
 const {width} = Dimensions.get('screen');
 import houses from '../consts/houses';
-const PaymentMethod = ({navigation}) => {
+const PaymentMethod = ({navigation, route}) => {
+  console.log(route.params, 'route.params;');
+  const {Item} = route.params;
   return (
     <SafeAreaView
       style={{
@@ -45,7 +47,7 @@ const PaymentMethod = ({navigation}) => {
           }}>
           Payment Details
         </Text>
-        <UserInfoCard />
+        <UserInfoCard Item={Item} />
         <BasicButton
           text="Pay"
           width={250}

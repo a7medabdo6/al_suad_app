@@ -167,7 +167,19 @@ const SheetCard = ({
             </Text>
             {MaintainenceSelceted?.comments?.map(comment => {
               return (
-                <Text style={{color: COLORS.dark}}>{comment.description}</Text>
+                <Text
+                  style={{
+                    color: COLORS.dark,
+                    borderColor: 'grey',
+                    borderWidth: 2,
+                    borderRadius: 5,
+                    marginVertical: 3,
+                    width: '100%',
+                    padding: 5,
+                    paddingHorizontal: 10,
+                  }}>
+                  {comment.description}
+                </Text>
               );
             })}
           </View>
