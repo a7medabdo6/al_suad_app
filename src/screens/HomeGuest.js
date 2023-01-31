@@ -28,10 +28,9 @@ import Skeleton from '../Components/Skeleton';
 import {setHomeDetailedData} from '../Store/HomeData/HomeSlice';
 import {api} from '../axios';
 
-const HomeScreen = ({route}) => {
+const HomeScreenGuest = ({route}) => {
   const {data, isLoading} = useHomeApi();
   const [AllLoved, setAllLoved] = useState([]);
-  const {userInfo} = useSelector(state => state.userinfo);
   const HomeData = useSelector(state => state.Home.data);
 
   const {DontMakeAnotherCall} = useSelector(state => state.Home);
@@ -39,12 +38,7 @@ const HomeScreen = ({route}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const dontRefresh = route.params;
-  useEffect(() => {
-    if (!userInfo) {
-      // console.log(login, 'login');
-      navigation.push('login');
-    }
-  }, [userInfo]);
+
   const handleHomeClick = house => {
     dispatch(setHomeDetailedData(house));
     navigation.push('DetailsScreenInStack');
@@ -68,7 +62,10 @@ const HomeScreen = ({route}) => {
   };
   const Card = ({house}) => {
     return (
-      <Pressable activeOpacity={0.8} onPress={() => handleHomeClick(house)}>
+      <Pressable
+        activeOpacity={0.8}
+        //  onPress={() => handleHomeClick(house)}
+      >
         <View style={style.card}>
           <View style={style.allIconflex}>
             <View style={style.allIcon}>
@@ -223,7 +220,7 @@ const HomeScreen = ({route}) => {
             {HomeData?.length} results
           </Text>
         </View>
-        <Pressable onPress={() => navigation.push('FilterScreen')}>
+        {/* <Pressable onPress={() => navigation.push('FilterScreen')}>
           <View style={style.sortBtn}>
             <Icon
               name="tune-variant"
@@ -237,7 +234,7 @@ const HomeScreen = ({route}) => {
               size={18}
             />
           </View>
-        </Pressable>
+        </Pressable> */}
       </View>
 
       {/* Render list options */}
@@ -409,4 +406,4 @@ const style = StyleSheet.create({
     marginHorizontal: 3,
   },
 });
-export default HomeScreen;
+export default HomeScreenGuest;

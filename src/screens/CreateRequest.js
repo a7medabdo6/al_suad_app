@@ -34,6 +34,9 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 const CreateRequestScreen = () => {
   const [RequestTypeData, setRequestTypeData] = useState([]);
   const [result, setResult] = React.useState('');
+  const [disable, setDisable] = React.useState(false);
+
+  
   const [name, setname] = useState('');
   const [type, settype] = useState('');
   const [allFilesdata, setallFilesdata] = React.useState([]);
@@ -96,6 +99,7 @@ const CreateRequestScreen = () => {
           },
         });
         if (res.data.result) {
+          setDisable(true)
           Toast.show('Request Created Succefully.', Toast.LONG, {
             backgroundColor: 'orange',
           });
@@ -333,7 +337,7 @@ const CreateRequestScreen = () => {
               })}
             </View>
 
-            <BasicButton text="Submit" width={155} onPress={callCreateReq} />
+            <BasicButton text="Submit" width={155} onPress={callCreateReq} disable={disable} />
           </View>
         </View>
       </ScrollView>

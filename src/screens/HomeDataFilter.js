@@ -28,28 +28,21 @@ import Skeleton from '../Components/Skeleton';
 import {setHomeDetailedData} from '../Store/HomeData/HomeSlice';
 import {api} from '../axios';
 
-const HomeScreen = ({route}) => {
+const HomeDataFilter = ({route}) => {
   const {data, isLoading} = useHomeApi();
   const [AllLoved, setAllLoved] = useState([]);
-  const {userInfo} = useSelector(state => state.userinfo);
   const HomeData = useSelector(state => state.Home.data);
 
   const {DontMakeAnotherCall} = useSelector(state => state.Home);
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const dontRefresh = route.params;
-  useEffect(() => {
-    if (!userInfo) {
-      // console.log(login, 'login');
-      navigation.push('login');
-    }
-  }, [userInfo]);
+  const {Data} = route.params;
+
   const handleHomeClick = house => {
     dispatch(setHomeDetailedData(house));
     navigation.push('DetailsScreenInStack');
   };
-  console.log(dontRefresh, 'dontRefresh');
 
   const HandleFavClick = async id => {
     setAllLoved(old => [...old, id]);
@@ -220,7 +213,7 @@ const HomeScreen = ({route}) => {
           {/* <Icon name="search" color={COLORS.grey} size={25} /> */}
           {/* <TextInput placeholder="Search address, city, location" /> */}
           <Text style={{fontWeight: '600', color: COLORS.dark, fontSize: 14}}>
-            {HomeData?.length} results
+            {Data?.length} results
           </Text>
         </View>
         <Pressable onPress={() => navigation.push('FilterScreen')}>
@@ -255,13 +248,13 @@ const HomeScreen = ({route}) => {
           width: '100%',
           display: 'flex',
         }}>
-        {HomeData.length > 0 ? (
+        {Data.length > 0 ? (
           <FlatList
             snapToInterval={width - 20}
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
             vertical
-            data={HomeData}
+            data={Data}
             renderItem={({item}) => <Card house={item} />}
           />
         ) : (
@@ -409,4 +402,4 @@ const style = StyleSheet.create({
     marginHorizontal: 3,
   },
 });
-export default HomeScreen;
+export default HomeDataFilter;

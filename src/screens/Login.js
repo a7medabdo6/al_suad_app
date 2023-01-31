@@ -188,19 +188,21 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
               </Text>
             </Pressable>
           </View>
-          <View style={style.bluebox}>
-            <View style={style.blueboxtext}>
-              <Ionicons
-                name="home-outline"
-                size={15}
-                style={{marginRight: 5}}
-                color={COLORS.blue}
-              />
-              <Text color={COLORS.blue} style={style.margin}>
-                Explore Properties as a Guest
-              </Text>
+          <Pressable onPress={() => navigation.push('HomeScreenGuest')}>
+            <View style={style.bluebox}>
+              <View style={style.blueboxtext}>
+                <Ionicons
+                  name="home-outline"
+                  size={15}
+                  style={{marginRight: 5}}
+                  color={COLORS.blue}
+                />
+                <Text color={COLORS.blue} style={style.margin}>
+                  Explore Properties as a Guest
+                </Text>
+              </View>
             </View>
-          </View>
+          </Pressable>
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -4,6 +4,8 @@ import PaymentMethod from '../../screens/PaymentMethod';
 import BasicHeader from '../Headers/BasicHeader';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import HomeScreen from '../../screens/Home';
+import HomeDataFilter from '../../screens/HomeDataFilter';
+
 import DetailsScreen from '../../screens/DetailsScreen';
 import Inquiry from '../../screens/Inquiry';
 import SubmitInquiry from '../../screens/SubmitInquiry';
@@ -21,6 +23,14 @@ export default function HomeStack() {
         name="HomeInstak"
         component={HomeScreen}
       />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name="HomeDataFilter"
+        component={HomeDataFilter}
+      />
+
       <Stack.Screen
         options={{
           headerLeft: false,

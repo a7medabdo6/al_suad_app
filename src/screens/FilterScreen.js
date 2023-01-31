@@ -36,12 +36,14 @@ const FilterScreen = ({}) => {
   const [high, setHigh] = useState(100000);
   const [room_no, setroom_no] = useState(0);
   const [Cities, setCities] = useState([]);
+  const [areas, setareas] = useState([]);
 
   const [isLoading, setisLoading] = useState(false);
   const [isLoadingReset, setisLoadingReset] = useState(false);
 
   const [state_id, setstate_id] = useState(1);
-
+  const [area_id, setarea_id] = useState(1);
+  const [value, onChangeText] = React.useState('Useless Multiline Placeholder');
   const navigation = useNavigation();
   const renderThumb = useCallback(() => <Thumb />, []);
   const renderRail = useCallback(() => <Rail />, []);
@@ -68,14 +70,28 @@ const FilterScreen = ({}) => {
   };
   const allCities = async () => {
     const res = await api.post('/api/emirates_states_only', {});
-    console.log(res.data, 'ressss');
     setCities(res.data.result);
+  };
+  const allAreas = async () => {
+    const res = await api.post('/api/emirates_areas', {
+      params: {
+        state_id: state_id,
+      },
+    });
+    console.log(res.data, 'area area ');
+    setareas(res.data.result);
   };
   useEffect(() => {
     allCities();
 
     return () => {};
   }, []);
+  useEffect(() => {
+    if (Cities.length > 0) {
+      allAreas();
+    }
+    return () => {};
+  }, [state_id]);
 
   const getFilters = async () => {
     setisLoading(true);
@@ -85,16 +101,17 @@ const FilterScreen = ({}) => {
         price_from: low,
         room_no,
         state_id,
+        area_id,
       },
     });
     // console.log(res.data, 'ressss');
     if (res) {
       setisLoading(false);
     }
-    dispatch(setHomeData(res.data.result));
-    dispatch(setDontMakeAnotherCall(true));
+    // dispatch(setHomeData(res.data.result));
+    // dispatch(setDontMakeAnotherCall(true));
 
-    navigation.push('HomeInstak');
+    navigation.push('HomeDataFilter', {Data: res.data.result});
   };
   return (
     <SafeAreaView
@@ -147,41 +164,26 @@ const FilterScreen = ({}) => {
                 Type="Select City"
                 settype={setstate_id}
               />
-              {/* {Cities.map(item => {
-                return (
-                  <Text
-                    style={{
-                      padding: 15,
-                      borderRadius: 10,
-                      backgroundColor: COLORS.backgroundblue,
-                      color: COLORS.blue,
-                      width: 100,
-                      borderColor: '#185894',
-                      fontWeight: 'bold',
-                      borderWidth: 2,
-                      marginHorizontal: 5,
-                      textAlign: 'center',
-                    }}>
-                    Dubai
-                  </Text>
-                );
-              })} */}
-              {/* 
-              <Text
-                style={{
-                  marginHorizontal: 5,
-                  padding: 15,
-                  borderRadius: 10,
-                  backgroundColor: COLORS.white,
-                  color: COLORS.blue,
-                  width: 100,
-                  borderColor: COLORS.grey,
-                  fontWeight: 'bold',
-                  borderWidth: 1,
-                  textAlign: 'center',
-                }}>
-                Abudhabi
-              </Text> */}
+            </View>
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: 'bold',
+                marginTop: 20,
+                marginBottom: 10,
+                color: COLORS.dark,
+              }}>
+              Area
+            </Text>
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                flexWrap: 'wrap',
+                width: '100%',
+              }}>
+              <SelectBox data={areas} Type="Select Area" settype={setarea_id} />
             </View>
             {/* <Text
               style={{
@@ -315,7 +317,14 @@ const FilterScreen = ({}) => {
                   marginTop: 30,
                   marginBottom: 20,
                 }}>
-                <Text
+                <TextInput
+                  editable
+                  multiline
+                  numberOfLines={1}
+                  maxLength={40}
+                  keyboardType="numeric"
+                  onChangeText={text => setLow(text)}
+                  value={low}
                   style={{
                     marginHorizontal: 5,
                     padding: 10,
@@ -326,10 +335,29 @@ const FilterScreen = ({}) => {
                     borderColor: COLORS.grey,
                     fontWeight: 'bold',
                     borderWidth: 1,
-                  }}>
-                  {low}
-                </Text>
-                <Text
+                  }}
+                />
+                <TextInput
+                  editable
+                  multiline
+                  numberOfLines={1}
+                  maxLength={40}
+                  keyboardType="numeric"
+                  onChangeText={text => setHigh(text)}
+                  value={high}
+                  style={{
+                    marginHorizontal: 5,
+                    padding: 10,
+                    borderRadius: 10,
+                    backgroundColor: COLORS.white,
+                    color: COLORS.dark,
+                    width: 120,
+                    borderColor: COLORS.grey,
+                    fontWeight: 'bold',
+                    borderWidth: 1,
+                  }}
+                />
+                {/* <Text
                   style={{
                     marginHorizontal: 5,
                     padding: 10,
@@ -342,7 +370,7 @@ const FilterScreen = ({}) => {
                     borderWidth: 1,
                   }}>
                   {high}
-                </Text>
+                </Text> */}
               </View>
             </View>
             {/* <Text
@@ -418,7 +446,21 @@ const FilterScreen = ({}) => {
                 flexDirection: 'row',
                 justifyContent: 'flex-start',
               }}>
-              <Pressable onPress={() => setroom_no(1)}>
+              <SelectBox
+                data={[
+                  {id: 1, name: '+1'},
+                  {id: 2, name: '+2'},
+                  {id: 3, name: '+3'},
+                  {id: 4, name: '+4'},
+                  {id: 5, name: '+5'},
+                  {id: 6, name: '+6'},
+                  {id: 7, name: '+7'},
+                ]}
+                Type="Select Bedrooms"
+                settype={setarea_id}
+              />
+
+              {/* <Pressable onPress={() => setroom_no(1)}>
                 <Text
                   style={{
                     padding: 15,
@@ -505,7 +547,7 @@ const FilterScreen = ({}) => {
                   }}>
                   <Text>+4</Text>
                 </Text>
-              </Pressable>
+              </Pressable> */}
             </View>
             <View
               style={{

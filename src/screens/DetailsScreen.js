@@ -301,6 +301,7 @@ const DetailsScreen = ({route}) => {
                               marginHorizontal: 4,
                             }}>
                             {e}
+                            {console.log(e, 'eeeeeeee')}
                           </Text>
                         </View>
                       );

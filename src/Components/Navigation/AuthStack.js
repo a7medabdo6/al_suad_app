@@ -13,6 +13,8 @@ import LogoTitle from '../Headers/LogoHeader';
 import LoginScreen from '../../screens/Login';
 import MyTabs from './BottomStackNavigaion';
 import SignupScreen from '../../screens/SignUp';
+import HomeScreenGuest from '../../screens/HomeGuest';
+import FilterScreen from '../../screens/FilterScreen';
 const Stack = createStackNavigator();
 
 export default function MyStack() {
@@ -43,6 +45,34 @@ export default function MyStack() {
         }}
         name="signup"
         component={SignupScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.white,
+            height: 70,
+          },
+
+          headerLeft: false,
+          headerBackTitleVisible: false,
+          headerShown: false,
+        }}
+        name="HomeScreenGuest"
+        component={HomeScreenGuest}
+      />
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.white,
+            height: 70,
+          },
+
+          headerLeft: false,
+          headerBackTitleVisible: false,
+          headerShown: false,
+        }}
+        name="FilterScreen"
+        component={FilterScreen}
       />
     </Stack.Navigator>
   );
