@@ -15,6 +15,7 @@ import MyTabs from './BottomStackNavigaion';
 import SignupScreen from '../../screens/SignUp';
 import HomeScreenGuest from '../../screens/HomeGuest';
 import FilterScreen from '../../screens/FilterScreen';
+import ResetPassword from '../../screens/ResetPassword';
 const Stack = createStackNavigator();
 
 export default function MyStack() {
@@ -73,6 +74,20 @@ export default function MyStack() {
         }}
         name="FilterScreen"
         component={FilterScreen}
+      />
+       <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.white,
+            height: 70,
+          },
+
+          headerLeft: false,
+          headerBackTitleVisible: false,
+          headerShown: false,
+        }}
+        name="ResetPassword"
+        component={ResetPassword}
       />
     </Stack.Navigator>
   );

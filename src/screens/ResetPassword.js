@@ -17,6 +17,8 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 // import Toast from 'react-native-toast-message';
+import Toast from 'react-native-simple-toast';
+import {api} from '../axios';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useValidation} from 'react-native-form-validator';
@@ -26,15 +28,23 @@ import BasicButton from '../Components/Buttons/BasicButton';
 const {width} = Dimensions.get('screen');
 import {useLoginApi} from '../apis/Auth/index';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
-  const [email, setEmail] = useState(null);
-  const [password, setpassword] = useState(null);
+import {setEnabled} from 'react-native/libraries/performance/systrace';
+const ResetPassword = ({
+  navigation,
+  route,
+  setIsAuth,
+  isAuth,
+  setisRegister,
+}) => {
+  const [resetPassword, setResetPassword] = useState(null);
+  const [isLoading, setisLoading] = useState(false);
   const isFocused = useIsFocused();
 
-  const {mutate: LoginApi, isLoading} = useLoginApi();
+  const [error, setError] = useState(false);
+
   const {validate, isFieldInError, getErrorsInField, getErrorMessages} =
     useValidation({
-      state: {email, password},
+      state: {resetPassword},
     });
   // const showToast = () => {
   //   Toast.show({
@@ -48,46 +58,36 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
   const {userInfo} = useSelector(state => state.userinfo);
 
   const HandleLogin = async event => {
-    validate({
-      password: {required: true, minlength: 5},
-      email: {required: true, minlength: 5},
-    });
-
     // console.log(getErrorMessages());
-    if (getErrorMessages()) {
-      return;
-    } else {
-      const result = await LoginApi({email, password});
-      // showToast();
-    }
-    // setIsAuth(!isAuth);
   };
-  const getMyObject = async () => {
+  const HandleReset = async () => {
+    setisLoading(true);
+    // validate({
+    //   resetPassword: {required: true, minlength: 1},
+    // });
     try {
-      const jsonValue = await AsyncStorage.getItem('User');
-      // console.log(JSON.parse(jsonValue), 'JSON.parse(jsonValue)');
-      setLogin(JSON.parse(jsonValue));
-      setrefresh(!refresh);
-      return JSON.parse(jsonValue);
-    } catch (e) {
-      // read error
-    }
+      const res = await api.post('/api/reset_password', {
+        params: {
+          login: resetPassword,
+        },
+      });
 
-    // console.log('Done.');
+      if (res) {
+        setisLoading(false);
+
+        Toast.show('Email sent Succefully.', Toast.LONG, {
+          backgroundColor: 'orange',
+        });
+      }
+      // setTimeout(() => {
+      //   setisLoading(false);
+      // }, 500);
+      navigation.navigate('login');
+    } catch (error) {
+      console.log(error);
+    }
   };
-
-  useEffect(() => {
-    getMyObject();
-  }, []);
-  useEffect(() => {
-    if (userInfo?.uid) {
-      // console.log(login, 'login');
-      navigation.push('main');
-    }
-  }, [login, userInfo, navigation, isFocused]);
-  // useEffect(() => {
-  //   navigation.push('main');
-  // }, [navigation]);
+  useEffect(() => {}, []);
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
@@ -109,12 +109,11 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
             style={{marginVertical: 10}}
             source={require('../assets/logo.png')}
           />
-          <Text style={style.text}>Login to manage </Text>
-          <Text style={style.text}> and explore properties</Text>
+          <Text style={style.text}>Reset Password </Text>
           <FirstInput
-            text="Email addres"
-            value={email}
-            fun={e => setEmail(e)}
+            text="Email address"
+            value={resetPassword}
+            fun={e => setResetPassword(e)}
             Icon={
               <Ionicons
                 name="at"
@@ -124,61 +123,30 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
               />
             }
           />
-          {isFieldInError('email') &&
-            getErrorsInField('email').map(errorMessage => (
+          {isFieldInError('resetPassword') &&
+            getErrorsInField('resetPassword').map(errorMessage => (
               <Text key={errorMessage} style={{color: 'red'}}>
                 {errorMessage}
               </Text>
             ))}
-          <FirstInput
-            text="password"
-            value={password}
-            fun={e => setpassword(e)}
-            Icon={
-              <Ionicons
-                name="lock-closed-outline"
-                size={25}
-                style={{marginHorizontal: 7}}
-                color={COLORS.red}
-              />
-            }
-          />
-          {isFieldInError('password') &&
-            getErrorsInField('password').map(errorMessage => (
-              <Text key={errorMessage} style={{color: 'red'}}>
-                {errorMessage}
-              </Text>
-            ))}
-          <Text style={{color: 'red'}}>
-            {userInfo && userInfo == 'Invalid credentials.' ? userInfo : null}
-          </Text>
+          {error && (
+            <Text style={{color: 'red'}}>Please Enter Your Email!</Text>
+          )}
 
           <BasicButton
             text={
               isLoading ? (
                 <ActivityIndicator size="large" color="white" />
               ) : (
-                'Login'
+                'Reset'
               )
             }
-            onPress={() => HandleLogin()}
+            disable={!resetPassword}
+            onPress={() => HandleReset()}
           />
-          <Pressable onPress={() => navigation.push('ResetPassword')}>
-            <View>
-              <Text
-                style={{
-                  color: COLORS.dark,
-                  fontWeight: 'bold',
-                  fontSize: 16,
-                  textDecorationLine: 'underline',
-                }}>
-                Forgot password?
-              </Text>
-            </View>
-          </Pressable>
 
           <View>
-            <Pressable onPress={() => navigation.push('signup')}>
+            <Pressable onPress={() => navigation.push('login')}>
               <Text
                 style={{
                   color: COLORS.dark,
@@ -186,25 +154,10 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
                   fontSize: 16,
                   textDecorationLine: 'underline',
                 }}>
-                Register?
+                Signin?
               </Text>
             </Pressable>
           </View>
-          <Pressable onPress={() => navigation.push('HomeScreenGuest')}>
-            <View style={style.bluebox}>
-              <View style={style.blueboxtext}>
-                <Ionicons
-                  name="home-outline"
-                  size={15}
-                  style={{marginRight: 5}}
-                  color={COLORS.blue}
-                />
-                <Text color={COLORS.blue} style={style.margin}>
-                  Explore Properties as a Guest
-                </Text>
-              </View>
-            </View>
-          </Pressable>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -357,4 +310,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default ResetPassword;
