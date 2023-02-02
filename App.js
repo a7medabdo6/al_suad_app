@@ -15,6 +15,7 @@ import AllStack from './src/Components/Navigation/AllStack';
 import AuthStack from './src/Components/Navigation/AuthStack';
 import {setuserInfo} from './src/Store/Message/MessageSlice';
 import {useSelector, useDispatch} from 'react-redux';
+import SplashScreen from 'react-native-splash-screen';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -35,6 +36,12 @@ function App() {
     }
     return parsedUser;
   };
+  useEffect(() => {
+    SplashScreen.hide();
+
+    return () => {};
+  }, []);
+
   useEffect(() => {
     getAuth();
   }, [logout]);

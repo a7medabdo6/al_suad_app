@@ -154,7 +154,7 @@ const HomeDataFilter = ({route}) => {
                   <Text style={style.facilityText}>{house.area} ft2</Text>
                 </View>
               </View>
-              <View style={style.bluebox}>
+              {/* <View style={style.bluebox}>
                 <Text style={style.blueboxtext}>
                   <Ionicons
                     name="information-circle-outline"
@@ -164,7 +164,7 @@ const HomeDataFilter = ({route}) => {
                   />
                   You have already sent an Inquiry: 14th of July
                 </Text>
-              </View>
+              </View> */}
             </View>
           </View>
           <View style={style.line}></View>
@@ -248,7 +248,7 @@ const HomeDataFilter = ({route}) => {
           width: '100%',
           display: 'flex',
         }}>
-        {Data.length > 0 ? (
+        {Data?.length > 0 ? (
           <FlatList
             snapToInterval={width - 20}
             showsHorizontalScrollIndicator={false}

@@ -75,7 +75,7 @@ const Inquiry = ({route}) => {
 
         <View style={style.detailsContainer}>
           <Text style={style.text}>Fill in the form </Text>
-          <View style={style.bluebox}>
+          {/* <View style={style.bluebox}>
             <Text style={style.blueboxtext}>
               <Ionicons
                 name="information-circle-outline"
@@ -85,7 +85,7 @@ const Inquiry = ({route}) => {
               />
               You have already sent an Inquiry: 14th of July
             </Text>
-          </View>
+          </View> */}
           <FirstInput text="Name" value={name} fun={e => setname(e)} />
           {isFieldInError('name') &&
             getErrorsInField('name').map(errorMessage => (

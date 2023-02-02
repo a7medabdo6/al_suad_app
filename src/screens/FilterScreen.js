@@ -42,6 +42,9 @@ const FilterScreen = ({}) => {
   const [isLoadingReset, setisLoadingReset] = useState(false);
 
   const [state_id, setstate_id] = useState(1);
+  const [bath_id, setBath_id] = useState(1);
+
+  
   const [area_id, setarea_id] = useState(1);
   const [value, onChangeText] = React.useState('Useless Multiline Placeholder');
   const navigation = useNavigation();
@@ -102,6 +105,7 @@ const FilterScreen = ({}) => {
         room_no,
         state_id,
         area_id,
+        bathroom_no:bath_id
       },
     });
     // console.log(res.data, 'ressss');
@@ -460,94 +464,39 @@ const FilterScreen = ({}) => {
                 settype={setarea_id}
               />
 
-              {/* <Pressable onPress={() => setroom_no(1)}>
-                <Text
-                  style={{
-                    padding: 15,
-                    borderRadius: 10,
-                    backgroundColor:
-                      room_no == 1 ? COLORS.backgroundblue : 'white',
-                    color: room_no == 1 ? COLORS.blue : COLORS.dark,
-                    borderColor: room_no == 1 ? '#185894' : COLORS.grey,
-                    fontWeight: 'bold',
-                    borderWidth: 1,
-                    marginHorizontal: 5,
-                    textAlign: 'center',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    alignSelf: 'center',
-                    alignContent: 'center',
-                  }}>
-                  <Text>+1</Text>
-                </Text>
-              </Pressable>
-              <Pressable onPress={() => setroom_no(2)}>
-                <Text
-                  style={{
-                    padding: 15,
-                    borderRadius: 10,
-                    backgroundColor:
-                      room_no == 2 ? COLORS.backgroundblue : 'white',
-                    color: room_no == 2 ? COLORS.blue : COLORS.dark,
-                    borderColor: room_no == 2 ? '#185894' : COLORS.grey,
-                    fontWeight: 'bold',
-                    borderWidth: 1,
-                    marginHorizontal: 5,
-                    textAlign: 'center',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    alignSelf: 'center',
-                    alignContent: 'center',
-                  }}>
-                  <Text>+2</Text>
-                </Text>
-              </Pressable>
-              <Pressable onPress={() => setroom_no(3)}>
-                <Text
-                  style={{
-                    padding: 15,
-                    borderRadius: 10,
-                    backgroundColor:
-                      room_no == 3 ? COLORS.backgroundblue : 'white',
-                    color: room_no == 3 ? COLORS.blue : COLORS.dark,
-                    borderColor: room_no == 3 ? '#185894' : COLORS.grey,
-                    fontWeight: 'bold',
-                    borderWidth: 1,
-                    marginHorizontal: 5,
-                    textAlign: 'center',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    alignSelf: 'center',
-                    alignContent: 'center',
-                  }}>
-                  <Text>+3</Text>
-                </Text>
-              </Pressable>
-              <Pressable onPress={() => setroom_no(4)}>
-                <Text
-                  style={{
-                    padding: 15,
-                    borderRadius: 10,
-                    backgroundColor:
-                      room_no == 4 ? COLORS.backgroundblue : 'white',
-                    color: room_no == 4 ? COLORS.blue : COLORS.dark,
-                    borderColor: room_no == 4 ? '#185894' : COLORS.grey,
-                    fontWeight: 'bold',
-                    borderWidth: 1,
-                    marginHorizontal: 5,
-                    textAlign: 'center',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    alignSelf: 'center',
-                    alignContent: 'center',
-                  }}>
-                  <Text>+4</Text>
-                </Text>
-              </Pressable> */}
+           
+            </View>
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: 'bold',
+                marginTop: 20,
+                marginBottom: 10,
+                color: COLORS.dark,
+              }}>
+              Bathrooms
+            </Text>
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+              }}>
+              <SelectBox
+                data={[
+                  {id: 1, name: '+1'},
+                  {id: 2, name: '+2'},
+                  {id: 3, name: '+3'},
+                  {id: 4, name: '+4'},
+                  {id: 5, name: '+5'},
+                  {id: 6, name: '+6'},
+                  {id: 7, name: '+7'},
+                ]}
+                Type="Select Bathrooms"
+                settype={setBath_id}
+              />
+
+           
             </View>
             <View
               style={{

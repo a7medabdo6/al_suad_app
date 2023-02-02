@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ImageBackground,
   SafeAreaView,
@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import AnimatedCorner from '../Components/Buttons/AnimatedCorner';
 import {useDispatch, useSelector} from 'react-redux';
+import openMap from 'react-native-open-maps';
 
 import MapView, {Marker} from 'react-native-maps';
 
@@ -24,16 +25,20 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 
 import COLORS from '../consts/colors';
+import {Button} from 'react-native';
 const {width} = Dimensions.get('screen');
 const DetailsScreen = ({route}) => {
   const navigation = useNavigation();
   const HomeDetailedData = useSelector(state => state.Home.Detailed);
-  // useEffect(() => {
-  //   console.log(HomeDetailedData, 'HomeDetailedData');
-
-  //   return () => {};
-  // }, [HomeDetailedData]);
-
+  const [arr, setArr] = useState([]);
+  useEffect(() => {
+    var str = HomeDetailedData?.amenities_compile;
+    setArr(str);
+    return () => {};
+  }, [HomeDetailedData]);
+  const HandleMap = () => {
+    openMap({latitude: 37.865101, longitude: -119.53833});
+  };
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -163,7 +168,7 @@ const DetailsScreen = ({route}) => {
                     </Text>
                   </View>
                 </View>
-                <View style={style.bluebox}>
+                {/* <View style={style.bluebox}>
                   <Text style={style.blueboxtext}>
                     <Ionicons
                       name="information-circle-outline"
@@ -173,7 +178,7 @@ const DetailsScreen = ({route}) => {
                     />
                     You have already sent an Inquiry: 14th of July
                   </Text>
-                </View>
+                </View> */}
               </View>
             </View>
             <View style={style.line}></View>
@@ -232,20 +237,26 @@ const DetailsScreen = ({route}) => {
                   {HomeDetailedData?.building_id?.[1]} -
                   {HomeDetailedData?.state_id?.[1]}
                 </Text>
-                <View style={style.container}>
-                  {/*Render our MapView*/}
-
-                  <MapView
-                    style={style.map}
-                    //specify our coordinates.
-                    initialRegion={{
-                      latitude: 37.78825,
-                      longitude: -122.4324,
-                      latitudeDelta: 0.0922,
-                      longitudeDelta: 0.0421,
-                    }}
-                  />
-                </View>
+                <Pressable onPress={() => HandleMap()}>
+                  <View style={style.container}>
+                    {/*Render our MapView*/}
+                    <Button
+                      color={COLORS.red}
+                      onPress={HandleMap}
+                      title="Click To Open The Location 🗺"
+                    />
+                    {/* <MapView
+                      style={style.map}
+                      //specify our coordinates.
+                      initialRegion={{
+                        latitude: 37.78825,
+                        longitude: -122.4324,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421,
+                      }}
+                    /> */}
+                  </View>
+                </Pressable>
               </View>
             </View>
             <View style={style.line}></View>
@@ -278,8 +289,16 @@ const DetailsScreen = ({route}) => {
                     flexWrap: 'wrap',
                     marginVertical: 5,
                   }}>
+                  {console.log(
+                    arr.length,
+                    typeof arr,
+                    arr,
+
+                    'JSON.parse(HomeDetailedData?.amenities_compile)',
+                  )}
                   {HomeDetailedData?.amenities_compile &&
-                    HomeDetailedData.amenities_compile.split(',').map(e => {
+                    arr?.length > 0 &&
+                    arr.split(',').map(e => {
                       return (
                         <View
                           style={{
@@ -502,7 +521,7 @@ const style = StyleSheet.create({
   },
 
   container: {
-    height: 400,
+    height: 50, // 400,
     width: '100%',
     justifyContent: 'flex-end',
     alignItems: 'center',

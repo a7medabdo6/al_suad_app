@@ -5,7 +5,7 @@ const HomeDataSlice = createSlice({
   initialState: {
     data: [],
     DontMakeAnotherCall: false,
-    Detailed: {},
+    Detailed: {amenities_compile: ['test']},
     fav: [],
   },
   reducers: {

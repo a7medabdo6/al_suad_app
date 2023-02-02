@@ -161,7 +161,7 @@ const HomeScreen = ({route}) => {
                   <Text style={style.facilityText}>{house.area} ft2</Text>
                 </View>
               </View>
-              <View style={style.bluebox}>
+              {/* <View style={style.bluebox}>
                 <Text style={style.blueboxtext}>
                   <Ionicons
                     name="information-circle-outline"
@@ -171,7 +171,7 @@ const HomeScreen = ({route}) => {
                   />
                   You have already sent an Inquiry: 14th of July
                 </Text>
-              </View>
+              </View> */}
             </View>
           </View>
           <View style={style.line}></View>
