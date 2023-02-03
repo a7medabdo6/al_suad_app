@@ -16,8 +16,7 @@ import AnimatedCorner from '../Components/Buttons/AnimatedCorner';
 import {useDispatch, useSelector} from 'react-redux';
 import openMap from 'react-native-open-maps';
 
-import MapView, {Marker} from 'react-native-maps';
-
+import Slider from "../Components/Slider"
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import house from '../consts/houses';
@@ -31,9 +30,22 @@ const DetailsScreen = ({route}) => {
   const navigation = useNavigation();
   const HomeDetailedData = useSelector(state => state.Home.Detailed);
   const [arr, setArr] = useState([]);
+  const [images_urls, setimages_urls] = useState([]);
+
+  
   useEffect(() => {
-    var str = HomeDetailedData?.amenities_compile;
-    setArr(str);
+    var strarr = HomeDetailedData?.amenities_compile.split(',');
+    var IconsArr = HomeDetailedData?.amenities_icons_compile.split(',');
+    var newArr=[]
+    for(let i=0;i<strarr.length;i++){
+newArr.push({name:strarr[i],icon:IconsArr[i]})
+    }
+    setArr(newArr);
+    if(HomeDetailedData?.images_urls){
+      var images = HomeDetailedData?.images_urls.split(',');
+      setimages_urls(images)
+
+    }
     return () => {};
   }, [HomeDetailedData]);
   const HandleMap = () => {
@@ -46,17 +58,20 @@ const DetailsScreen = ({route}) => {
         <StatusBar
           barStyle="light-content"
           backgroundColor="transparent"
-          translucent={true}
         />
 
+         
         <View style={style.backgroundImageContainer}>
-          <ImageBackground
-            style={style.backgroundImage}
-            source={
-              HomeDetailedData?.image_128
-                ? {uri: `data:image/jpeg;base64,${HomeDetailedData?.image_128}`}
+          {images_urls.length>0 ?  <View style={{height:"100%"}}>
+          <Slider Data={images_urls}/>
+
+          </View>:<Image  source={
+              house.image_128
+                ? {uri: `data:image/jpeg;base64,${house.image_128}`}
                 : require('../assets/unknown.jpg')
-            }>
+            }
+            style={style.cardImage}/>}
+       
             <View style={style.header}>
               <Pressable onPress={() => navigation.goBack()}>
                 <View style={style.headerBtn}>
@@ -87,7 +102,6 @@ const DetailsScreen = ({route}) => {
                 </View>
               </View>
             </View>
-          </ImageBackground>
         </View>
 
         <View style={style.detailsContainer}>
@@ -298,7 +312,7 @@ const DetailsScreen = ({route}) => {
                   )}
                   {HomeDetailedData?.amenities_compile &&
                     arr?.length > 0 &&
-                    arr.split(',').map(e => {
+                    arr.map(e => {
                       return (
                         <View
                           style={{
@@ -308,18 +322,18 @@ const DetailsScreen = ({route}) => {
                             width: '50%',
                             marginVertical: 10,
                           }}>
-                          <Icon
-                            name="cupboard-outline"
-                            size={20}
-                            color={COLORS.dark}
-                          />
+                         
+                          <Image size={20}
+                          style={{width:30 ,height:20}}
+
+                            color={COLORS.dark} source={{uri:e.icon}}/>
                           <Text
                             style={{
                               color: COLORS.dark,
                               fontSize: 16,
                               marginHorizontal: 4,
                             }}>
-                            {e}
+                            {e.name}
                             {console.log(e, 'eeeeeeee')}
                           </Text>
                         </View>
@@ -352,7 +366,7 @@ const style = StyleSheet.create({
     // marginHorizontal: 20,
     // marginTop: 20,
     alignItems: 'center',
-    height: 350,
+    height:  350,
     zIndex: 1,
   },
   backgroundImage: {
@@ -366,6 +380,14 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 10,
+    paddingTop:20,
+
+    zIndex:55555,
+    position:"absolute",
+    display:"flex",
+    width:"100%",
+    left:0,
+  
   },
   headerBtn: {
     height: 50,
@@ -436,6 +458,11 @@ const style = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     marginHorizontal: 8,
+    zIndex:55555,
+    position:"absolute",
+    display:"flex",
+    right:0,
+    top:30
   },
   icon: {
     color: COLORS.grey,
@@ -473,7 +500,6 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     position: 'absolute',
-    top: 10,
     zIndex: 5,
     width: '100%',
   },
