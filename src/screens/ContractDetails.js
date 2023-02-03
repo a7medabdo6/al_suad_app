@@ -10,21 +10,19 @@ import {
 import COLORS from '../consts/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
-//import Pdf from 'react-native-pdf';
+import Pdf from 'react-native-pdf';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 // Without Flow type annotations
 // import PDFView from 'react-native-view-pdf/lib/index';
 
-
 const {width} = Dimensions.get('screen');
 
 const ContractDetails = ({route, navigation}) => {
-
- 
- // const source = { uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf', cache: true };
-
-
+  const source = {
+    uri: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+    cache: true,
+  };
 
   const selectedProp = useSelector(state => state.MyProperties.selectedProp);
   const Diff = () => {
@@ -35,7 +33,7 @@ const ContractDetails = ({route, navigation}) => {
     // let year = date.getFullYear();
     // let currentDate = `${year}-${month}-${day}`;
     const diffTime = Math.abs(futureDate - currentDate);
-    console.log("selectedProp",selectedProp.contract, 'selectedProp');
+    console.log('selectedProp', selectedProp.contract, 'selectedProp');
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays;
   };
@@ -98,7 +96,7 @@ const ContractDetails = ({route, navigation}) => {
               fontWeight: '500',
               textAlign: 'left',
             }}>
-           Insurance Amount : {selectedProp?.contract?.insurance_amount}
+            Insurance Amount : {selectedProp?.contract?.insurance_amount}
           </Text>
           <Text
             style={{
@@ -108,7 +106,7 @@ const ContractDetails = ({route, navigation}) => {
               fontWeight: '500',
               textAlign: 'left',
             }}>
-           Rent Period : {selectedProp?.contract?.rent_period}
+            Rent Period : {selectedProp?.contract?.rent_period}
           </Text>
           <Text
             style={{
@@ -118,7 +116,7 @@ const ContractDetails = ({route, navigation}) => {
               fontWeight: '500',
               textAlign: 'left',
             }}>
-           Checks No : {selectedProp?.contract?.checks_no}
+            Checks No : {selectedProp?.contract?.checks_no}
           </Text>
           {/* Facilities container */}
           <View style={{flexDirection: 'column'}}>
@@ -136,30 +134,71 @@ const ContractDetails = ({route, navigation}) => {
           </View>
         </View>
         <View style={style.line}></View>
-        <View style={{ flex: 1 }}>
-        {/* Some Controls to change PDF resource */}
-        {/* <Pdf
-                    source={source}
-                    onLoadComplete={(numberOfPages,filePath) => {
-                        console.log(`Number of pages: ${numberOfPages}`);
-                    }}
-                    onPageChanged={(page,numberOfPages) => {
-                        console.log(`Current page: ${page}`);
-                    }}
-                    onError={(error) => {
-                        console.log(error);
-                    }}
-                    onPressLink={(uri) => {
-                        console.log(`Link pressed: ${uri}`);
-                    }}
-                    style={styles.pdf}/> */}
-      </View>
+        <View style={{flex: 1}}>
+          {/* Some Controls to change PDF resource */}
+          {/* <View style={style.container}>
+            <Pdf
+              trustAllCerts={false}
+              source={{
+                uri: `data:application/pdf;base64,${selectedProp?.contract?.documents[0].datas}`,
+              }}
+              onLoadComplete={(numberOfPages, filePath) => {
+                console.log(`Number of pages: ${numberOfPages}`);
+              }}
+              onPageChanged={(page, numberOfPages) => {
+                console.log(`Current page: ${page}`);
+              }}
+              onError={error => {
+                console.log(error);
+              }}
+              onPressLink={uri => {
+                console.log(`Link pressed: ${uri}`);
+              }}
+              style={style.pdf}
+            />
+          </View> */}
+          {selectedProp?.contract?.documents?.map(item => {
+            console.log('doccccccc');
+            return (
+              <View style={style.container}>
+                <Pdf
+                  trustAllCerts={false}
+                  source={{uri: `data:application/pdf;base64,${item.datas}`}}
+                  onLoadComplete={(numberOfPages, filePath) => {
+                    console.log(`Number of pages: ${numberOfPages}`);
+                  }}
+                  onPageChanged={(page, numberOfPages) => {
+                    console.log(`Current page: ${page}`);
+                  }}
+                  onError={error => {
+                    console.log(error);
+                  }}
+                  onPressLink={uri => {
+                    console.log(`Link pressed: ${uri}`);
+                  }}
+                  style={style.pdf}
+                />
+              </View>
+            );
+          })}
+        </View>
       </View>
     </SafeAreaView>
   );
 };
 
 const style = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginTop: 25,
+  },
+  pdf: {
+    flex: 1,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+  },
   header: {
     paddingVertical: 20,
     flexDirection: 'row',
