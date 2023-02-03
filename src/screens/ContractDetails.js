@@ -10,13 +10,22 @@ import {
 import COLORS from '../consts/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
-
+//import Pdf from 'react-native-pdf';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
+// Without Flow type annotations
+// import PDFView from 'react-native-view-pdf/lib/index';
+
 
 const {width} = Dimensions.get('screen');
 
 const ContractDetails = ({route, navigation}) => {
+
+ 
+ // const source = { uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf', cache: true };
+
+
+
   const selectedProp = useSelector(state => state.MyProperties.selectedProp);
   const Diff = () => {
     const currentDate = new Date();
@@ -26,7 +35,7 @@ const ContractDetails = ({route, navigation}) => {
     // let year = date.getFullYear();
     // let currentDate = `${year}-${month}-${day}`;
     const diffTime = Math.abs(futureDate - currentDate);
-    console.log(diffTime, 'diffTime');
+    console.log("selectedProp",selectedProp.contract, 'selectedProp');
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays;
   };
@@ -81,6 +90,36 @@ const ContractDetails = ({route, navigation}) => {
             }}>
             Contract End : {selectedProp?.contract?.date_to}
           </Text>
+          <Text
+            style={{
+              color: COLORS.grey,
+              fontSize: 12,
+              marginTop: 5,
+              fontWeight: '500',
+              textAlign: 'left',
+            }}>
+           Insurance Amount : {selectedProp?.contract?.insurance_amount}
+          </Text>
+          <Text
+            style={{
+              color: COLORS.grey,
+              fontSize: 12,
+              marginTop: 5,
+              fontWeight: '500',
+              textAlign: 'left',
+            }}>
+           Rent Period : {selectedProp?.contract?.rent_period}
+          </Text>
+          <Text
+            style={{
+              color: COLORS.grey,
+              fontSize: 12,
+              marginTop: 5,
+              fontWeight: '500',
+              textAlign: 'left',
+            }}>
+           Checks No : {selectedProp?.contract?.checks_no}
+          </Text>
           {/* Facilities container */}
           <View style={{flexDirection: 'column'}}>
             <View style={style.bluebox}>
@@ -97,6 +136,24 @@ const ContractDetails = ({route, navigation}) => {
           </View>
         </View>
         <View style={style.line}></View>
+        <View style={{ flex: 1 }}>
+        {/* Some Controls to change PDF resource */}
+        {/* <Pdf
+                    source={source}
+                    onLoadComplete={(numberOfPages,filePath) => {
+                        console.log(`Number of pages: ${numberOfPages}`);
+                    }}
+                    onPageChanged={(page,numberOfPages) => {
+                        console.log(`Current page: ${page}`);
+                    }}
+                    onError={(error) => {
+                        console.log(error);
+                    }}
+                    onPressLink={(uri) => {
+                        console.log(`Link pressed: ${uri}`);
+                    }}
+                    style={styles.pdf}/> */}
+      </View>
       </View>
     </SafeAreaView>
   );
