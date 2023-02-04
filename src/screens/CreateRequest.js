@@ -31,7 +31,7 @@ import {useSelector} from 'react-redux';
 import {useValidation} from 'react-native-form-validator';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
-const CreateRequestScreen = () => {
+const CreateRequestScreen = ({navigation}) => {
   const [RequestTypeData, setRequestTypeData] = useState([]);
   const [result, setResult] = React.useState('');
   const [disable, setDisable] = React.useState(false);
@@ -77,6 +77,7 @@ const CreateRequestScreen = () => {
     useValidation({
       state: {name, type, result, description},
     });
+  var callRequested = false;
   const callCreateReq = async () => {
     validate({
       name: {required: true, minlength: 1},
@@ -88,6 +89,7 @@ const CreateRequestScreen = () => {
       return;
     } else {
       try {
+        setDisable(true)
         const res = await api.post('api/property_create_request', {
           params: {
             flat: selectedProp.id,
@@ -99,7 +101,6 @@ const CreateRequestScreen = () => {
           },
         });
         if (res.data.result) {
-          setDisable(true)
           Toast.show('Request Created Succefully.', Toast.LONG, {
             backgroundColor: 'orange',
           });
@@ -108,6 +109,7 @@ const CreateRequestScreen = () => {
         }
         // console.log(result, 'helpdesk');
       } catch (error) {
+        setDisable(false)
         console.log(error, 'error ');
       }
     }
