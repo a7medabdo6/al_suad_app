@@ -39,6 +39,7 @@ const PaymentHeader = ({title, item}) => {
             <MaterialIcons
               name="arrow-back-ios"
               size={20}
+              color={COLORS.grey}
               onPress={navigation.goBack}
             />
           </View>

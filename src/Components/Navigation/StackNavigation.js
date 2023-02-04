@@ -14,6 +14,7 @@ import LogoTitle from '../Headers/LogoHeader';
 import {useSelector} from 'react-redux';
 import DetailsScreen from '../../screens/DetailsScreen';
 import ContractDetails from '../../screens/ContractDetails';
+import PdfView from '../../screens/PdfVeiw';
 const Stack = createStackNavigator();
 
 export default function MyStack() {
@@ -91,6 +92,23 @@ export default function MyStack() {
         name="ContractDetails"
         component={ContractDetails}
       />
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.white,
+            height: 70,
+          },
+          headerTitle: props => (
+            <ContactHeader {...props} title="Pdf " item={selectedProp} />
+          ),
+          headerLeft: false,
+          headerBackTitleVisible: false,
+          headerShown: true,
+        }}
+        name="PdfView"
+        component={PdfView}
+      />
+
       <Stack.Screen
         options={{
           headerTitle: props => (

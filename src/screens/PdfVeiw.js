@@ -14,15 +14,14 @@ import Pdf from 'react-native-pdf';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 import DocumentCard from '../Components/Cards/DocumentCard';
-import {Pressable} from 'react-native';
 // Without Flow type annotations
 // import PDFView from 'react-native-view-pdf/lib/index';
 
 const {width} = Dimensions.get('screen');
 
-const ContractDetails = ({route}) => {
-  const navigation = useNavigation();
-
+const PdfView = ({route, navigation}) => {
+  const item = route.params;
+  console.log(item, 'pdf item');
   const selectedProp = useSelector(state => state.MyProperties.selectedProp);
   const Diff = () => {
     const currentDate = new Date();
@@ -51,101 +50,26 @@ const ContractDetails = ({route}) => {
         barStyle="dark-content"
       />
       <View style={style.card}>
-        <View style={{marginTop: 10}}>
-          {/* Title and price container */}
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'flex-start',
-              marginTop: 10,
-            }}>
-            <Text style={{fontSize: 12, fontWeight: '500', color: COLORS.dark}}>
-              {selectedProp?.contract?.name}
-            </Text>
-          </View>
-
-          {/* Location text */}
-
-          <Text
-            style={{
-              color: COLORS.blue,
-              fontSize: 14,
-              marginTop: 5,
-              fontWeight: 'bold',
-            }}>
-            {selectedProp?.contract?.total_value} /{' '}
-            {selectedProp?.contract?.rent_period_type}
-          </Text>
-          <Text
-            style={{
-              color: COLORS.grey,
-              fontSize: 12,
-              marginTop: 5,
-              fontWeight: '500',
-              textAlign: 'left',
-            }}>
-            Contract End : {selectedProp?.contract?.date_to}
-          </Text>
-          <Text
-            style={{
-              color: COLORS.grey,
-              fontSize: 12,
-              marginTop: 5,
-              fontWeight: '500',
-              textAlign: 'left',
-            }}>
-            Insurance Amount : {selectedProp?.contract?.insurance_amount}
-          </Text>
-          <Text
-            style={{
-              color: COLORS.grey,
-              fontSize: 12,
-              marginTop: 5,
-              fontWeight: '500',
-              textAlign: 'left',
-            }}>
-            Rent Period : {selectedProp?.contract?.rent_period}
-          </Text>
-          <Text
-            style={{
-              color: COLORS.grey,
-              fontSize: 12,
-              marginTop: 5,
-              fontWeight: '500',
-              textAlign: 'left',
-            }}>
-            Checks No : {selectedProp?.contract?.checks_no}
-          </Text>
-          {/* Facilities container */}
-          <View style={{flexDirection: 'column'}}>
-            <View style={style.bluebox}>
-              <Text style={style.blueboxtext}>
-                <Ionicons
-                  name="information-circle-outline"
-                  size={12}
-                  style={{marginHorizontal: 3}}
-                  color={COLORS.blue}
-                />
-                Due In {Diff()} Days
-              </Text>
-            </View>
-          </View>
-        </View>
-        <View style={style.line}></View>
+        <Text
+          style={{
+            color: COLORS.blue,
+            fontSize: 16,
+            marginTop: 5,
+            fontWeight: '500',
+            textAlign: 'left',
+          }}>
+          {item.name}
+        </Text>
         <View
           style={{
             flex: 1,
             display: 'flex',
             alignItems: 'center',
           }}>
-          {/* Some Controls to change PDF resource */}
-          {/* <View style={style.container}>
+          <View style={style.container}>
             <Pdf
               trustAllCerts={false}
-              source={{
-                uri: `data:application/pdf;base64,${selectedProp?.contract?.documents[0].datas}`,
-              }}
+              source={{uri: `data:application/pdf;base64,${item?.datas}`}}
               onLoadComplete={(numberOfPages, filePath) => {
                 console.log(`Number of pages: ${numberOfPages}`);
               }}
@@ -160,43 +84,7 @@ const ContractDetails = ({route}) => {
               }}
               style={style.pdf}
             />
-          </View> */}
-          {/*   <View style={style.container}>
-                <Pdf
-                  trustAllCerts={false}
-                  source={{uri: `data:application/pdf;base64,${item.datas}`}}
-                  onLoadComplete={(numberOfPages, filePath) => {
-                    console.log(`Number of pages: ${numberOfPages}`);
-                  }}
-                  onPageChanged={(page, numberOfPages) => {
-                    console.log(`Current page: ${page}`);
-                  }}
-                  onError={error => {
-                    console.log(error);
-                  }}
-                  onPressLink={uri => {
-                    console.log(`Link pressed: ${uri}`);
-                  }}
-                  style={style.pdf}
-                />
-              </View> */}
-          {selectedProp?.contract?.documents?.map(item => {
-            return (
-              <>
-                <Pressable onPress={() => navigation.push('PdfView', item)}>
-                  <View
-                    style={{
-                      width: '100%',
-                      borderWidth: 1,
-                      borderColor: 'white',
-                      borderBottomColor: COLORS.grey,
-                    }}>
-                    <DocumentCard item={item} />
-                  </View>
-                </Pressable>
-              </>
-            );
-          })}
+          </View>
         </View>
       </View>
     </SafeAreaView>
@@ -212,7 +100,7 @@ const style = StyleSheet.create({
   },
   pdf: {
     flex: 1,
-    width: Dimensions.get('window').width,
+    width: Dimensions.get('window').width * 0.8,
     height: Dimensions.get('window').height,
   },
   header: {
@@ -351,4 +239,4 @@ const style = StyleSheet.create({
     padding: 5,
   },
 });
-export default ContractDetails;
+export default PdfView;

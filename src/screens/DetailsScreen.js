@@ -15,8 +15,8 @@ import {
 import AnimatedCorner from '../Components/Buttons/AnimatedCorner';
 import {useDispatch, useSelector} from 'react-redux';
 import openMap from 'react-native-open-maps';
-
-import Slider from "../Components/Slider"
+import VideoPlayer from '../Components/Video/index';
+import Slider from '../Components/Slider';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import house from '../consts/houses';
@@ -31,20 +31,27 @@ const DetailsScreen = ({route}) => {
   const HomeDetailedData = useSelector(state => state.Home.Detailed);
   const [arr, setArr] = useState([]);
   const [images_urls, setimages_urls] = useState([]);
+  const [videoId, setvideoId] = useState('');
 
-  
   useEffect(() => {
     var strarr = HomeDetailedData?.amenities_compile.split(',');
     var IconsArr = HomeDetailedData?.amenities_icons_compile.split(',');
-    var newArr=[]
-    for(let i=0;i<strarr.length;i++){
-newArr.push({name:strarr[i],icon:IconsArr[i]})
+    var newArr = [];
+    for (let i = 0; i < strarr.length; i++) {
+      newArr.push({name: strarr[i], icon: IconsArr[i]});
     }
     setArr(newArr);
-    if(HomeDetailedData?.images_urls){
+    if (HomeDetailedData?.images_urls) {
       var images = HomeDetailedData?.images_urls.split(',');
-      setimages_urls(images)
-
+      setimages_urls(images);
+    }
+    if (HomeDetailedData?.video_url) {
+      var video_id = HomeDetailedData?.video_url.split('v=')[1];
+      var ampersandPosition = video_id.indexOf('&');
+      if (ampersandPosition != -1) {
+        video_id = video_id.substring(0, ampersandPosition);
+      }
+      setvideoId(video_id);
     }
     return () => {};
   }, [HomeDetailedData]);
@@ -55,53 +62,50 @@ newArr.push({name:strarr[i],icon:IconsArr[i]})
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* House image */}
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor="transparent"
-        />
+        <StatusBar barStyle="light-content" backgroundColor="transparent" />
 
-         
         <View style={style.backgroundImageContainer}>
-          {images_urls.length>0 ?  <View style={{height:"100%"}}>
-          <Slider Data={images_urls}/>
+          {images_urls.length > 0 ? (
+            <View style={{height: '100%'}}>
+              <Slider Data={images_urls} />
+            </View>
+          ) : (
+            <Image
+              source={
+                house.image_128
+                  ? {uri: `data:image/jpeg;base64,${house.image_128}`}
+                  : require('../assets/unknown.jpg')
+              }
+              style={style.cardImage}
+            />
+          )}
 
-          </View>:<Image  source={
-              house.image_128
-                ? {uri: `data:image/jpeg;base64,${house.image_128}`}
-                : require('../assets/unknown.jpg')
-            }
-            style={style.cardImage}/>}
-       
-            <View style={style.header}>
-              <Pressable onPress={() => navigation.goBack()}>
+          <View style={style.header}>
+            <Pressable onPress={() => navigation.goBack()}>
+              <View style={style.headerBtn}>
+                <MaterialIcons
+                  name="arrow-back-ios"
+                  size={20}
+                  color={COLORS.grey}
+                  // onPress={navigation.goBack}
+                />
+              </View>
+            </Pressable>
+            <View style={style.twoIcon}>
+              <Pressable
+                onPress={() =>
+                  navigation.push('Inquiry', {id: HomeDetailedData?.id})
+                }>
                 <View style={style.headerBtn}>
-                  <MaterialIcons
-                    name="arrow-back-ios"
-                    size={20}
-                    color={COLORS.grey}
-                    // onPress={navigation.goBack}
-                  />
+                  <Ionicons name="push-outline" style={style.icon} size={18} />
                 </View>
               </Pressable>
-              <View style={style.twoIcon}>
-                <Pressable
-                  onPress={() =>
-                    navigation.push('Inquiry', {id: HomeDetailedData?.id})
-                  }>
-                  <View style={style.headerBtn}>
-                    <Ionicons
-                      name="push-outline"
-                      style={style.icon}
-                      size={18}
-                    />
-                  </View>
-                </Pressable>
 
-                <View style={style.headerBtn}>
-                  <Ionicons name="heart-outline" style={style.icon} size={18} />
-                </View>
+              <View style={style.headerBtn}>
+                <Ionicons name="heart-outline" style={style.icon} size={18} />
               </View>
             </View>
+          </View>
         </View>
 
         <View style={style.detailsContainer}>
@@ -275,7 +279,7 @@ newArr.push({name:strarr[i],icon:IconsArr[i]})
             </View>
             <View style={style.line}></View>
           </View>
-          {/* Description */}
+          <View>{videoId && <VideoPlayer videoId={videoId} />}</View>
           <View>
             <View style={{marginTop: 10}}>
               {/* Title and price container */}
@@ -322,11 +326,12 @@ newArr.push({name:strarr[i],icon:IconsArr[i]})
                             width: '50%',
                             marginVertical: 10,
                           }}>
-                         
-                          <Image size={20}
-                          style={{width:30 ,height:20}}
-
-                            color={COLORS.dark} source={{uri:e.icon}}/>
+                          <Image
+                            size={20}
+                            style={{width: 30, height: 20}}
+                            color={COLORS.dark}
+                            source={{uri: e.icon}}
+                          />
                           <Text
                             style={{
                               color: COLORS.dark,
@@ -366,7 +371,7 @@ const style = StyleSheet.create({
     // marginHorizontal: 20,
     // marginTop: 20,
     alignItems: 'center',
-    height:  350,
+    height: 350,
     zIndex: 1,
   },
   backgroundImage: {
@@ -380,14 +385,13 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 10,
-    paddingTop:20,
+    paddingTop: 20,
 
-    zIndex:55555,
-    position:"absolute",
-    display:"flex",
-    width:"100%",
-    left:0,
-  
+    zIndex: 55555,
+    position: 'absolute',
+    display: 'flex',
+    width: '100%',
+    left: 0,
   },
   headerBtn: {
     height: 50,
@@ -458,11 +462,11 @@ const style = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     marginHorizontal: 8,
-    zIndex:55555,
-    position:"absolute",
-    display:"flex",
-    right:0,
-    top:30
+    zIndex: 55555,
+    position: 'absolute',
+    display: 'flex',
+    right: 0,
+    top: 30,
   },
   icon: {
     color: COLORS.grey,

@@ -11,6 +11,7 @@ import {
   FlatList,
   Dimensions,
   ScrollView,
+  Pressable,
 } from 'react-native';
 import {TabView, SceneMap} from 'react-native-tab-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -64,7 +65,7 @@ const FirstRoute = () => {
             contentContainerStyle={{marginVertical: 10, marginHorizontal: 10}}
             vertical
             data={Payments}
-            renderItem={({item}) => <PaymentCard Item={item}/>}
+            renderItem={({item}) => <PaymentCard Item={item} />}
           />
         ) : (
           <Text style={{color: 'black', fontWeight: 'bold'}}>No Data</Text>
@@ -163,6 +164,7 @@ const SecondRoute = () => {
 const ThirdRoute = () => {
   const refRBSheet = useRef();
   const selectedProp = useSelector(state => state.MyProperties.selectedProp);
+  const navigation = useNavigation();
   return (
     <>
       <FlatList
@@ -171,7 +173,11 @@ const ThirdRoute = () => {
         contentContainerStyle={{marginVertical: 10, marginHorizontal: 10}}
         vertical
         data={selectedProp?.contract?.documents}
-        renderItem={({item}) => <DocumentCard item={item} />}
+        renderItem={({item}) => (
+          <Pressable onPress={() => navigation.push('PdfView', item)}>
+            <DocumentCard item={item} />
+          </Pressable>
+        )}
       />
 
       <BottomSheet />
