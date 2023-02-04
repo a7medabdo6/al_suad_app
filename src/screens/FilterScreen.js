@@ -43,6 +43,7 @@ const FilterScreen = ({}) => {
 
   const [state_id, setstate_id] = useState(1);
   const [bath_id, setBath_id] = useState(1);
+  const [bed_id, setBed_id] = useState(1);
 
   
   const [area_id, setarea_id] = useState(1);
@@ -102,9 +103,9 @@ const FilterScreen = ({}) => {
       params: {
         price_to: high,
         price_from: low,
-        room_no,
-        state_id,
-        area_id,
+        room_no:bed_id,
+        state_id: state_id,
+        area_id: area_id,
         bathroom_no:bath_id
       },
     });
@@ -461,7 +462,7 @@ const FilterScreen = ({}) => {
                   {id: 7, name: '+7'},
                 ]}
                 Type="Select Bedrooms"
-                settype={setarea_id}
+                settype={setBed_id}
               />
 
            
