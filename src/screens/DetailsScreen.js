@@ -92,10 +92,7 @@ const DetailsScreen = ({route}) => {
               </View>
             </Pressable>
             <View style={style.twoIcon}>
-              <Pressable
-                onPress={() =>
-                  navigation.push('Inquiry', {id: HomeDetailedData?.id})
-                }>
+              <Pressable onPress={() => navigation.push('Inquiry', {id: '1'})}>
                 <View style={style.headerBtn}>
                   <Ionicons name="push-outline" style={style.icon} size={18} />
                 </View>
@@ -307,13 +304,6 @@ const DetailsScreen = ({route}) => {
                     flexWrap: 'wrap',
                     marginVertical: 5,
                   }}>
-                  {console.log(
-                    arr.length,
-                    typeof arr,
-                    arr,
-
-                    'JSON.parse(HomeDetailedData?.amenities_compile)',
-                  )}
                   {HomeDetailedData?.amenities_compile &&
                     arr?.length > 0 &&
                     arr.map(e => {

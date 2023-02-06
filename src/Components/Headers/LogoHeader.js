@@ -5,10 +5,12 @@ import COLORS from '../../consts/colors';
 import {View, Text, Image, Pressable} from 'react-native';
 import {Dimensions} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 
 const ScreenWidth = Dimensions.get('window').width;
 export default function LogoTitle({item}) {
   const navigation = useNavigation();
+  const HomeDetailedData = useSelector(state => state.Home.Detailed);
 
   return (
     <View
@@ -50,7 +52,7 @@ export default function LogoTitle({item}) {
               marginHorizontal: 3,
             }}
             source={
-              item?.image_128
+              HomeDetailedData?.image_128
                 ? {
                     uri: `data:image/jpeg;base64,${HomeDetailedData.image_128}`,
                   }
@@ -61,11 +63,11 @@ export default function LogoTitle({item}) {
         <View>
           <Text style={{color: COLORS.blue, marginHorizontal: 5}}>
             {' '}
-            {item?.name}
+            {HomeDetailedData?.name}
           </Text>
           <Text style={{color: COLORS.dark, marginHorizontal: 5}}>
             {' '}
-            {item?.project_id[1]}
+            {HomeDetailedData?.project_id[1]}
           </Text>
         </View>
       </View>

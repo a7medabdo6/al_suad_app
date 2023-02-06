@@ -33,10 +33,9 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 const CreateRequestScreen = ({navigation}) => {
   const [RequestTypeData, setRequestTypeData] = useState([]);
-  const [result, setResult] = React.useState('');
+  const [photo, setphoto] = React.useState('');
   const [disable, setDisable] = React.useState(false);
 
-  
   const [name, setname] = useState('');
   const [type, settype] = useState('');
   const [allFilesdata, setallFilesdata] = React.useState([]);
@@ -65,7 +64,7 @@ const CreateRequestScreen = ({navigation}) => {
       } else if (res.errorCode == 'permission') {
       } else if (res.errorCode == 'others') {
       } else {
-        setResult([`data:image/png;base64,${res.assets[0].base64}`]);
+        setphoto([`data:image/png;base64,${res.assets[0].base64}`]);
         // console.log(res.assets[0], 'res.assets[0]');
         // setpicName(res.assets[0].fileName);
         setallFilesdata([{type: 'image/png', name: 'photo'}]);
@@ -75,21 +74,21 @@ const CreateRequestScreen = ({navigation}) => {
   };
   const {validate, isFieldInError, getErrorsInField, getErrorMessages} =
     useValidation({
-      state: {name, type, result, description},
+      state: {name, type, photo, description},
     });
   var callRequested = false;
   const callCreateReq = async () => {
     validate({
       name: {required: true, minlength: 1},
       type: {required: true},
-      result: {required: true, minlength: 1},
+      photo: {required: true, minlength: 1},
       description: {required: true, minlength: 1},
     });
-    if (getErrorMessages() || !name || !type || !result || !description) {
+    if (getErrorMessages() || !name || !type || !photo || !description) {
       return;
     } else {
       try {
-        setDisable(true)
+        setDisable(true);
         const res = await api.post('api/property_create_request', {
           params: {
             flat: selectedProp.id,
@@ -97,7 +96,7 @@ const CreateRequestScreen = ({navigation}) => {
             name: name,
             description: description,
             type: type,
-            files: result,
+            files: photo,
           },
         });
         if (res.data.result) {
@@ -109,7 +108,7 @@ const CreateRequestScreen = ({navigation}) => {
         }
         // console.log(result, 'helpdesk');
       } catch (error) {
-        setDisable(false)
+        setDisable(false);
         console.log(error, 'error ');
       }
     }
@@ -273,8 +272,8 @@ const CreateRequestScreen = ({navigation}) => {
                   marginVertical: 15,
                 }}>
                 <PickFiles
-                  setResult={setResult}
-                  result={result}
+                  setResult={setphoto}
+                  result={photo}
                   setallFilesdata={setallFilesdata}
                 />
               </View>
@@ -302,8 +301,8 @@ const CreateRequestScreen = ({navigation}) => {
                 </View>
               </Pressable>
             </View>
-            {isFieldInError('result') &&
-              getErrorsInField('result').map(errorMessage => (
+            {isFieldInError('photo') &&
+              getErrorsInField('photo').map(errorMessage => (
                 <Text key={errorMessage} style={{color: 'red'}}>
                   {errorMessage}
                 </Text>
@@ -339,7 +338,12 @@ const CreateRequestScreen = ({navigation}) => {
               })}
             </View>
 
-            <BasicButton text="Submit" width={155} onPress={callCreateReq} disable={disable} />
+            <BasicButton
+              text="Submit"
+              width={155}
+              onPress={callCreateReq}
+              disable={disable}
+            />
           </View>
         </View>
       </ScrollView>

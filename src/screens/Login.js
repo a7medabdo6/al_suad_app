@@ -132,6 +132,7 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
             ))}
           <FirstInput
             text="password"
+            type="password"
             value={password}
             fun={e => setpassword(e)}
             Icon={

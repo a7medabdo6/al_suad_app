@@ -145,6 +145,7 @@ const SignupScreen = ({navigation, route, setIsAuth, setisRegister}) => {
             ))}
           <FirstInput
             text="password"
+            type="password"
             value={password}
             fun={e => setpassword(e)}
             Icon={

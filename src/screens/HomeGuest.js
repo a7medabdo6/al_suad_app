@@ -62,10 +62,7 @@ const HomeScreenGuest = ({route}) => {
   };
   const Card = ({house}) => {
     return (
-      <Pressable
-        activeOpacity={0.8}
-        //  onPress={() => handleHomeClick(house)}
-      >
+      <Pressable activeOpacity={0.8} onPress={() => handleHomeClick(house)}>
         <View style={style.card}>
           <View style={style.allIconflex}>
             <View style={style.allIcon}>
@@ -220,7 +217,7 @@ const HomeScreenGuest = ({route}) => {
             {HomeData?.length} results
           </Text>
         </View>
-        {/* <Pressable onPress={() => navigation.push('FilterScreen')}>
+        <Pressable onPress={() => navigation.push('FilterScreen')}>
           <View style={style.sortBtn}>
             <Icon
               name="tune-variant"
@@ -234,7 +231,7 @@ const HomeScreenGuest = ({route}) => {
               size={18}
             />
           </View>
-        </Pressable> */}
+        </Pressable>
       </View>
 
       {/* Render list options */}

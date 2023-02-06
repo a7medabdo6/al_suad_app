@@ -16,6 +16,10 @@ import SignupScreen from '../../screens/SignUp';
 import HomeScreenGuest from '../../screens/HomeGuest';
 import FilterScreen from '../../screens/FilterScreen';
 import ResetPassword from '../../screens/ResetPassword';
+import HomeDataFilter from '../../screens/HomeDataFilter';
+import DetailsScreen from '../../screens/DetailsScreen';
+import LogoHeader from '../Headers/LogoHeader';
+
 const Stack = createStackNavigator();
 
 export default function MyStack() {
@@ -75,7 +79,7 @@ export default function MyStack() {
         name="FilterScreen"
         component={FilterScreen}
       />
-       <Stack.Screen
+      <Stack.Screen
         options={{
           headerStyle: {
             backgroundColor: COLORS.white,
@@ -88,6 +92,33 @@ export default function MyStack() {
         }}
         name="ResetPassword"
         component={ResetPassword}
+      />
+
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name="HomeDataFilter"
+        component={HomeDataFilter}
+      />
+      <Stack.Screen
+        options={{
+          headerLeft: false,
+          headerBackTitleVisible: false,
+          headerShown: false,
+        }}
+        name="DetailsScreenInStack"
+        component={DetailsScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerLeft: false,
+          headerBackTitleVisible: false,
+          headerShown: true,
+          header: props => <LogoHeader {...props} />,
+        }}
+        name="Inquiry"
+        component={Inquiry}
       />
     </Stack.Navigator>
   );
