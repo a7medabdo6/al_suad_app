@@ -11,6 +11,7 @@ const ScreenWidth = Dimensions.get('window').width;
 export default function LogoTitle({item}) {
   const navigation = useNavigation();
   const HomeDetailedData = useSelector(state => state.Home.Detailed);
+  const selectedProp = useSelector(state => state.MyProperties.selectedProp);
 
   return (
     <View
@@ -52,9 +53,9 @@ export default function LogoTitle({item}) {
               marginHorizontal: 3,
             }}
             source={
-              HomeDetailedData?.image_128
+              selectedProp?.image_128
                 ? {
-                    uri: `data:image/jpeg;base64,${HomeDetailedData.image_128}`,
+                    uri: `data:image/jpeg;base64,${selectedProp?.image_128}`,
                   }
                 : require('../../assets/unknown.jpg')
             }
@@ -63,11 +64,11 @@ export default function LogoTitle({item}) {
         <View>
           <Text style={{color: COLORS.blue, marginHorizontal: 5}}>
             {' '}
-            {HomeDetailedData?.name}
+            {selectedProp?.name}
           </Text>
           <Text style={{color: COLORS.dark, marginHorizontal: 5}}>
             {' '}
-            {HomeDetailedData?.project_id[1]}
+            {selectedProp?.project_id?.[1]}
           </Text>
         </View>
       </View>

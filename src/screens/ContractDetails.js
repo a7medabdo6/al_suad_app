@@ -24,6 +24,8 @@ const ContractDetails = ({route}) => {
   const navigation = useNavigation();
 
   const selectedProp = useSelector(state => state.MyProperties.selectedProp);
+  const {Payments} = useSelector(state => state.Payments);
+
   const Diff = () => {
     const currentDate = new Date();
     const futureDate = new Date(selectedProp?.contract.date_to);
@@ -87,6 +89,17 @@ const ContractDetails = ({route}) => {
             }}>
             Contract End : {selectedProp?.contract?.date_to}
           </Text>
+          <Text
+            style={{
+              color: COLORS.grey,
+              fontSize: 12,
+              marginTop: 5,
+              fontWeight: '500',
+              textAlign: 'left',
+            }}>
+            Next Cheuqe Date : {Payments[0]?.date}
+          </Text>
+         
           <Text
             style={{
               color: COLORS.grey,

@@ -15,7 +15,7 @@ import {
 import {Box, Progress, NativeBaseProvider} from 'native-base';
 import FirstInput from '../Components/Inputs/FirstInput';
 import Toast from 'react-native-simple-toast';
-
+import BottomSheetRec from '../Components/Sheets/BottomSheetRec';
 import BasicButton from '../Components/Buttons/BasicButton';
 import SelectBox from '../Components/Inputs/SelectBox';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -277,7 +277,7 @@ const CreateRequestScreen = ({navigation}) => {
                   setallFilesdata={setallFilesdata}
                 />
               </View>
-              <Pressable onPress={() => UploadImage()}>
+              {/* <Pressable onPress={() => UploadImage()}>
                 <View
                   style={{
                     display: 'flex',
@@ -299,7 +299,18 @@ const CreateRequestScreen = ({navigation}) => {
                     Open Camera
                   </Text>
                 </View>
-              </Pressable>
+              </Pressable> */}
+              <BottomSheetRec
+                UploadImage={UploadImage}
+                data={{
+                  flat: selectedProp.id,
+                  partner: userInfo.partner_id,
+                  name: name,
+                  description: description,
+                  type: type,
+                  files: photo,
+                }}
+              />
             </View>
             {isFieldInError('photo') &&
               getErrorsInField('photo').map(errorMessage => (

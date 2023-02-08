@@ -15,6 +15,7 @@ import {useSelector} from 'react-redux';
 import DetailsScreen from '../../screens/DetailsScreen';
 import ContractDetails from '../../screens/ContractDetails';
 import PdfView from '../../screens/PdfVeiw';
+import VideoRecScreen from '../../screens/VideoRec';
 const Stack = createStackNavigator();
 
 export default function MyStack() {
@@ -147,6 +148,16 @@ export default function MyStack() {
         }}
         name="CreateRequestScreen"
         component={CreateRequestScreen}
+      />
+       <Stack.Screen
+        options={{
+          header: props => <LogoTitle {...props} item={selectedProp} />,
+          headerLeft: false,
+          headerBackTitleVisible: false,
+          headerShown: true,
+        }}
+        name="videoRec"
+        component={VideoRecScreen}
       />
     </Stack.Navigator>
   );
