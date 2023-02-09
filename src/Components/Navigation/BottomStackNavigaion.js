@@ -15,6 +15,7 @@ import SubmitInquiry from '../../screens/SubmitInquiry';
 import MyProperties from '../../screens/MyProperties';
 import PaymentScreen from '../../screens/Payment';
 import StackNavigation from './StackNavigation';
+import SettingStack from './SettingStack';
 import FavScreen from '../../screens/Fav';
 import PaymentHeader from '../Headers/PaymentHeader';
 import HomeStack from './HomeStack';
@@ -153,8 +154,8 @@ function MyTabs() {
 
           headerShown: false,
         }}
-        name="settings"
-        component={SettingScreen}
+        name="settingsMain"
+        component={SettingStack}
       />
     </Tab.Navigator>
   );

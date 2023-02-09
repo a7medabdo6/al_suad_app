@@ -19,6 +19,7 @@ import ResetPassword from '../../screens/ResetPassword';
 import HomeDataFilter from '../../screens/HomeDataFilter';
 import DetailsScreen from '../../screens/DetailsScreen';
 import LogoHeader from '../Headers/LogoHeader';
+import FavScreen from '../../screens/Fav';
 
 const Stack = createStackNavigator();
 
@@ -119,6 +120,22 @@ export default function MyStack() {
         }}
         name="Inquiry"
         component={Inquiry}
+      />
+      <Stack.Screen
+        options={{
+          tabBarIcon: ({focused}) => {
+            return (
+              <Icon
+                name="cards-heart-outline"
+                color={focused ? COLORS.red : COLORS.dark}
+                size={20}
+              />
+            );
+          },
+          headerShown: false,
+        }}
+        name="Loved"
+        component={FavScreen}
       />
     </Stack.Navigator>
   );

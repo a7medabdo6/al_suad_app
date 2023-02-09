@@ -23,6 +23,8 @@ import houses from '../consts/houses';
 import {useFavApi} from '../apis/Home';
 import {useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {setHomeDetailedData} from '../Store/HomeData/HomeSlice';
+import { useDispatch } from 'react-redux';
 
 const FavScreen = () => {
   const optionsList = [
@@ -30,12 +32,15 @@ const FavScreen = () => {
     {title: 'Rent a Home', img: require('../assets/house2.jpg')},
   ];
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const Card = ({house}) => {
+    const handleHomeClick = house => {
+      dispatch(setHomeDetailedData(house));
+      navigation.push('DetailsScreenInStack');
+    };
     return (
-      <Pressable
-        activeOpacity={0.8}
-        onPress={() => navigation.push('DetailsScreenInStack')}>
+      <Pressable activeOpacity={0.8} onPress={() => handleHomeClick()}>
         <View style={style.card}>
           <View style={style.allIconflex}>
             <View style={style.allIcon}>

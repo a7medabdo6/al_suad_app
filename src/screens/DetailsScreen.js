@@ -37,7 +37,7 @@ const DetailsScreen = ({route}) => {
     var strarr = HomeDetailedData?.amenities_compile.split(',');
     var IconsArr = HomeDetailedData?.amenities_icons_compile.split(',');
     var newArr = [];
-    for (let i = 0; i < strarr.length; i++) {
+    for (let i = 0; i < strarr?.length; i++) {
       newArr.push({name: strarr[i], icon: IconsArr[i]});
     }
     setArr(newArr);

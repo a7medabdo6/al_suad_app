@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useIsFocused} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {
   ImageBackground,
@@ -191,21 +192,39 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
               </Text>
             </Pressable>
           </View>
-          <Pressable onPress={() => navigation.push('HomeScreenGuest')}>
-            <View style={style.bluebox}>
-              <View style={style.blueboxtext}>
-                <Ionicons
-                  name="home-outline"
-                  size={15}
-                  style={{marginRight: 5}}
-                  color={COLORS.blue}
-                />
-                <Text color={COLORS.blue} style={style.margin}>
-                  Explore Properties as a Guest
-                </Text>
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Pressable onPress={() => navigation.push('HomeScreenGuest')}>
+              <View style={style.bluebox}>
+                <View style={style.blueboxtext}>
+                  <Ionicons
+                    name="home-outline"
+                    size={15}
+                    style={{marginRight: 5}}
+                    color={COLORS.blue}
+                  />
+                  <Text color={COLORS.blue} style={style.margin}>
+                    Explore Properties as a Guest
+                  </Text>
+                </View>
               </View>
-            </View>
-          </Pressable>
+            </Pressable>
+            <Pressable
+              onPress={() => navigation.push('Loved')}
+              style={{
+                padding: 12,
+                borderColor: COLORS.dark,
+                borderWidth: 1,
+                borderRadius: 5,
+              }}>
+              <Icon name="cards-heart-outline" color={COLORS.dark} size={20} />
+            </Pressable>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>

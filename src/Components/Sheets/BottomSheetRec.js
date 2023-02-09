@@ -17,8 +17,15 @@ export default function Example({UploadImage, data}) {
   const [pic, setpic] = useState('');
   const [picName, setpicName] = useState('');
   const navigation = useNavigation();
-  const [percentage, setPercentage] = useState(0);
-
+  const [error, seterror] = useState(null);
+  const HandleOpenModal = () => {
+    if (data.name == '' || data.description == '' || data.type == '') {
+      seterror('Please Fill All The Field ');
+    } else {
+      refRBSheet.current.open();
+      seterror(null);
+    }
+  };
   return (
     <View
       style={{
@@ -27,7 +34,7 @@ export default function Example({UploadImage, data}) {
         alignItems: 'center',
       }}>
       <Pressable
-        onPress={() => refRBSheet.current.open()}
+        onPress={() => HandleOpenModal()}
         style={{
           flex: 1,
           justifyContent: 'center',
@@ -44,6 +51,8 @@ export default function Example({UploadImage, data}) {
           Take Photo Or Video
         </Text>
       </Pressable>
+      {error && <Text style={{color: 'red'}}>{error}</Text>}
+
       <RBSheet
         ref={refRBSheet}
         closeOnDragDown={true}
