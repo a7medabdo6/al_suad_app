@@ -42,7 +42,8 @@ export default function LogoTitle({item}) {
         </Pressable>
 
         <View>
-          <Image
+         
+          {selectedProp? <Image
             style={{
               height: 50,
               width: 50,
@@ -59,16 +60,37 @@ export default function LogoTitle({item}) {
                   }
                 : require('../../assets/unknown.jpg')
             }
-          />
+          />: <Image
+          style={{
+            height: 50,
+            width: 50,
+            backgroundColor: COLORS.white,
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginHorizontal: 3,
+          }}
+          source={
+            HomeDetailedData?.image_128
+              ? {
+                  uri: `data:image/jpeg;base64,${HomeDetailedData?.image_128}`,
+                }
+              : require('../../assets/unknown.jpg')
+          }
+        />}
         </View>
         <View>
           <Text style={{color: COLORS.blue, marginHorizontal: 5}}>
             {' '}
-            {selectedProp?.name}
+            {selectedProp ? selectedProp.name : HomeDetailedData?.name}
+            {/* {HomeDetailedData?.name} */}
           </Text>
           <Text style={{color: COLORS.dark, marginHorizontal: 5}}>
             {' '}
-            {selectedProp?.project_id?.[1]}
+            {selectedProp
+              ? selectedProp.project_id?.[1]
+              : HomeDetailedData?.project_id?.[1]}
+            {/* {selectedProp?.project_id?.[1]} */}
           </Text>
         </View>
       </View>

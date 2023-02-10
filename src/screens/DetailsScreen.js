@@ -65,7 +65,7 @@ const DetailsScreen = ({route}) => {
         <StatusBar barStyle="light-content" backgroundColor="transparent" />
 
         <View style={style.backgroundImageContainer}>
-          {images_urls.length > 0 ? (
+          {images_urls?.length > 0 ? (
             <View style={{height: '100%'}}>
               <Slider Data={images_urls} />
             </View>
@@ -92,7 +92,10 @@ const DetailsScreen = ({route}) => {
               </View>
             </Pressable>
             <View style={style.twoIcon}>
-              <Pressable onPress={() => navigation.push('Inquiry', {id: '1'})}>
+              <Pressable
+                onPress={() =>
+                  navigation.push('Inquiry', {id: HomeDetailedData?.id})
+                }>
                 <View style={style.headerBtn}>
                   <Ionicons name="push-outline" style={style.icon} size={18} />
                 </View>
@@ -329,7 +332,6 @@ const DetailsScreen = ({route}) => {
                               marginHorizontal: 4,
                             }}>
                             {e.name}
-                            {console.log(e, 'eeeeeeee')}
                           </Text>
                         </View>
                       );

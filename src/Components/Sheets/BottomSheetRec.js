@@ -47,7 +47,7 @@ export default function Example({UploadImage, data}) {
           size={18}
           name="plus-circle-outline"
         />
-        <Text style={{color: COLORS.blue}} color={'black'}>
+        <Text style={{color: COLORS.dark}} color={'black'}>
           Take Photo Or Video
         </Text>
       </Pressable>

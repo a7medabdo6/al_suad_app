@@ -214,7 +214,7 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
                 </View>
               </View>
             </Pressable>
-            <Pressable
+            {/* <Pressable
               onPress={() => navigation.push('Loved')}
               style={{
                 padding: 12,
@@ -223,7 +223,7 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
                 borderRadius: 5,
               }}>
               <Icon name="cards-heart-outline" color={COLORS.dark} size={20} />
-            </Pressable>
+            </Pressable> */}
           </View>
         </View>
       </ScrollView>
