@@ -27,11 +27,13 @@ import BasicButton from '../Components/Buttons/BasicButton';
 const {width} = Dimensions.get('screen');
 import {useLoginApi} from '../apis/Auth/index';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setisAuth } from '../Store/Message/MessageSlice';
 const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
+
   const [email, setEmail] = useState(null);
   const [password, setpassword] = useState(null);
   const isFocused = useIsFocused();
-
+const dispatch=useDispatch()
   const {mutate: LoginApi, isLoading} = useLoginApi();
   const {validate, isFieldInError, getErrorsInField, getErrorMessages} =
     useValidation({
@@ -199,7 +201,7 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Pressable onPress={() => navigation.push('HomeScreenGuest')}>
+            <Pressable onPress={() => dispatch(setisAuth(true))}>
               <View style={style.bluebox}>
                 <View style={style.blueboxtext}>
                   <Ionicons
