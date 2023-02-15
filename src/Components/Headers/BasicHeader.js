@@ -15,7 +15,7 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import {useNavigation} from '@react-navigation/native';
 const {width} = Dimensions.get('screen');
 
-const BasicHeader = ({title, Icon}) => {
+const BasicHeader = ({title, Icon,color}) => {
   const navigation = useNavigation();
 
   return (
@@ -28,7 +28,7 @@ const BasicHeader = ({title, Icon}) => {
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'flex-start',
-          backgroundColor: COLORS.backgroundblue,
+          backgroundColor: color?color :COLORS.backgroundblue,
           paddingHorizontal: 10,
           width: width,
         }}>

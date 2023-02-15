@@ -18,6 +18,8 @@ import PdfView from '../../screens/PdfVeiw';
 import VideoRecScreen from '../../screens/VideoRec';
 import SettingScreen from '../../screens/Settings';
 import MyVisitsScreen from '../../screens/MyVisits';
+import PersonalInformation from '../../PersonalInformation';
+import CreateNewPassword from '../../CreateNewPassword';
 
 const Stack = createStackNavigator();
 
@@ -33,6 +35,25 @@ export default function MyStack() {
         }}
         name="SettingScreen"
         component={SettingScreen}
+      />
+
+<Stack.Screen
+        options={{
+          headerTitle: props => <BasicHeader color='white' {...props} title="Personal Information" />,
+          headerShown: true,
+        }}
+        name="PersonalInformation"
+        component={PersonalInformation}
+      />
+
+<Stack.Screen
+        options={{
+          headerTitle: props => <BasicHeader color='white' {...props} title="Recovery Password" />,
+          headerShown: true,
+
+        }}
+        name="CreateNewPassword"
+        component={CreateNewPassword}
       />
       <Stack.Screen
         options={{

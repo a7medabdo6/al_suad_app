@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, Image, ImageBackground,Switch} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity,Switch} from 'react-native';
 import {Button, Center} from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -8,7 +8,7 @@ import COLORS from '../consts/colors';
 import {useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Pressable} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useNavigationBuilder} from '@react-navigation/native';
 import {setLogout} from '../Store/Message/MessageSlice';
 import {useDispatch} from 'react-redux';
 import RNRestart from 'react-native-restart';
@@ -33,6 +33,7 @@ const Setting = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const logout = async () => {
+
     const res = await AsyncStorage.removeItem('User');
     console.log('logout', res, 'logout');
 
@@ -47,7 +48,11 @@ const Setting = () => {
         translucent={true}
       />
       <ScrollView>
-      <SettingCard Header={<View style={{marginLeft:10,paddingBottom:20,borderBottomWidth:2,borderBottomColor:COLORS.grey,paddingTop:20}}><Text style={{fontWeight:"bold",fontSize:15,color:"black"}} >Account</Text></View>} FirstRow={
+        
+      <SettingCard Header={<View style={{marginLeft:10,paddingBottom:20,borderBottomWidth:2,borderBottomColor:COLORS.grey,paddingTop:20}}><Text style={{fontWeight:"bold",fontSize:15,color:"black"}} >Account</Text></View>} 
+      
+      FirstRow={
+        <TouchableOpacity  onPress={()=> navigation.navigate("PersonalInformation")}>
         <View style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexDirection:"row",paddingVertical:15}}>
         <View style={{display:"flex",justifyContent:"flex-start",alignItems:"center",flexDirection:"row"}}>
         <Ionicons style={{paddingRight:20,paddingLeft:10}} name='person' color="black" size={18}/>
@@ -59,9 +64,11 @@ const Setting = () => {
 
         </View>
     </View>
+    </TouchableOpacity>
       } 
       
       SecondRow={
+        <TouchableOpacity  onPress={()=> navigation.navigate("CreateNewPassword")}>
         <View style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexDirection:"row",paddingVertical:15}}>
         <View style={{display:"flex",justifyContent:"flex-start",alignItems:"center",flexDirection:"row"}}>
             <FontAwesome style={{paddingRight:20,paddingLeft:10}} name='lock' color="black" size={18}/>
@@ -71,6 +78,7 @@ const Setting = () => {
         <FontAwesome name='angle-right' color="black" size={18}/>
         </View>
     </View>
+    </TouchableOpacity>
       }
 
       ThiredRow={
@@ -96,8 +104,6 @@ const Setting = () => {
         </View>
     </View>
       }
-
-      
       />
 
 

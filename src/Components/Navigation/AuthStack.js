@@ -20,6 +20,8 @@ import HomeDataFilter from '../../screens/HomeDataFilter';
 import DetailsScreen from '../../screens/DetailsScreen';
 import LogoHeader from '../Headers/LogoHeader';
 import FavScreen from '../../screens/Fav';
+import CreateNewPassword from '../../CreateNewPassword';
+
 import GuestBottomStackNavigaion from "../../Components/Navigation/GuestBottomStackNavigaion"
 const Stack = createStackNavigator();
 
@@ -66,7 +68,7 @@ export default function MyStack() {
         name="GuestBottomStackNavigaion"
         component={GuestBottomStackNavigaion}
       />
-     
+      
   
     </Stack.Navigator>
   );
