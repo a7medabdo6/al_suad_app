@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, Image, TouchableOpacity,Switch} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Switch,
+} from 'react-native';
 import {Button, Center} from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -15,25 +22,21 @@ import RNRestart from 'react-native-restart';
 import {StatusBar} from 'react-native';
 import {SafeAreaView} from 'react-native';
 import SettingCard from '../Components/Cards/SettingCard';
-import FontAwesome from "react-native-vector-icons/FontAwesome"
-import Ionicons from "react-native-vector-icons/Ionicons"
-import Fontisto from "react-native-vector-icons/Fontisto"
-import { ScrollView } from 'react-native';
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
-import MaterialIcons from "react-native-vector-icons/MaterialIcons"
-
-
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import {ScrollView} from 'react-native';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const Setting = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-
   const {userInfo} = useSelector(state => state.userinfo);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const logout = async () => {
-
     const res = await AsyncStorage.removeItem('User');
     console.log('logout', res, 'logout');
 
@@ -41,186 +44,397 @@ const Setting = () => {
     RNRestart.Restart();
   };
   return (
-    <SafeAreaView style={{backgroundColor:COLORS.backgroundblue,height:"100%"}}>
+    <SafeAreaView
+      style={{backgroundColor: COLORS.backgroundblue, height: '100%'}}>
       <StatusBar
         barStyle="light-content"
         backgroundColor="transparent"
         translucent={true}
       />
       <ScrollView>
-        
-      <SettingCard Header={<View style={{marginLeft:10,paddingBottom:20,borderBottomWidth:2,borderBottomColor:COLORS.grey,paddingTop:20}}><Text style={{fontWeight:"bold",fontSize:15,color:"black"}} >Account</Text></View>} 
-      
-      FirstRow={
-        <TouchableOpacity  onPress={()=> navigation.navigate("PersonalInformation")}>
-        <View style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexDirection:"row",paddingVertical:15}}>
-        <View style={{display:"flex",justifyContent:"flex-start",alignItems:"center",flexDirection:"row"}}>
-        <Ionicons style={{paddingRight:20,paddingLeft:10}} name='person' color="black" size={18}/>
+        <SettingCard
+          Header={
+            <View
+              style={{
+                marginLeft: 10,
+                paddingBottom: 20,
+                borderBottomWidth: 2,
+                borderBottomColor: COLORS.grey,
+                paddingTop: 20,
+              }}>
+              <Text style={{fontWeight: 'bold', fontSize: 15, color: 'black'}}>
+                Account
+              </Text>
+            </View>
+          }
+          FirstRow={
+            <TouchableOpacity
+              onPress={() => navigation.navigate('PersonalInformation')}>
+              <View
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                  paddingVertical: 15,
+                }}>
+                <View
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                  }}>
+                  <Ionicons
+                    style={{paddingRight: 20, paddingLeft: 10}}
+                    name="person"
+                    color="black"
+                    size={18}
+                  />
 
-            <Text style={{color:"black"}}>Person Information</Text>
-        </View>
-        <View>
-        <FontAwesome name='angle-right' color="black" size={18}/>
+                  <Text style={{color: 'black'}}>Person Information</Text>
+                </View>
+                <View>
+                  <FontAwesome name="angle-right" color="black" size={18} />
+                </View>
+              </View>
+            </TouchableOpacity>
+          }
+          SecondRow={
+            <TouchableOpacity
+              onPress={() => navigation.navigate('CreateNewPassword')}>
+              <View
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                  paddingVertical: 15,
+                }}>
+                <View
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                  }}>
+                  <FontAwesome
+                    style={{paddingRight: 20, paddingLeft: 10}}
+                    name="lock"
+                    color="black"
+                    size={18}
+                  />
+                  <Text style={{color: 'black'}}>Recovery Password</Text>
+                </View>
+                <View>
+                  <FontAwesome name="angle-right" color="black" size={18} />
+                </View>
+              </View>
+            </TouchableOpacity>
+          }
+          ThiredRow={
+            <View
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                flexDirection: 'row',
+                paddingVertical: 15,
+              }}>
+              <View
+                style={{
+                  display: 'flex',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                }}>
+                <Fontisto
+                  style={{paddingRight: 20, paddingLeft: 10}}
+                  name="holiday-village"
+                  color="black"
+                  size={16}
+                />
+                <Text style={{color: 'black'}}>My Properties</Text>
+              </View>
+              <View>
+                <FontAwesome name="angle-right" color="black" size={18} />
+              </View>
+            </View>
+          }
+          ForthRow={
+            <View
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                flexDirection: 'row',
+                paddingVertical: 15,
+              }}>
+              <View
+                style={{
+                  display: 'flex',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                }}>
+                <FontAwesome
+                  style={{paddingRight: 20, paddingLeft: 10}}
+                  name="calendar"
+                  color="black"
+                  size={18}
+                />
+                <Text style={{color: 'black'}}>My Visits</Text>
+              </View>
+              <View>
+                <FontAwesome name="angle-right" color="black" size={18} />
+              </View>
+            </View>
+          }
+        />
 
-        </View>
-    </View>
-    </TouchableOpacity>
-      } 
-      
-      SecondRow={
-        <TouchableOpacity  onPress={()=> navigation.navigate("CreateNewPassword")}>
-        <View style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexDirection:"row",paddingVertical:15}}>
-        <View style={{display:"flex",justifyContent:"flex-start",alignItems:"center",flexDirection:"row"}}>
-            <FontAwesome style={{paddingRight:20,paddingLeft:10}} name='lock' color="black" size={18}/>
-            <Text style={{color:"black"}} >Recovery Password</Text>
-        </View>
-        <View>
-        <FontAwesome name='angle-right' color="black" size={18}/>
-        </View>
-    </View>
-    </TouchableOpacity>
-      }
+        <SettingCard
+          Header={
+            <View
+              style={{
+                marginLeft: 10,
+                paddingBottom: 20,
+                borderBottomWidth: 2,
+                borderBottomColor: COLORS.grey,
+                paddingTop: 20,
+              }}>
+              <Text style={{fontWeight: 'bold', fontSize: 15, color: 'black'}}>
+                General
+              </Text>
+            </View>
+          }
+          FirstRow={
+            <View
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                flexDirection: 'row',
+                paddingVertical: 15,
+              }}>
+              <View
+                style={{
+                  display: 'flex',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                }}>
+                <Ionicons
+                  style={{paddingRight: 20, paddingLeft: 10}}
+                  name="notifications"
+                  color="black"
+                  size={18}
+                />
 
-      ThiredRow={
-        <View style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexDirection:"row",paddingVertical:15}}>
-        <View style={{display:"flex",justifyContent:"flex-start",alignItems:"center",flexDirection:"row"}}>
-            <Fontisto style={{paddingRight:20,paddingLeft:10}} name='holiday-village' color="black" size={16}/>
-            <Text style={{color:"black"}}>My Properties</Text>
-        </View>
-        <View>
-        <FontAwesome name='angle-right' color="black" size={18}/>
-        </View>
-    </View>
-      }
-      
-      ForthRow={
-        <View style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexDirection:"row",paddingVertical:15}}>
-        <View style={{display:"flex",justifyContent:"flex-start",alignItems:"center",flexDirection:"row"}}>
-            <FontAwesome style={{paddingRight:20,paddingLeft:10}} name='calendar' color="black" size={18}/>
-            <Text style={{color:"black"}}>My Visits</Text>
-        </View>
-        <View>
-        <FontAwesome name='angle-right' color="black" size={18}/>
-        </View>
-    </View>
-      }
-      />
+                <Text style={{color: 'black'}}>Notification</Text>
+              </View>
+              <View style={{marginLeft: 20}}>
+                <Switch
+                  trackColor={{false: '#767577', true: COLORS.red}}
+                  thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+                  ios_backgroundColor="#3e3e3e"
+                  onValueChange={toggleSwitch}
+                  value={isEnabled}
+                />
+              </View>
+            </View>
+          }
+          SecondRow={
+            <View
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                flexDirection: 'row',
+                paddingVertical: 15,
+              }}>
+              <View
+                style={{
+                  display: 'flex',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                }}>
+                <FontAwesome
+                  style={{paddingRight: 20, paddingLeft: 10}}
+                  name="language"
+                  color="black"
+                  size={18}
+                />
+                <Text style={{color: 'black'}}>Language</Text>
+              </View>
+              <View>
+                <FontAwesome name="angle-right" color="black" size={18} />
+              </View>
+            </View>
+          }
+          ThiredRow={
+            <Pressable onPress={() => navigation.push('HelpCenterScreen')}>
+              <View
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                  paddingVertical: 15,
+                }}>
+                <View
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                  }}>
+                  <FontAwesome5
+                    style={{paddingRight: 20, paddingLeft: 10}}
+                    name="hands-helping"
+                    color="black"
+                    size={16}
+                  />
+                  <Text style={{color: 'black'}}>Help Center</Text>
+                </View>
+                <View>
+                  <FontAwesome name="angle-right" color="black" size={18} />
+                </View>
+              </View>
+            </Pressable>
+          }
+        />
 
+        <SettingCard
+          Header={
+            <View
+              style={{
+                marginLeft: 10,
+                paddingBottom: 20,
+                borderBottomWidth: 2,
+                borderBottomColor: COLORS.grey,
+                paddingTop: 20,
+              }}>
+              <Text style={{fontWeight: 'bold', fontSize: 15, color: 'black'}}>
+                About
+              </Text>
+            </View>
+          }
+          FirstRow={
+            <TouchableOpacity onPress={() => navigation.navigate('Policy')}>
+              <View
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                  paddingVertical: 15,
+                }}>
+                <View
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                  }}>
+                  <MaterialIcons
+                    style={{paddingRight: 20, paddingLeft: 10}}
+                    name="privacy-tip"
+                    color="black"
+                    size={18}
+                  />
 
-
-
-<SettingCard Header={<View style={{marginLeft:10,paddingBottom:20,borderBottomWidth:2,borderBottomColor:COLORS.grey,paddingTop:20}}><Text style={{fontWeight:"bold",fontSize:15,color:"black"}} >General</Text></View>} FirstRow={
-        <View style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexDirection:"row",paddingVertical:15}}>
-        <View style={{display:"flex",justifyContent:"flex-start",alignItems:"center",flexDirection:"row"}}>
-        <Ionicons style={{paddingRight:20,paddingLeft:10}} name='notifications' color="black" size={18}/>
-
-            <Text style={{color:"black"}}>Notification</Text>
-        </View>
-        <View style={{marginLeft:20}} >
-      <Switch
-        trackColor={{false: '#767577', true: COLORS.red}}
-        thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-        ios_backgroundColor="#3e3e3e"
-        onValueChange={toggleSwitch}
-        value={isEnabled}
-      />
-    </View>
-    </View>
-      } 
-      
-      SecondRow={
-        <View style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexDirection:"row",paddingVertical:15}}>
-        <View style={{display:"flex",justifyContent:"flex-start",alignItems:"center",flexDirection:"row"}}>
-            <FontAwesome style={{paddingRight:20,paddingLeft:10}} name='language' color="black" size={18}/>
-            <Text style={{color:"black"}} >Language</Text>
-        </View>
-        <View>
-        <FontAwesome name='angle-right' color="black" size={18}/>
-        </View>
-    </View>
-      }
-
-      ThiredRow={
-        <View style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexDirection:"row",paddingVertical:15}}>
-        <View style={{display:"flex",justifyContent:"flex-start",alignItems:"center",flexDirection:"row"}}>
-            <FontAwesome5 style={{paddingRight:20,paddingLeft:10}} name='hands-helping' color="black" size={16}/>
-            <Text style={{color:"black"}}>Help Center</Text>
-        </View>
-        <View>
-        <FontAwesome name='angle-right' color="black" size={18}/>
-        </View>
-    </View>
-      }
-      
-    
-
-      
-      />
-
-
-
-<SettingCard Header={<View style={{marginLeft:10,paddingBottom:20,borderBottomWidth:2,borderBottomColor:COLORS.grey,paddingTop:20}}><Text style={{fontWeight:"bold",fontSize:15,color:"black"}} >About</Text></View>}
- FirstRow={
-  
-  <TouchableOpacity  onPress={()=> navigation.navigate("Policy")}>
-        <View style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexDirection:"row",paddingVertical:15}}>
-        <View style={{display:"flex",justifyContent:"flex-start",alignItems:"center",flexDirection:"row"}}>
-        <MaterialIcons style={{paddingRight:20,paddingLeft:10}} name='privacy-tip' color="black" size={18}/>
-
-            <Text style={{color:"black"}}>Privacy & Policy</Text>
-        </View>
-        <View>
-        <FontAwesome name='angle-right' color="black" size={18}/>
-
-        </View>
-    </View>
-    </TouchableOpacity>
-      } 
-      
-      SecondRow={
-        <TouchableOpacity  onPress={()=> navigation.navigate("TermsOfService")}>
-        <View style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexDirection:"row",paddingVertical:15}}>
-        <View style={{display:"flex",justifyContent:"flex-start",alignItems:"center",flexDirection:"row"}}>
-            <FontAwesome style={{paddingRight:20,paddingLeft:10}} name='server' color="black" size={18}/>
-            <Text style={{color:"black"}} >Terms of Services</Text>
-        </View>
-        <View>
-        <FontAwesome name='angle-right' color="black" size={18}/>
-        </View>
-    </View>
-    </TouchableOpacity>
-      }
-
-      ThiredRow={
-        <TouchableOpacity  onPress={()=> navigation.navigate("AboutUs")}>
-
-        <View style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexDirection:"row",paddingVertical:15}}>
-        <View style={{display:"flex",justifyContent:"flex-start",alignItems:"center",flexDirection:"row"}}>
-            <FontAwesome style={{paddingRight:20,paddingLeft:10}} name='info' color="black" size={16}/>
-            <Text style={{color:"black"}}>About us</Text>
-        </View>
-        <View>
-        <FontAwesome name='angle-right' color="black" size={18}/>
-        </View>
-    </View>
-    </TouchableOpacity>
-      }
-      
-    
-
-      
-      />
-
-
-      <View style={{display:"flex",justifyContent:"flex-start",alignContent:"center",flexDirection:"row",padding:15}}>
-      <Ionicons style={{paddingRight:20,paddingLeft:10}} name='log-out-outline' color={COLORS.red} size={25}/>
-      <Text style={{fontSize:15,color:COLORS.red}}>Logout</Text>
-      </View>
-
+                  <Text style={{color: 'black'}}>Privacy & Policy</Text>
+                </View>
+                <View>
+                  <FontAwesome name="angle-right" color="black" size={18} />
+                </View>
+              </View>
+            </TouchableOpacity>
+          }
+          SecondRow={
+            <TouchableOpacity
+              onPress={() => navigation.navigate('TermsOfService')}>
+              <View
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                  paddingVertical: 15,
+                }}>
+                <View
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                  }}>
+                  <FontAwesome
+                    style={{paddingRight: 20, paddingLeft: 10}}
+                    name="server"
+                    color="black"
+                    size={18}
+                  />
+                  <Text style={{color: 'black'}}>Terms of Services</Text>
+                </View>
+                <View>
+                  <FontAwesome name="angle-right" color="black" size={18} />
+                </View>
+              </View>
+            </TouchableOpacity>
+          }
+          ThiredRow={
+            <TouchableOpacity onPress={() => navigation.navigate('AboutUs')}>
+              <View
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                  paddingVertical: 15,
+                }}>
+                <View
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                  }}>
+                  <FontAwesome
+                    style={{paddingRight: 20, paddingLeft: 10}}
+                    name="info"
+                    color="black"
+                    size={16}
+                  />
+                  <Text style={{color: 'black'}}>About us</Text>
+                </View>
+                <View>
+                  <FontAwesome name="angle-right" color="black" size={18} />
+                </View>
+              </View>
+            </TouchableOpacity>
+          }
+        />
+        <Pressable onPress={() => logout()}>
+          <View
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-start',
+              alignContent: 'center',
+              flexDirection: 'row',
+              padding: 15,
+            }}>
+            <Ionicons
+              style={{paddingRight: 20, paddingLeft: 10}}
+              name="log-out-outline"
+              color={COLORS.red}
+              size={25}
+            />
+            <Text style={{fontSize: 15, color: COLORS.red}}>Logout</Text>
+          </View>
+        </Pressable>
       </ScrollView>
-    
-
-
 
       {/* <View
         style={{

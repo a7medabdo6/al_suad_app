@@ -23,6 +23,7 @@ import CreateNewPassword from '../../CreateNewPassword';
 import TermsOfService from '../../TermsOfService';
 import AboutUs from '../../AboutUs';
 import Policy from '../../Policy';
+import HelpCenterScreen from '../../screens/HelpCenterScreen';
 
 const Stack = createStackNavigator();
 
@@ -39,18 +40,35 @@ export default function MyStack() {
         name="SettingScreen"
         component={SettingScreen}
       />
-
-<Stack.Screen
+      <Stack.Screen
         options={{
-          headerTitle: props => <BasicHeader color='white' {...props} title="Personal Information" />,
+          headerTitle: props => (
+            <BasicHeader color="white" {...props} title="Help Center" />
+          ),
+          headerShown: true,
+        }}
+        name="HelpCenterScreen"
+        component={HelpCenterScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerTitle: props => (
+            <BasicHeader
+              color="white"
+              {...props}
+              title="Personal Information"
+            />
+          ),
           headerShown: true,
         }}
         name="PersonalInformation"
         component={PersonalInformation}
       />
-<Stack.Screen
+      <Stack.Screen
         options={{
-          headerTitle: props => <BasicHeader color='white' {...props} title="Terms Of Service" />,
+          headerTitle: props => (
+            <BasicHeader color="white" {...props} title="Terms Of Service" />
+          ),
           headerShown: true,
         }}
         name="TermsOfService"
@@ -58,26 +76,31 @@ export default function MyStack() {
       />
       <Stack.Screen
         options={{
-          headerTitle: props => <BasicHeader color='white' {...props} title="About Us" />,
+          headerTitle: props => (
+            <BasicHeader color="white" {...props} title="About Us" />
+          ),
           headerShown: true,
         }}
         name="AboutUs"
         component={AboutUs}
       />
-        <Stack.Screen
+      <Stack.Screen
         options={{
-          headerTitle: props => <BasicHeader color='white' {...props} title="Privacy & Policy" />,
+          headerTitle: props => (
+            <BasicHeader color="white" {...props} title="Privacy & Policy" />
+          ),
           headerShown: true,
         }}
         name="Policy"
         component={Policy}
       />
-      
-<Stack.Screen
-        options={{
-          headerTitle: props => <BasicHeader color='white' {...props} title="Recovery Password" />,
-          headerShown: true,
 
+      <Stack.Screen
+        options={{
+          headerTitle: props => (
+            <BasicHeader color="white" {...props} title="Recovery Password" />
+          ),
+          headerShown: true,
         }}
         name="CreateNewPassword"
         component={CreateNewPassword}
