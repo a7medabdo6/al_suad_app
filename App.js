@@ -19,10 +19,10 @@ import SplashScreen from 'react-native-splash-screen';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
-  const [isAuth, setIsAuth] = useState(false);
+  // const [isAuth, setIsAuth] = useState(false);
   const [user, setuser] = useState(false);
   const [login, setLogin] = useState(false);
-  const {userInfo, logout} = useSelector(state => state.userinfo);
+  const {userInfo,isAuth, logout} = useSelector(state => state.userinfo);
 
   const [isRegister, setisRegister] = useState(false);
   const dispatch = useDispatch();
@@ -38,8 +38,10 @@ function App() {
   };
   useEffect(() => {
     setTimeout(() => {
-      SplashScreen.hide();
+SplashScreen.hide();
     }, 2000);
+    
+
 
     return () => {};
   }, []);
@@ -47,7 +49,7 @@ function App() {
   useEffect(() => {
     getAuth();
   }, [logout]);
-  return userInfo?.uid ? <AllStack /> : <AuthStack />;
+  return userInfo?.uid || isAuth ? <AllStack /> : <AuthStack />;
 }
 
 export default App;

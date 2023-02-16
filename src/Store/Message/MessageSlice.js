@@ -4,6 +4,7 @@ const UserSlice = createSlice({
   name: 'auth',
   initialState: {
     userInfo: null,
+    isAuth:false,
     login: true,
     register: false,
     logout: false,
@@ -11,6 +12,9 @@ const UserSlice = createSlice({
   reducers: {
     setuserInfo(state, action) {
       state.userInfo = action.payload;
+    },
+    setisAuth(state, action) {
+      state.isAuth = action.payload;
     },
     setLoginOrRegister(state, action) {
       state = {...state, ...action.payload};
@@ -21,5 +25,5 @@ const UserSlice = createSlice({
   },
 });
 
-export const {setuserInfo, setLogout} = UserSlice.actions;
+export const {setuserInfo, setLogout,setisAuth} = UserSlice.actions;
 export default UserSlice.reducer;

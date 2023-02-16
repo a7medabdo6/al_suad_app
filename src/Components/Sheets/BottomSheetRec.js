@@ -52,7 +52,6 @@ export default function Example({UploadImage, data}) {
         </Text>
       </Pressable>
       {error && Alert.alert(error)}
-      {/* {error && <Text style={{color: 'red'}}>{error}</Text>} */}
 
       <RBSheet
         ref={refRBSheet}

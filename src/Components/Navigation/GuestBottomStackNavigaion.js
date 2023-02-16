@@ -20,12 +20,10 @@ import FavScreen from '../../screens/Fav';
 import PaymentHeader from '../Headers/PaymentHeader';
 import HomeStack from './HomeStack';
 import SettingScreen from '../../screens/Settings';
-import { useSelector } from 'react-redux';
+import HomeScreenGuest from '../../screens/HomeGuest';
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
-  const {userInfo, logout} = useSelector(state => state.userinfo);
-
   function LogoTitle() {
     return (
       <View
@@ -96,78 +94,28 @@ function MyTabs() {
           },
           headerShown: false,
         }}
-        name="HomeMain"
-        component={HomeStack}
+        name="HomeScreenGuest"
+        component={HomeScreenGuest}
       />
-       <Tab.Screen
+     
+     <Tab.Screen
         options={{
           tabBarIcon: ({focused}) => {
             return (
               <Icon
-                name="cards-heart-outline"
+                name="home-outline"
+                size={22}
                 color={focused ? COLORS.red : COLORS.dark}
-                size={20}
               />
             );
           },
           headerShown: false,
         }}
-        name="Loved"
+        name="FavScreen"
         component={FavScreen}
       />
       
-      {
-        userInfo?.uid ? <>
-       <Tab.Screen
-        options={{
-          headerLeft: false,
-          headerBackTitleVisible: false,
-          headerStyle: {
-            backgroundColor: COLORS.white,
-            height: 80,
-          },
-          header: props => <BasicHeader {...props} title="My properties" />,
-          tabBarIcon: ({focused}) => {
-            return (
-              <Fontisto
-                name="holiday-village"
-                size={18}
-                color={focused ? COLORS.red : COLORS.dark}
-              />
-            );
-          },
-          headerShown: false,
-        }}
-        name="my_Property"
-        component={StackNavigation}
-      />
-      <Tab.Screen
-        options={{
-          headerStyle: {
-            backgroundColor: COLORS.backgroundblue,
-          },
-          tabBarIcon: ({focused}) => {
-            return (
-              <Ionicons
-                name="md-settings-outline"
-                size={20}
-                style={{fontWeight: 'bold'}}
-                color={focused ? COLORS.red : COLORS.dark}
-              />
-            );
-          },
-
-          headerShown: false,
-        }}
-        name="settingsMain"
-        component={SettingStack}
-      />
-        </>:null
-
-
-      }
-
-     
+    
     </Tab.Navigator>
   );
 }

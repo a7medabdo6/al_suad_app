@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import COLORS from '../consts/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import {useDispatch, useSelector} from 'react-redux';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -27,6 +28,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Skeleton from '../Components/Skeleton';
 import {setHomeDetailedData} from '../Store/HomeData/HomeSlice';
 import {api} from '../axios';
+import { setisAuth } from '../Store/Message/MessageSlice';
 
 const HomeScreen = ({route}) => {
   const {data, isLoading} = useHomeApi();
@@ -221,6 +223,22 @@ const HomeScreen = ({route}) => {
             {HomeData?.length} results
           </Text>
         </View>
+        <Pressable onPress={() => dispatch(setisAuth(false))}>
+          <View style={style.sortBtn}>
+            <Icon
+
+              name="login"
+              color={COLORS.dark}
+              style={{
+                borderWidth: 1,
+                padding: 5,
+                borderColor: COLORS.grey,
+                borderRadius: 4,
+              }}
+              size={18}
+            />
+          </View>
+        </Pressable>
         <Pressable onPress={() => navigation.push('FilterScreen')}>
           <View style={style.sortBtn}>
             <Icon

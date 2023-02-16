@@ -18,6 +18,11 @@ import PdfView from '../../screens/PdfVeiw';
 import VideoRecScreen from '../../screens/VideoRec';
 import SettingScreen from '../../screens/Settings';
 import MyVisitsScreen from '../../screens/MyVisits';
+import PersonalInformation from '../../PersonalInformation';
+import CreateNewPassword from '../../CreateNewPassword';
+import TermsOfService from '../../TermsOfService';
+import AboutUs from '../../AboutUs';
+import Policy from '../../Policy';
 
 const Stack = createStackNavigator();
 
@@ -33,6 +38,49 @@ export default function MyStack() {
         }}
         name="SettingScreen"
         component={SettingScreen}
+      />
+
+<Stack.Screen
+        options={{
+          headerTitle: props => <BasicHeader color='white' {...props} title="Personal Information" />,
+          headerShown: true,
+        }}
+        name="PersonalInformation"
+        component={PersonalInformation}
+      />
+<Stack.Screen
+        options={{
+          headerTitle: props => <BasicHeader color='white' {...props} title="Terms Of Service" />,
+          headerShown: true,
+        }}
+        name="TermsOfService"
+        component={TermsOfService}
+      />
+      <Stack.Screen
+        options={{
+          headerTitle: props => <BasicHeader color='white' {...props} title="About Us" />,
+          headerShown: true,
+        }}
+        name="AboutUs"
+        component={AboutUs}
+      />
+        <Stack.Screen
+        options={{
+          headerTitle: props => <BasicHeader color='white' {...props} title="Privacy & Policy" />,
+          headerShown: true,
+        }}
+        name="Policy"
+        component={Policy}
+      />
+      
+<Stack.Screen
+        options={{
+          headerTitle: props => <BasicHeader color='white' {...props} title="Recovery Password" />,
+          headerShown: true,
+
+        }}
+        name="CreateNewPassword"
+        component={CreateNewPassword}
       />
       <Stack.Screen
         options={{

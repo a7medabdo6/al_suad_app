@@ -20,7 +20,9 @@ import HomeDataFilter from '../../screens/HomeDataFilter';
 import DetailsScreen from '../../screens/DetailsScreen';
 import LogoHeader from '../Headers/LogoHeader';
 import FavScreen from '../../screens/Fav';
+import CreateNewPassword from '../../CreateNewPassword';
 
+import GuestBottomStackNavigaion from "../../Components/Navigation/GuestBottomStackNavigaion"
 const Stack = createStackNavigator();
 
 export default function MyStack() {
@@ -63,80 +65,11 @@ export default function MyStack() {
           headerBackTitleVisible: false,
           headerShown: false,
         }}
-        name="HomeScreenGuest"
-        component={HomeScreenGuest}
+        name="GuestBottomStackNavigaion"
+        component={GuestBottomStackNavigaion}
       />
-      <Stack.Screen
-        options={{
-          headerStyle: {
-            backgroundColor: COLORS.white,
-            height: 70,
-          },
-
-          headerLeft: false,
-          headerBackTitleVisible: false,
-          headerShown: false,
-        }}
-        name="FilterScreen"
-        component={FilterScreen}
-      />
-      <Stack.Screen
-        options={{
-          headerStyle: {
-            backgroundColor: COLORS.white,
-            height: 70,
-          },
-
-          headerLeft: false,
-          headerBackTitleVisible: false,
-          headerShown: false,
-        }}
-        name="ResetPassword"
-        component={ResetPassword}
-      />
-
-      <Stack.Screen
-        options={{
-          headerShown: false,
-        }}
-        name="HomeDataFilter"
-        component={HomeDataFilter}
-      />
-      <Stack.Screen
-        options={{
-          headerLeft: false,
-          headerBackTitleVisible: false,
-          headerShown: false,
-        }}
-        name="DetailsScreenInStack"
-        component={DetailsScreen}
-      />
-      <Stack.Screen
-        options={{
-          headerLeft: false,
-          headerBackTitleVisible: false,
-          headerShown: true,
-          header: props => <LogoHeader {...props} />,
-        }}
-        name="Inquiry"
-        component={Inquiry}
-      />
-      <Stack.Screen
-        options={{
-          tabBarIcon: ({focused}) => {
-            return (
-              <Icon
-                name="cards-heart-outline"
-                color={focused ? COLORS.red : COLORS.dark}
-                size={20}
-              />
-            );
-          },
-          headerShown: false,
-        }}
-        name="Loved"
-        component={FavScreen}
-      />
+      
+  
     </Stack.Navigator>
   );
 }
