@@ -159,7 +159,10 @@ const Setting = () => {
 
 
 
-<SettingCard Header={<View style={{marginLeft:10,paddingBottom:20,borderBottomWidth:2,borderBottomColor:COLORS.grey,paddingTop:20}}><Text style={{fontWeight:"bold",fontSize:15,color:"black"}} >About</Text></View>} FirstRow={
+<SettingCard Header={<View style={{marginLeft:10,paddingBottom:20,borderBottomWidth:2,borderBottomColor:COLORS.grey,paddingTop:20}}><Text style={{fontWeight:"bold",fontSize:15,color:"black"}} >About</Text></View>}
+ FirstRow={
+  
+  <TouchableOpacity  onPress={()=> navigation.navigate("Policy")}>
         <View style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexDirection:"row",paddingVertical:15}}>
         <View style={{display:"flex",justifyContent:"flex-start",alignItems:"center",flexDirection:"row"}}>
         <MaterialIcons style={{paddingRight:20,paddingLeft:10}} name='privacy-tip' color="black" size={18}/>
@@ -171,9 +174,11 @@ const Setting = () => {
 
         </View>
     </View>
+    </TouchableOpacity>
       } 
       
       SecondRow={
+        <TouchableOpacity  onPress={()=> navigation.navigate("TermsOfService")}>
         <View style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexDirection:"row",paddingVertical:15}}>
         <View style={{display:"flex",justifyContent:"flex-start",alignItems:"center",flexDirection:"row"}}>
             <FontAwesome style={{paddingRight:20,paddingLeft:10}} name='server' color="black" size={18}/>
@@ -183,9 +188,12 @@ const Setting = () => {
         <FontAwesome name='angle-right' color="black" size={18}/>
         </View>
     </View>
+    </TouchableOpacity>
       }
 
       ThiredRow={
+        <TouchableOpacity  onPress={()=> navigation.navigate("AboutUs")}>
+
         <View style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexDirection:"row",paddingVertical:15}}>
         <View style={{display:"flex",justifyContent:"flex-start",alignItems:"center",flexDirection:"row"}}>
             <FontAwesome style={{paddingRight:20,paddingLeft:10}} name='info' color="black" size={16}/>
@@ -195,6 +203,7 @@ const Setting = () => {
         <FontAwesome name='angle-right' color="black" size={18}/>
         </View>
     </View>
+    </TouchableOpacity>
       }
       
     
