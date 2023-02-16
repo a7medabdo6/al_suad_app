@@ -37,7 +37,9 @@ function App() {
     return parsedUser;
   };
   useEffect(() => {
-    SplashScreen.hide();
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 2000);
 
     return () => {};
   }, []);

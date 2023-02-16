@@ -38,7 +38,6 @@ const HomeScreen = ({route}) => {
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const dontRefresh = route.params;
   useEffect(() => {
     if (!userInfo) {
       // console.log(login, 'login');
@@ -49,7 +48,6 @@ const HomeScreen = ({route}) => {
     dispatch(setHomeDetailedData(house));
     navigation.push('DetailsScreenInStack');
   };
-  console.log(dontRefresh, 'dontRefresh');
 
   const HandleFavClick = async id => {
     setAllLoved(old => [...old, id]);

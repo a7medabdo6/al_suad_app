@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {View, Button, Text, Image, Pressable} from 'react-native';
+import {View, Button, Text, Image, Pressable, Alert} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import SelectBox from '../Inputs/SelectBox';
 import BasicButton from '../Buttons/BasicButton';
@@ -51,7 +51,8 @@ export default function Example({UploadImage, data}) {
           Take Photo Or Video
         </Text>
       </Pressable>
-      {error && <Text style={{color: 'red'}}>{error}</Text>}
+      {error && Alert.alert(error)}
+      {/* {error && <Text style={{color: 'red'}}>{error}</Text>} */}
 
       <RBSheet
         ref={refRBSheet}
