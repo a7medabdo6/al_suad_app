@@ -6,7 +6,7 @@ import COLORS from '../consts/colors';
 
 const App = ({callCreateReq}) => {
   const camera = useRef(null);
-  const [video, setVideo] = useState('');
+  const [video, setVideo] = useState(null);
   const ConvertVideoBase64 = async uri => {
     const base64Video = await RNFS.readFile(uri, 'base64');
     setVideo(base64Video);
@@ -15,16 +15,19 @@ const App = ({callCreateReq}) => {
     if (camera) {
       const {uri, codec = 'mp4'} = await camera.current.recordAsync();
       console.info(uri, 'uri');
-      ConvertVideoBase64(uri);
+      if (uri) {
+        ConvertVideoBase64(uri);
+      }
     }
   };
   const Stop = () => {
     camera.current.stopRecording();
-    callCreateReq(video);
   };
   useEffect(() => {
     console.log(video, 'video');
-
+    if (video) {
+      callCreateReq(video);
+    }
     return () => {};
   }, [video]);
 

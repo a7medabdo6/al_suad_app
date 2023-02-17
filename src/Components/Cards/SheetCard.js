@@ -13,15 +13,19 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {api} from '../../axios';
 import {useSelector} from 'react-redux';
 import {useState} from 'react';
+import {useMaintianenceApi} from '../../apis/Home';
 const SheetCard = ({
   openModal,
   setOpenModal,
   MaintainenceSelceted,
   setOpen,
+  handleCloseModal,
 }) => {
   const [comment, setcomment] = useState('');
   const {userInfo} = useSelector(state => state.userinfo);
   const [response, setresponse] = useState(false);
+  const selectedProp = useSelector(state => state.MyProperties.selectedProp);
+  const {mutate: MaintianenceApi, isLoading} = useMaintianenceApi();
 
   const Submit = async () => {
     try {
@@ -35,8 +39,14 @@ const SheetCard = ({
       Toast.show('Comments Sent Succefully.', Toast.LONG, {
         backgroundColor: 'orange',
       });
+      handleCloseModal();
       setresponse(res.data);
       setOpen(false);
+      MaintianenceApi({
+        partner_type: userInfo?.partner[0].is_tenant ? 'tenant' : 'owner',
+        partner: userInfo.partner_id,
+        flat: selectedProp.id,
+      });
     } catch (error) {
       console.log(error.response, 'error');
     }

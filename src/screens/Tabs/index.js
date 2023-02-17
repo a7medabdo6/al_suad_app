@@ -99,6 +99,9 @@ const SecondRoute = () => {
   const handleOpenModal = () => {
     sheetRef.current.snapTo(0);
   };
+  const handleCloseModal = () => {
+    sheetRef.current.snapTo(2);
+  };
   return (
     <View
       style={{
@@ -155,6 +158,7 @@ const SecondRoute = () => {
           openModal={openModal}
           setOpenModal={setOpenModal}
           sheetRef={sheetRef}
+          handleCloseModal={handleCloseModal}
           MaintainenceSelceted={MaintainenceSelceted}
         />
       </View>

@@ -13,7 +13,7 @@ import {
   Pressable,
   ActivityIndicator,
 } from 'react-native';
-
+import SelectBox from '../Components/Inputs/SelectBox';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import house from '../consts/houses';
@@ -163,7 +163,7 @@ const SignupScreen = ({navigation, route, setIsAuth, setisRegister}) => {
                 {errorMessage}
               </Text>
             ))}
-          <FirstInput
+          {/* <FirstInput
             text="type"
             value={type}
             fun={e => settype(e)}
@@ -175,6 +175,14 @@ const SignupScreen = ({navigation, route, setIsAuth, setisRegister}) => {
                 color={COLORS.red}
               />
             }
+          /> */}
+          <SelectBox
+            Type={'Select Type'}
+            settype={settype}
+            data={[
+              {name: 'tenant', id: 'tenant'},
+              {name: 'owner', id: 'owner'},
+            ]}
           />
           {isFieldInError('type') &&
             getErrorsInField('type').map(errorMessage => (

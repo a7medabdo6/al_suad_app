@@ -57,7 +57,7 @@ const PaymentHeader = ({title, item}) => {
               source={
                 item.image_128
                   ? {
-                      uri: `data:image/jpeg;base64,${HomeDetailedData.image_128}`,
+                      uri: `data:image/jpeg;base64,${item.image_128}`,
                     }
                   : require('../../assets/unknown.jpg')
               }
