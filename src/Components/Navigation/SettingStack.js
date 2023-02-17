@@ -24,6 +24,8 @@ import TermsOfService from '../../TermsOfService';
 import AboutUs from '../../AboutUs';
 import Policy from '../../Policy';
 import HelpCenterScreen from '../../screens/HelpCenterScreen';
+import RecoveryPassword from '../../screens/RecoveryPassword';
+import OTPCode from '../../screens/OTPCode';
 
 const Stack = createStackNavigator();
 
@@ -64,6 +66,35 @@ export default function MyStack() {
         name="PersonalInformation"
         component={PersonalInformation}
       />
+ <Stack.Screen
+        options={{
+          headerTitle: props => (
+            <BasicHeader
+              color="white"
+              {...props}
+              title="RecoveryPassword"
+            />
+          ),
+          headerShown: true,
+        }}
+        name="RecoveryPassword"
+        component={RecoveryPassword}
+      />
+       <Stack.Screen
+        options={{
+          headerTitle: props => (
+            <BasicHeader
+              color="white"
+              {...props}
+              title="OTP Code Verification"
+            />
+          ),
+          headerShown: true,
+        }}
+        name="OTPCode"
+        component={OTPCode}
+      />
+
       <Stack.Screen
         options={{
           headerTitle: props => (
@@ -98,7 +129,7 @@ export default function MyStack() {
       <Stack.Screen
         options={{
           headerTitle: props => (
-            <BasicHeader color="white" {...props} title="Recovery Password" />
+            <BasicHeader color="white" {...props} title="CreateNewPassword" />
           ),
           headerShown: true,
         }}

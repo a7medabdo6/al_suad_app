@@ -101,8 +101,9 @@ const Setting = () => {
             </TouchableOpacity>
           }
           SecondRow={
+
             <TouchableOpacity
-              onPress={() => navigation.navigate('CreateNewPassword')}>
+              onPress={() => navigation.navigate('RecoveryPassword')}>
               <View
                 style={{
                   display: 'flex',
