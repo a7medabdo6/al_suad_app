@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -28,21 +28,28 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import {ScrollView} from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
+import {useHelpCenterApi} from '../apis/Home/index';
 const Setting = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
+  const {mutate: HelpCenterApi, isLoading} = useHelpCenterApi();
   const {userInfo} = useSelector(state => state.userinfo);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const logout = async () => {
     const res = await AsyncStorage.removeItem('User');
-    console.log('logout', res, 'logout');
+    // console.log('logout', res, 'logout');
 
     dispatch(setLogout(true));
     RNRestart.Restart();
   };
+  useEffect(() => {
+    //
+    HelpCenterApi();
+
+    return () => {};
+  }, []);
+
   return (
     <SafeAreaView
       style={{backgroundColor: COLORS.backgroundblue, height: '100%'}}>
@@ -101,9 +108,8 @@ const Setting = () => {
             </TouchableOpacity>
           }
           SecondRow={
-
             <TouchableOpacity
-              onPress={() => navigation.navigate('RecoveryPassword')}>
+              onPress={() => navigation.navigate('CreateNewPassword')}>
               <View
                 style={{
                   display: 'flex',

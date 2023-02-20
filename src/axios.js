@@ -15,7 +15,7 @@ const headers = {
 // }
 
 export const api = axios.create({
-  baseURL: 'https://odooerp-ae-property2.odoo.com/',
+  baseURL: 'https://odooerp-ae-property-developmentstage-7168665.dev.odoo.com/',
   headers: {...headers},
   
 

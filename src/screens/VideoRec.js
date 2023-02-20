@@ -38,6 +38,8 @@ const VideoRecScreen = ({navigation, route}) => {
   const [photo, setphoto] = React.useState('');
   const [disable, setDisable] = React.useState(false);
 
+  const [Isprogress, setIsprogress] = React.useState(false);
+
   // const [name, setname] = useState('');
   // const [type, settype] = useState('');
   // const [allFilesdata, setallFilesdata] = React.useState([]);
@@ -49,6 +51,8 @@ const VideoRecScreen = ({navigation, route}) => {
 
   var callRequested = false;
   const callCreateReq = async video => {
+    setIsprogress(true);
+
     console.log(data, 'data');
     try {
       setDisable(true);
@@ -66,6 +70,7 @@ const VideoRecScreen = ({navigation, route}) => {
         Toast.show('Request Created Succefully.', Toast.LONG, {
           backgroundColor: 'orange',
         });
+        setIsprogress(false);
 
         navigation.goBack();
       }
@@ -88,7 +93,11 @@ const VideoRecScreen = ({navigation, route}) => {
         />
 
         <View style={style.detailsContainer}>
-          <VideoRec callCreateReq={callCreateReq} />
+          <VideoRec
+            callCreateReq={callCreateReq}
+            setIsprogress={setIsprogress}
+            Isprogress={Isprogress}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>

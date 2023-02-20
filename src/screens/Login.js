@@ -52,7 +52,7 @@ const dispatch=useDispatch()
 
   const HandleLogin = async event => {
     validate({
-      password: {required: true, minlength: 5},
+      password: {required: true, minlength: 2},
       email: {required: true, minlength: 5},
     });
 

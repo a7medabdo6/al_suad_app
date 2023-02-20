@@ -11,18 +11,46 @@ import {setmyproperties} from '../../Store/MyProperty/MyPropertySlice';
 import {setCreateVisit} from '../../Store/CreateVisit/CreateVistSlice';
 import {setMaintainence} from '../../Store/Maintainence/MaintainenceSlice';
 import {setPayments} from '../../Store/Payments/PaymentsSlice';
+import {setHelpCenter} from '../../Store/HelpCenterSlice/HelpCenterSlice';
+import {
+  setPass,
+  setPersonalInfo,
+} from '../../Store/PersonalInfoSlice/PersonalInfoSlice';
 const getHomeData = async data => {
   return await api.post('api/generic/property.flat', {});
 };
 const getMyPropertiesData = async data => {
   return await api.post(`api/get_my_property/${data.partner_id}`, {});
 };
+const getHelpCenter = async data => {
+  return await api.post(`api/get_company_info/`, {});
+};
+//https://odooerp-ae-property-developmentstage-7168665.dev.odoo.com/api/get_company_info
 const getMaintianenceData = async data => {
   return await api.post('api/property_requests', {
     params: {
       flat: data.flat,
       partner: data.partner,
       partner_type: data.partner_type,
+    },
+  });
+};
+const ChangePersonalInfo = async data => {
+  return await api.post('api/change_personal_info', {
+    params: {
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      partner_id: data.partner_id,
+    },
+  });
+};
+const ChangePassword = async data => {
+  return await api.post('api/change_password', {
+    params: {
+      password: data.password,
+      confirm_password: data.confirm_password,
+      partner_id: data.partner_id,
     },
   });
 };
@@ -107,9 +135,32 @@ const useMyPropertyApi = data => {
       //   headers: res.headers,
       //   data: res.data,
       // };
-      // console.log(res.data?.result.reverse(), 'result');
+      console.log(res.data, 'result');
       let reversed = [...res.data?.result];
       dispatch(setmyproperties(reversed));
+      return res.data;
+    },
+    onError: err => {
+      console.log(err, 'err');
+
+      //   dispatch(errorAtLogin(err.response.data.detail));
+      //  return err;
+    },
+  });
+};
+const useHelpCenterApi = data => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+  return useMutation(getHelpCenter, {
+    onSuccess: res => {
+      // const result = {
+      //   status: res.status + '-' + res.statusText,
+      //   headers: res.headers,
+      //   data: res.data,
+      // };
+      console.log(res.data, 'HelpCenterApi HelpCenterApi');
+      dispatch(setHelpCenter(res.data?.result));
       return res.data;
     },
     onError: err => {
@@ -164,6 +215,42 @@ const useMaintianenceApi = data => {
 
       //   dispatch(errorAtLogin(err.response.data.detail));
       //  return err;
+    },
+  });
+};
+const useChangePersonalInfo = data => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+  return useMutation(ChangePersonalInfo, {
+    onSuccess: res => {
+      dispatch(setPersonalInfo(res.data?.result));
+      console.log(res.data?.result, 'res.data?.result');
+      dispatch(setuserInfo(res.data?.result?.record[0]));
+
+      navigation.push('SettingScreen');
+
+      return res.data;
+    },
+    onError: err => {
+      console.log(err, 'err');
+    },
+  });
+};
+const useChangeassword = data => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+  return useMutation(ChangePassword, {
+    onSuccess: res => {
+      // dispatch(setPassword(res.data?.result));
+      // navigation.push('SettingScreen');
+      dispatch(setPass(res?.data?.result));
+      console.log(res.data, 'change password');
+      return res.data;
+    },
+    onError: err => {
+      console.log(err, 'err');
     },
   });
 };
@@ -242,4 +329,7 @@ export {
   usePaymentsForTenantApi,
   useCreateUserHook,
   useFavApi,
+  useHelpCenterApi,
+  useChangePersonalInfo,
+  useChangeassword,
 };

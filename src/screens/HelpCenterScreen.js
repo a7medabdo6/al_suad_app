@@ -13,15 +13,16 @@ import {
   ScrollView,
   Pressable,
 } from 'react-native';
+
 import {TabView, SceneMap} from 'react-native-tab-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 const ScreenWidth = Dimensions.get('window').width;
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import COLORS from '../consts/colors';
-
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Accordian from '../Components/Accordian';
 import HelpCenterCard from '../Components/Accordian/HelpCenterCard';
+import {useSelector} from 'react-redux';
 const FirstRoute = () => {
   //   useEffect(() => {
 
@@ -65,6 +66,9 @@ const FirstRoute = () => {
   );
 };
 const SecondRoute = () => {
+  const {HelpCenter} = useSelector(state => state.HelpCenter);
+  // console.log(HelpCenter?.company_id?.[0].about_us, 'HelpCenter');
+
   return (
     <ScrollView>
       <View
@@ -76,13 +80,75 @@ const SecondRoute = () => {
           display: 'flex',
           flexDirection: 'column',
         }}>
-        <HelpCenterCard />
-        <HelpCenterCard />
-        <HelpCenterCard />
-        <HelpCenterCard />
-        <HelpCenterCard />
-        <HelpCenterCard />
-        <HelpCenterCard />
+        {HelpCenter?.company_id?.[0].customer_service && (
+          <HelpCenterCard
+            text="Custome Service"
+            icon={
+              <AntDesign
+                style={{fontWeight: 'bold', marginRight: 10}}
+                name="customerservice"
+                color={COLORS.red}
+                size={22}
+              />
+            }
+          />
+        )}
+        {HelpCenter?.company_id?.[0].whatsapp && (
+          <HelpCenterCard
+            value={HelpCenter?.company_id?.[0].whatsapp}
+            text="whatsapp"
+            icon={
+              <FontAwesome
+                style={{fontWeight: 'bold', marginRight: 10}}
+                name="whatsapp"
+                color={COLORS.red}
+                size={22}
+              />
+            }
+          />
+        )}
+        {HelpCenter?.company_id?.[0].facebook && (
+          <HelpCenterCard
+            value={HelpCenter?.company_id?.[0].facebook}
+            text="facebook"
+            icon={
+              <FontAwesome
+                style={{fontWeight: 'bold', marginRight: 10}}
+                name="facebook"
+                color={COLORS.red}
+                size={22}
+              />
+            }
+          />
+        )}
+        {HelpCenter?.company_id?.[0].twitter && (
+          <HelpCenterCard
+            value={HelpCenter?.company_id?.[0].twitter}
+            text="twitter"
+            icon={
+              <FontAwesome
+                style={{fontWeight: 'bold', marginRight: 10}}
+                name="twitter"
+                color={COLORS.red}
+                size={22}
+              />
+            }
+          />
+        )}
+        {HelpCenter?.company_id?.[0].instagram && (
+          <HelpCenterCard
+            text="instagram"
+            value={HelpCenter?.company_id?.[0].instagram}
+            icon={
+              <FontAwesome
+                style={{fontWeight: 'bold', marginRight: 10}}
+                name="instagram"
+                color={COLORS.red}
+                size={22}
+              />
+            }
+          />
+        )}
       </View>
     </ScrollView>
   );

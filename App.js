@@ -22,7 +22,7 @@ function App() {
   // const [isAuth, setIsAuth] = useState(false);
   const [user, setuser] = useState(false);
   const [login, setLogin] = useState(false);
-  const {userInfo,isAuth, logout} = useSelector(state => state.userinfo);
+  const {userInfo, isAuth, logout} = useSelector(state => state.userinfo);
 
   const [isRegister, setisRegister] = useState(false);
   const dispatch = useDispatch();
@@ -38,10 +38,8 @@ function App() {
   };
   useEffect(() => {
     setTimeout(() => {
-SplashScreen.hide();
+      SplashScreen.hide();
     }, 2000);
-    
-
 
     return () => {};
   }, []);

@@ -19,7 +19,7 @@ const ScreenWidth = Dimensions.get('window').width;
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import COLORS from '../../consts/colors';
-const HelpCenterCard = () => {
+const HelpCenterCard = ({icon, value, text}) => {
   return (
     <View
       style={{
@@ -46,15 +46,8 @@ const HelpCenterCard = () => {
             paddingHorizontal: 20,
             flexDirection: 'row',
           }}>
-          <AntDesign
-            style={{fontWeight: 'bold', marginRight: 10}}
-            name="customerservice"
-            color={COLORS.red}
-            size={22}
-          />
-          <Text style={{color: 'black', fontWeight: 'bold'}}>
-            Custome Service
-          </Text>
+          {icon}
+          <Text style={{color: 'black', fontWeight: 'bold'}}>{text}</Text>
         </View>
       </View>
     </View>

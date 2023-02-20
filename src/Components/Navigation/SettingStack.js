@@ -66,21 +66,17 @@ export default function MyStack() {
         name="PersonalInformation"
         component={PersonalInformation}
       />
- <Stack.Screen
+      <Stack.Screen
         options={{
           headerTitle: props => (
-            <BasicHeader
-              color="white"
-              {...props}
-              title="RecoveryPassword"
-            />
+            <BasicHeader color="white" {...props} title="RecoveryPassword" />
           ),
           headerShown: true,
         }}
         name="RecoveryPassword"
         component={RecoveryPassword}
       />
-       <Stack.Screen
+      <Stack.Screen
         options={{
           headerTitle: props => (
             <BasicHeader
@@ -129,7 +125,7 @@ export default function MyStack() {
       <Stack.Screen
         options={{
           headerTitle: props => (
-            <BasicHeader color="white" {...props} title="CreateNewPassword" />
+            <BasicHeader color="white" {...props} title="Create New Password" />
           ),
           headerShown: true,
         }}

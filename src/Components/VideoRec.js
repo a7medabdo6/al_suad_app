@@ -4,7 +4,8 @@ import {RNCamera} from 'react-native-camera';
 import RNFS from 'react-native-fs';
 import COLORS from '../consts/colors';
 
-const App = ({callCreateReq}) => {
+const App = ({callCreateReq, setIsprogress, Isprogress}) => {
+  const [IsRec, setIsRec] = useState(false);
   const camera = useRef(null);
   const [video, setVideo] = useState(null);
   const ConvertVideoBase64 = async uri => {
@@ -12,6 +13,7 @@ const App = ({callCreateReq}) => {
     setVideo(base64Video);
   };
   const Submit = async () => {
+    setIsRec(true);
     if (camera) {
       const {uri, codec = 'mp4'} = await camera.current.recordAsync();
       console.info(uri, 'uri');
@@ -21,6 +23,7 @@ const App = ({callCreateReq}) => {
     }
   };
   const Stop = () => {
+    setIsRec(false);
     camera.current.stopRecording();
   };
   useEffect(() => {
@@ -54,45 +57,91 @@ const App = ({callCreateReq}) => {
   };
   return (
     <View style={styles.container}>
-      <View
-        style={{flexDirection: 'row', height: '70%', backgroundColor: 'white'}}>
-        <View style={{width: '100%', height: '100%'}}>{RenderCam()}</View>
-      </View>
-
-      <Pressable
-        onPress={Submit}
-        style={{
-          height: 50,
-          marginTop: 30,
-          backgroundColor: COLORS.red,
-          width: '100%',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-        <Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>
-          Start
-        </Text>
-      </Pressable>
-      <Pressable
-        onPress={Stop}
-        style={{
-          height: 50,
-          marginTop: 10,
-          backgroundColor: COLORS.red,
-          width: '100%',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-        <Text
-          style={{
-            color: 'white',
-            fontWeight: 'bold',
-            fontSize: 20,
-            backgroundColor: COLORS.red,
-          }}>
-          Stop and Upload
-        </Text>
-      </Pressable>
+      <>
+        {Isprogress ? (
+          <>
+            <View>
+              <Text style={{fontWeight: 'bold', fontSize: 20}}>
+                Please Wait..
+              </Text>
+            </View>
+          </>
+        ) : (
+          <>
+            <View
+              style={{
+                flexDirection: 'row',
+                height: '70%',
+                backgroundColor: 'white',
+              }}>
+              <View style={{width: '100%', height: '100%'}}>{RenderCam()}</View>
+            </View>
+            <View
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'row',
+              }}>
+              <Pressable
+                onPress={Submit}
+                style={{
+                  height: 50,
+                  marginTop: 30,
+                  backgroundColor: COLORS.red,
+                  width: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <Text
+                  style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>
+                  Start
+                </Text>
+              </Pressable>
+            </View>
+            {IsRec && (
+              <View
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                  height: 50,
+                }}>
+                <Text>Rec</Text>
+                <View
+                  style={{
+                    width: 15,
+                    marginHorizontal: 5,
+                    height: 15,
+                    borderRadius: 500,
+                    backgroundColor: COLORS.red,
+                  }}></View>
+              </View>
+            )}
+            <Pressable
+              onPress={Stop}
+              style={{
+                height: 50,
+                marginTop: 10,
+                backgroundColor: COLORS.red,
+                width: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Text
+                style={{
+                  color: 'white',
+                  fontWeight: 'bold',
+                  fontSize: 20,
+                  backgroundColor: COLORS.red,
+                }}>
+                Stop and Upload
+              </Text>
+            </Pressable>
+          </>
+        )}
+      </>
     </View>
   );
 };

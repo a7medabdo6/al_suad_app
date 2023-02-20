@@ -20,7 +20,7 @@ import FavScreen from '../../screens/Fav';
 import PaymentHeader from '../Headers/PaymentHeader';
 import HomeStack from './HomeStack';
 import SettingScreen from '../../screens/Settings';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
@@ -99,7 +99,35 @@ function MyTabs() {
         name="HomeMain"
         component={HomeStack}
       />
-       <Tab.Screen
+      {userInfo?.uid ? (
+        <>
+          <Tab.Screen
+            options={{
+              headerLeft: false,
+              headerBackTitleVisible: false,
+              headerStyle: {
+                backgroundColor: COLORS.white,
+                height: 80,
+              },
+              header: props => <BasicHeader {...props} title="My properties" />,
+              tabBarIcon: ({focused}) => {
+                return (
+                  <Fontisto
+                    name="holiday-village"
+                    size={18}
+                    color={focused ? COLORS.red : COLORS.dark}
+                  />
+                );
+              },
+              headerShown: false,
+            }}
+            name="my_Property"
+            component={StackNavigation}
+          />
+        </>
+      ) : null}
+
+      <Tab.Screen
         options={{
           tabBarIcon: ({focused}) => {
             return (
@@ -115,59 +143,32 @@ function MyTabs() {
         name="Loved"
         component={FavScreen}
       />
-      
-      {
-        userInfo?.uid ? <>
-       <Tab.Screen
-        options={{
-          headerLeft: false,
-          headerBackTitleVisible: false,
-          headerStyle: {
-            backgroundColor: COLORS.white,
-            height: 80,
-          },
-          header: props => <BasicHeader {...props} title="My properties" />,
-          tabBarIcon: ({focused}) => {
-            return (
-              <Fontisto
-                name="holiday-village"
-                size={18}
-                color={focused ? COLORS.red : COLORS.dark}
-              />
-            );
-          },
-          headerShown: false,
-        }}
-        name="my_Property"
-        component={StackNavigation}
-      />
-      <Tab.Screen
-        options={{
-          headerStyle: {
-            backgroundColor: COLORS.backgroundblue,
-          },
-          tabBarIcon: ({focused}) => {
-            return (
-              <Ionicons
-                name="md-settings-outline"
-                size={20}
-                style={{fontWeight: 'bold'}}
-                color={focused ? COLORS.red : COLORS.dark}
-              />
-            );
-          },
 
-          headerShown: false,
-        }}
-        name="settingsMain"
-        component={SettingStack}
-      />
-        </>:null
+      {userInfo?.uid ? (
+        <>
+          <Tab.Screen
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.backgroundblue,
+              },
+              tabBarIcon: ({focused}) => {
+                return (
+                  <Ionicons
+                    name="md-settings-outline"
+                    size={20}
+                    style={{fontWeight: 'bold'}}
+                    color={focused ? COLORS.red : COLORS.dark}
+                  />
+                );
+              },
 
-
-      }
-
-     
+              headerShown: false,
+            }}
+            name="settingsMain"
+            component={SettingStack}
+          />
+        </>
+      ) : null}
     </Tab.Navigator>
   );
 }
