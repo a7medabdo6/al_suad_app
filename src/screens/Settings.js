@@ -139,63 +139,67 @@ const Setting = () => {
               </View>
             </TouchableOpacity>
           }
-          ThiredRow={
-            <View
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                flexDirection: 'row',
-                paddingVertical: 15,
-              }}>
-              <View
-                style={{
-                  display: 'flex',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  flexDirection: 'row',
-                }}>
-                <Fontisto
-                  style={{paddingRight: 20, paddingLeft: 10}}
-                  name="holiday-village"
-                  color="black"
-                  size={16}
-                />
-                <Text style={{color: 'black'}}>My Properties</Text>
-              </View>
-              <View>
-                <FontAwesome name="angle-right" color="black" size={18} />
-              </View>
-            </View>
-          }
+          // ThiredRow={
+          //   <Pressable>
+          //     <View
+          //       style={{
+          //         display: 'flex',
+          //         justifyContent: 'space-between',
+          //         alignItems: 'center',
+          //         flexDirection: 'row',
+          //         paddingVertical: 15,
+          //       }}>
+          //       <View
+          //         style={{
+          //           display: 'flex',
+          //           justifyContent: 'flex-start',
+          //           alignItems: 'center',
+          //           flexDirection: 'row',
+          //         }}>
+          //         <Fontisto
+          //           style={{paddingRight: 20, paddingLeft: 10}}
+          //           name="holiday-village"
+          //           color="black"
+          //           size={16}
+          //         />
+          //         <Text style={{color: 'black'}}>My Properties</Text>
+          //       </View>
+          //       <View>
+          //         <FontAwesome name="angle-right" color="black" size={18} />
+          //       </View>
+          //     </View>
+          //   </Pressable>
+          // }
           ForthRow={
-            <View
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                flexDirection: 'row',
-                paddingVertical: 15,
-              }}>
+            <Pressable onPress={() => navigation.push('myVisits')}>
               <View
                 style={{
                   display: 'flex',
-                  justifyContent: 'flex-start',
+                  justifyContent: 'space-between',
                   alignItems: 'center',
                   flexDirection: 'row',
+                  paddingVertical: 15,
                 }}>
-                <FontAwesome
-                  style={{paddingRight: 20, paddingLeft: 10}}
-                  name="calendar"
-                  color="black"
-                  size={18}
-                />
-                <Text style={{color: 'black'}}>My Visits</Text>
+                <View
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                  }}>
+                  <FontAwesome
+                    style={{paddingRight: 20, paddingLeft: 10}}
+                    name="calendar"
+                    color="black"
+                    size={18}
+                  />
+                  <Text style={{color: 'black'}}>My Visits</Text>
+                </View>
+                <View>
+                  <FontAwesome name="angle-right" color="black" size={18} />
+                </View>
               </View>
-              <View>
-                <FontAwesome name="angle-right" color="black" size={18} />
-              </View>
-            </View>
+            </Pressable>
           }
         />
 

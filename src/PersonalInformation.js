@@ -11,6 +11,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import COLORS from './consts/colors';
 import {useChangePersonalInfo} from './apis/Home';
 import {useSelector} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PersonalInformation = () => {
   const {userInfo} = useSelector(state => state.userinfo);
@@ -21,11 +22,14 @@ const PersonalInformation = () => {
 
   const {mutate: ChangePersonalInfo} = useChangePersonalInfo();
   const OnSubmit = async () => {
+    const jsonValue = await AsyncStorage.getItem('passwordAndDb');
+    const parsedValues = JSON.parse(jsonValue);
     await ChangePersonalInfo({
       name,
       email,
       phone,
       partner_id: userInfo?.partner_id,
+      ...parsedValues,
     });
   };
   return (

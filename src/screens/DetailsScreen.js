@@ -289,15 +289,17 @@ const DetailsScreen = ({route}) => {
                   justifyContent: 'flex-start',
                   alignItems: 'flex-start',
                 }}>
-                <Text
-                  style={{
-                    fontSize: 16,
-                    fontWeight: '500',
-                    color: COLORS.dark,
-                    marginBottom: 10,
-                  }}>
-                  Amenities
-                </Text>
+                  {HomeDetailedData?.amenities_compile &&
+                    arr?.length > 0 &&  <Text
+                    style={{
+                      fontSize: 16,
+                      fontWeight: '500',
+                      color: COLORS.dark,
+                      marginBottom: 10,
+                    }}>
+                    Amenities
+                  </Text>}
+               
                 <View
                   style={{
                     flexDirection: 'row',

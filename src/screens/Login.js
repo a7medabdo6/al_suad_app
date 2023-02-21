@@ -27,13 +27,12 @@ import BasicButton from '../Components/Buttons/BasicButton';
 const {width} = Dimensions.get('screen');
 import {useLoginApi} from '../apis/Auth/index';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setisAuth } from '../Store/Message/MessageSlice';
+import {setisAuth} from '../Store/Message/MessageSlice';
 const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
-
   const [email, setEmail] = useState(null);
   const [password, setpassword] = useState(null);
   const isFocused = useIsFocused();
-const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const {mutate: LoginApi, isLoading} = useLoginApi();
   const {validate, isFieldInError, getErrorsInField, getErrorMessages} =
     useValidation({
@@ -60,6 +59,14 @@ const dispatch=useDispatch()
     if (getErrorMessages()) {
       return;
     } else {
+      await AsyncStorage.setItem(
+        'passwordAndDb',
+        JSON.stringify({
+          password,
+          db: 'odooerp-ae-property-developmentstage-7168665',
+        }),
+      );
+
       const result = await LoginApi({email, password});
       // showToast();
     }

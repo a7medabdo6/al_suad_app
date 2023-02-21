@@ -12,6 +12,8 @@ import {setCreateVisit} from '../../Store/CreateVisit/CreateVistSlice';
 import {setMaintainence} from '../../Store/Maintainence/MaintainenceSlice';
 import {setPayments} from '../../Store/Payments/PaymentsSlice';
 import {setHelpCenter} from '../../Store/HelpCenterSlice/HelpCenterSlice';
+import RNRestart from 'react-native-restart';
+
 import {
   setPass,
   setPersonalInfo,
@@ -36,12 +38,15 @@ const getMaintianenceData = async data => {
   });
 };
 const ChangePersonalInfo = async data => {
+  console.log(data, 'data per');
   return await api.post('api/change_personal_info', {
     params: {
       name: data.name,
       email: data.email,
       phone: data.phone,
       partner_id: data.partner_id,
+      db: data.db,
+      password: data.password,
     },
   });
 };
@@ -223,11 +228,14 @@ const useChangePersonalInfo = data => {
   const navigation = useNavigation();
 
   return useMutation(ChangePersonalInfo, {
-    onSuccess: res => {
+    onSuccess: async res => {
       dispatch(setPersonalInfo(res.data?.result));
-      console.log(res.data?.result, 'res.data?.result');
-      dispatch(setuserInfo(res.data?.result?.record[0]));
-
+      console.log(res.data?.result?.uid, 'res.data?.result uid');
+      dispatch(setuserInfo(res.data?.result));
+      const jsonValue = JSON.stringify(res.data?.result);
+      // console.log(jsonValue, 'jsonValue');
+      await AsyncStorage.setItem('User', jsonValue);
+      // RNRestart.Restart();
       navigation.push('SettingScreen');
 
       return res.data;
