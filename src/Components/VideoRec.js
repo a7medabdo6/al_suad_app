@@ -9,8 +9,8 @@ const App = ({callCreateReq, setIsprogress, Isprogress}) => {
   const camera = useRef(null);
   const [video, setVideo] = useState(null);
   const ConvertVideoBase64 = async uri => {
-    const base64Video = await RNFS.readFile(uri, 'base64');
-    setVideo(base64Video);
+    // const base64Video = await RNFS.readFile(uri, 'base64');
+    setVideo(uri);
   };
   const Submit = async () => {
     setIsRec(true);

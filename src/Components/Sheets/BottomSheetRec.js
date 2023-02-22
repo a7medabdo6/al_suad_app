@@ -19,12 +19,14 @@ export default function Example({UploadImage, data}) {
   const navigation = useNavigation();
   const [error, seterror] = useState(null);
   const HandleOpenModal = () => {
-    if (data.name == '' || data.description == '' || data.type == '') {
-      seterror('Please Fill All The Field ');
-    } else {
-      refRBSheet.current.open();
-      seterror(null);
-    }
+    refRBSheet.current.open();
+    seterror(null);
+    // if (data.name == '' || data.description == '' || data.type == '') {
+    //   seterror('Please Fill All The Field ');
+    // } else {
+    //   refRBSheet.current.open();
+    //   seterror(null);
+    // }
   };
   return (
     <View

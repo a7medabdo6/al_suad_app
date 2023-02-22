@@ -11,7 +11,10 @@ import {
   Dimensions,
   ScrollView,
   Pressable,
+  Alert,
 } from 'react-native';
+import storage from '@react-native-firebase/storage';
+
 import {Box, Progress, NativeBaseProvider} from 'native-base';
 import FirstInput from '../Components/Inputs/FirstInput';
 import Toast from 'react-native-simple-toast';
@@ -38,6 +41,8 @@ const VideoRecScreen = ({navigation, route}) => {
   const [photo, setphoto] = React.useState('');
   const [disable, setDisable] = React.useState(false);
 
+  const [uris, seturis] = React.useState([]);
+
   const [Isprogress, setIsprogress] = React.useState(false);
 
   // const [name, setname] = useState('');
@@ -48,37 +53,61 @@ const VideoRecScreen = ({navigation, route}) => {
   const {userInfo} = useSelector(state => state.userinfo);
 
   const selectedProp = useSelector(state => state.MyProperties.selectedProp);
-
+  useEffect(() => {
+    if (uris?.length > 0) {
+      navigation.push('CreateRequestScreen', {data: uris});
+    }
+  }, [uris]);
+  const uploadImagetoFirebase = async uri => {
+    // const { uri } = image;
+    const filename = uri.substring(uri.lastIndexOf('/') + 1);
+    const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+    const task = storage().ref(filename).putFile(uploadUri);
+    console.log(uri, 'uri');
+    try {
+      const res = await task;
+      // console.error(res.metadata.fullPath, 'res res');
+      seturis(old => [
+        ...old,
+        `https://firebasestorage.googleapis.com/v0/b/realestate-3b42f.appspot.com/o/${res.metadata.fullPath}`,
+      ]);
+      // Alert.alert(
+      //   'Photo uploaded!',
+      //   `https://firebasestorage.googleapis.com/v0/b/realestate-3b42f.appspot.com/o/${res.metadata.fullPath}`,
+      // );
+    } catch (e) {
+      console.error(e, 'eeeee');
+    }
+  };
   var callRequested = false;
   const callCreateReq = async video => {
-    setIsprogress(true);
+    // setIsprogress(true);
+    uploadImagetoFirebase(video);
+    // try {
+    //   setDisable(true);
+    //   const res = await api.post('api/property_create_request', {
+    //     params: {
+    //       flat: data.flat,
+    //       partner: data.partner,
+    //       name: data.name,
+    //       description: data.description,
+    //       type: data.type,
+    //       files: //[`data:video/mp4;base64,${video}`],
+    //     },
+    //   });
+    //   if (res.data.result) {
+    //     Toast.show('Request Created Succefully.', Toast.LONG, {
+    //       backgroundColor: 'orange',
+    //     });
+    //     setIsprogress(false);
 
-    console.log(data, 'data');
-    try {
-      setDisable(true);
-      const res = await api.post('api/property_create_request', {
-        params: {
-          flat: data.flat,
-          partner: data.partner,
-          name: data.name,
-          description: data.description,
-          type: data.type,
-          files: [`data:video/mp4;base64,${video}`],
-        },
-      });
-      if (res.data.result) {
-        Toast.show('Request Created Succefully.', Toast.LONG, {
-          backgroundColor: 'orange',
-        });
-        setIsprogress(false);
-
-        navigation.goBack();
-      }
-      // console.log(result, 'helpdesk');
-    } catch (error) {
-      setDisable(false);
-      console.log(error, 'error ');
-    }
+    //     navigation.goBack();
+    //   }
+    //   // console.log(result, 'helpdesk');
+    // } catch (error) {
+    //   setDisable(false);
+    //   console.log(error, 'error ');
+    // }
   };
 
   // const house = route.params;

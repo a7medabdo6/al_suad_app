@@ -11,7 +11,10 @@ import {
   Dimensions,
   ScrollView,
   Pressable,
+  Alert,
 } from 'react-native';
+import storage from '@react-native-firebase/storage';
+
 import {Box, Progress, NativeBaseProvider} from 'native-base';
 import FirstInput from '../Components/Inputs/FirstInput';
 import Toast from 'react-native-simple-toast';
@@ -31,10 +34,11 @@ import {useSelector} from 'react-redux';
 import {useValidation} from 'react-native-form-validator';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
-const CreateRequestScreen = ({navigation}) => {
+const CreateRequestScreen = ({navigation, route}) => {
   const [RequestTypeData, setRequestTypeData] = useState([]);
   const [photo, setphoto] = React.useState('');
   const [disable, setDisable] = React.useState(false);
+  const [uris, seturis] = React.useState([]);
 
   const [name, setname] = useState('');
   const [type, settype] = useState('');
@@ -47,28 +51,47 @@ const CreateRequestScreen = ({navigation}) => {
     try {
       const result = await api.post('api/generic/maintenance.request.type', {});
       setRequestTypeData(result.data.result);
-      // console.log(result, 'helpdesk');
     } catch (error) {
       console.log(error, 'error helpdesk');
     }
   };
   const selectedProp = useSelector(state => state.MyProperties.selectedProp);
+  const uploadImagetoFirebase = async uri => {
+    // const { uri } = image;
+    const filename = uri.substring(uri.lastIndexOf('/') + 1);
+    const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+    const task = storage().ref(filename).putFile(uploadUri);
+    console.log(uri, 'uri');
+    try {
+      const res = await task;
+      // console.error(res.metadata.fullPath, 'res res');
+      seturis(old => [
+        ...old,
+        `https://firebasestorage.googleapis.com/v0/b/realestate-3b42f.appspot.com/o/${res.metadata.fullPath}`,
+      ]);
+      Alert.alert(
+        'Photo uploaded!',
+        `https://firebasestorage.googleapis.com/v0/b/realestate-3b42f.appspot.com/o/${res.metadata.fullPath}`,
+      );
+    } catch (e) {
+      console.error(e, 'eeeee');
+    }
+  };
   const UploadImage = () => {
     let options = {
       mediaType: 'photo',
       quality: 1,
-      includeBase64: true,
+      // includeBase64: true,
     };
     launchCamera(options, async res => {
       if (res.didCancel) {
       } else if (res.errorCode == 'permission') {
       } else if (res.errorCode == 'others') {
       } else {
-        setphoto([`data:image/png;base64,${res.assets[0].base64}`]);
-        // console.log(res.assets[0], 'res.assets[0]');
+        // setphoto([`data:image/png;base64,${res.assets[0].uri}`]);
+        uploadImagetoFirebase(res.assets[0].uri);
         // setpicName(res.assets[0].fileName);
         setallFilesdata([{type: 'image/png', name: 'photo'}]);
-        // console.log(res.assets[0].fileName, res.assets[0]);
       }
     });
   };
@@ -81,10 +104,10 @@ const CreateRequestScreen = ({navigation}) => {
     validate({
       name: {required: true, minlength: 1},
       type: {required: true},
-      photo: {required: true, minlength: 1},
+      // photo: {required: true, minlength: 1},
       description: {required: true, minlength: 1},
     });
-    if (getErrorMessages() || !name || !type || !photo || !description) {
+    if (getErrorMessages() || !name || !type || !description) {
       return;
     } else {
       try {
@@ -96,9 +119,10 @@ const CreateRequestScreen = ({navigation}) => {
             name: name,
             description: description,
             type: type,
-            files: photo,
+            files: uris,
           },
         });
+        console.log(res.data, uris, 'res.data');
         if (res.data.result) {
           Toast.show('Request Created Succefully.', Toast.LONG, {
             backgroundColor: 'orange',
@@ -115,14 +139,19 @@ const CreateRequestScreen = ({navigation}) => {
   };
   useEffect(() => {
     callRquestTypes();
-    // console.log(allFilesdata, 'alllllllll');
     return () => {};
   }, []);
+  const data = route.params;
 
-  // const house = route.params;
+  useEffect(() => {
+    if (data?.length > 0) {
+      seturis(data);
+    }
+    console.log(data, 'data v data');
+    return () => {};
+  }, [data]);
 
   const Card = ({file, index}) => {
-    console.log(file, 'fillee');
     return (
       <View
         style={{
@@ -202,7 +231,6 @@ const CreateRequestScreen = ({navigation}) => {
           <Pressable
             onPress={() =>
               setallFilesdata(old => {
-                // console.log(old, index, 'index');
                 return old.filter((item, idx) => index != idx);
               })
             }>
@@ -274,6 +302,7 @@ const CreateRequestScreen = ({navigation}) => {
                 <PickFiles
                   setResult={setphoto}
                   result={photo}
+                  seturis={seturis}
                   setallFilesdata={setallFilesdata}
                 />
               </View>
