@@ -189,7 +189,7 @@ const HomeScreen = ({route}) => {
     );
   }
   return (
-    <SafeAreaView style={{backgroundColor: COLORS.white, flex: 1}}>
+    <SafeAreaView style={{backgroundColor: COLORS.white, flex: 1,}}>
       {/* Customise status bar */}
       <StatusBar
         translucent={false}
@@ -278,6 +278,11 @@ const HomeScreen = ({route}) => {
             contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
             vertical
             data={HomeData}
+            removeClippedSubviews={true}
+            initialNumToRender={2} // Reduce initial render amount
+                    maxToRenderPerBatch={1} // Reduce number in each render batch
+                    updateCellsBatchingPeriod={100} // Increase time between renders
+                    windowSize={7} // Reduce the window size
             renderItem={({item}) => <Card house={item} />}
           />
         ) : (

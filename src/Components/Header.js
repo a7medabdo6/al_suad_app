@@ -1,14 +1,17 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View,TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/Ionicons';
 import COLORS from '../consts/colors';
-const Header = ({title, back = false}) => {
+import {useNavigation} from '@react-navigation/native';
+
+const Header = ({title, back = false,style,}) => {
+  const navigation = useNavigation();
   return (
-    <View style={styles.container}>
-      {back && <Icon name="chevron-back" size={20} />}
+    <TouchableOpacity onPress={()=>{navigation.goBack()}} style={[styles.container, { paddingHorizontal:back?0:20,...style}]}>
+      {back && <Icon name="chevron-back" size={20}  color={'black'} style={styles.back}/>}
 
       <Text style={styles.title}>{title}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -19,9 +22,10 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     backgroundColor: 'white',
     flexDirection: 'row',
-    paddingHorizontal: 20,
     alignItems: 'center',
     paddingBottom: 10,
+  
   },
   title: {fontWeight: 'bold', fontSize: 15, color: 'black'},
+  back:{marginHorizontal:10}
 });

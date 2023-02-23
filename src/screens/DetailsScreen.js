@@ -11,6 +11,7 @@ import {
   Dimensions,
   ScrollView,
   Pressable,
+  Linking
 } from 'react-native';
 import AnimatedCorner from '../Components/Buttons/AnimatedCorner';
 import {useDispatch, useSelector} from 'react-redux';
@@ -56,7 +57,17 @@ const DetailsScreen = ({route}) => {
     return () => {};
   }, [HomeDetailedData]);
   const HandleMap = () => {
-    openMap({latitude: 37.865101, longitude: -119.53833});
+    // openMap({latitude: 37.865101, longitude: -119.53833});
+    const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+    const latLng = `${37.865101},${-119.53833}`;
+    const label = 'Custom Label';
+    const url = Platform.select({
+      ios: `${scheme}${label}@${latLng}`,
+      android: `${scheme}${latLng}(${label})`
+    });
+
+        
+    Linking.openURL(url);
   };
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
@@ -238,10 +249,12 @@ const DetailsScreen = ({route}) => {
               <View
                 style={{
                   flexDirection: 'column',
-                  justifyContent: 'flex-start',
-                  alignItems: 'flex-start',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  flexDirection:'row'
                 }}>
-                <Text
+                  <View>
+                  <Text
                   style={{
                     fontSize: 16,
                     fontWeight: '500',
@@ -255,26 +268,9 @@ const DetailsScreen = ({route}) => {
                   {HomeDetailedData?.building_id?.[1]} -
                   {HomeDetailedData?.state_id?.[1]}
                 </Text>
-                <Pressable onPress={() => HandleMap()}>
-                  <View style={style.container}>
-                    {/*Render our MapView*/}
-                    <Button
-                      color={COLORS.red}
-                      onPress={HandleMap}
-                      title="Click To Open The Location 🗺"
-                    />
-                    {/* <MapView
-                      style={style.map}
-                      //specify our coordinates.
-                      initialRegion={{
-                        latitude: 37.78825,
-                        longitude: -122.4324,
-                        latitudeDelta: 0.0922,
-                        longitudeDelta: 0.0421,
-                      }}
-                    /> */}
                   </View>
-                </Pressable>
+                  <MaterialIcons name="directions" onPress={HandleMap} size={40} color={COLORS.blue} />
+               
               </View>
             </View>
             <View style={style.line}></View>
