@@ -8,7 +8,7 @@ import {
   TextInput,
 } from 'react-native';
 import Toast from 'react-native-simple-toast';
-
+import Video from 'react-native-video';
 import {ScrollView} from 'react-native-gesture-handler';
 import {api} from '../../axios';
 import {useSelector} from 'react-redux';
@@ -145,10 +145,22 @@ const SheetCard = ({
               {MaintainenceSelceted?.attachments?.map(attach => {
                 console.log(attach.url, 'attach.url');
                 if (attach.url) {
-                  if(attach.url.includes("mp4")){
-                    <View>
-                      
+                  if (attach.url.includes('mp4')) {
+                    
+                    return (
+                      <View>
+                        <Video
+                          source={{uri: attach.url}}
+                          controls={true}
+                          style={{
+                            width: 50,
+                            height: 50,
+                            borderRadius: 5,
+                            marginRight: 5,
+                          }}
+                        />
                       </View>
+                    );
                   }
                   return (
                     <Image
