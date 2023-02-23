@@ -31,6 +31,7 @@ import houses from '../consts/houses';
 import {Pressable} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {setHomeData, setDontMakeAnotherCall} from '../Store/HomeData/HomeSlice';
+import Header from '../Components/Header';
 const FilterScreen = ({}) => {
   const [low, setLow] = useState(0);
   const [high, setHigh] = useState(100000);
@@ -123,8 +124,8 @@ const FilterScreen = ({}) => {
       style={{
         backgroundColor: COLORS.white,
         flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
+        // flexDirection: 'row',
+        // justifyContent: 'center',
       }}>
       {/* Customise status bar */}
       <StatusBar
@@ -133,9 +134,7 @@ const FilterScreen = ({}) => {
         barStyle="dark-content"
       />
       <ScrollView
-        style={{
-          width: width - 20,
-        }}>
+      showsVerticalScrollIndicator={false}>
         <View
           style={{
             display: 'flex',
@@ -144,52 +143,17 @@ const FilterScreen = ({}) => {
           }}>
           <View
             style={{
-              width: '90%',
+              alignItems:'center',marginHorizontal:20
             }}>
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: 'bold',
-                marginTop: 20,
-                marginBottom: 10,
-                color: COLORS.dark,
-              }}>
-              City
-            </Text>
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                flexWrap: 'wrap',
-                width: '100%',
-              }}>
-              <SelectBox
+            <SelectBox
                 data={Cities}
                 Type="Select City"
                 settype={setstate_id}
+                title={'city'}
               />
-            </View>
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: 'bold',
-                marginTop: 20,
-                marginBottom: 10,
-                color: COLORS.dark,
-              }}>
-              Area
-            </Text>
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                flexWrap: 'wrap',
-                width: '100%',
-              }}>
-              <SelectBox data={areas} Type="Select Area" settype={setarea_id} />
-            </View>
+         
+              <SelectBox data={areas} title={'Area'} Type="Select Area" settype={setarea_id} />
+            
             {/* <Text
               style={{
                 fontSize: 18,
@@ -283,7 +247,7 @@ const FilterScreen = ({}) => {
                 fontWeight: 'bold',
                 borderWidth: 1,
                 marginHorizontal: 5,
-                marginVertical: 15,
+                marginTop:20,
                 textAlign: 'center',
                 display: 'flex',
                 //   justifyContent: 'center',
@@ -295,12 +259,12 @@ const FilterScreen = ({}) => {
                 style={{
                   fontWeight: 'bold',
                   color: COLORS.dark,
-                  fontSize: 18,
-                  marginBottom: 20,
+                  fontSize: 15,
+                  // marginBottom: 20,
                 }}>
                 Price Range
               </Text>
-              <RangeSlider
+              {/* <RangeSlider
                 style={style.slider}
                 min={0}
                 max={100000}
@@ -312,15 +276,15 @@ const FilterScreen = ({}) => {
                 renderLabel={renderLabel}
                 renderNotch={renderNotch}
                 onValueChanged={handleValueChange}
-              />
+              /> */}
               <View
                 style={{
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
                   flexDirection: 'row',
-                  marginTop: 30,
-                  marginBottom: 20,
+                  marginTop: 15,
+   
                 }}>
                 <TextInput
                   editable
@@ -330,16 +294,17 @@ const FilterScreen = ({}) => {
                   keyboardType="numeric"
                   onChangeText={text => setLow(text)}
                   value={low}
+                  placeholder={'From'}
                   style={{
                     marginHorizontal: 5,
                     padding: 10,
                     borderRadius: 10,
                     backgroundColor: COLORS.white,
                     color: COLORS.dark,
-                    width: 120,
-                    borderColor: COLORS.grey,
+                    width: '50%',
+                  
                     fontWeight: 'bold',
-                    borderWidth: 1,
+                  
                   }}
                 />
                 <TextInput
@@ -350,16 +315,17 @@ const FilterScreen = ({}) => {
                   keyboardType="numeric"
                   onChangeText={text => setHigh(text)}
                   value={high}
+                  placeholder={'To'}
                   style={{
                     marginHorizontal: 5,
                     padding: 10,
                     borderRadius: 10,
                     backgroundColor: COLORS.white,
                     color: COLORS.dark,
-                    width: 120,
-                    borderColor: COLORS.grey,
+                    width: '50%',
+                 
                     fontWeight: 'bold',
-                    borderWidth: 1,
+               
                   }}
                 />
                 {/* <Text
@@ -435,23 +401,9 @@ const FilterScreen = ({}) => {
                 Dubai Marina
               </Text>
             </View> */}
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: 'bold',
-                marginTop: 20,
-                marginBottom: 10,
-                color: COLORS.dark,
-              }}>
-              Bedrooms
-            </Text>
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-              }}>
+
               <SelectBox
+              title={'Bedrooms'}
                 data={[
                   {id: 1, name: '+1'},
                   {id: 2, name: '+2'},
@@ -465,25 +417,8 @@ const FilterScreen = ({}) => {
                 settype={setBed_id}
               />
 
-           
-            </View>
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: 'bold',
-                marginTop: 20,
-                marginBottom: 10,
-                color: COLORS.dark,
-              }}>
-              Bathrooms
-            </Text>
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-              }}>
               <SelectBox
+              title={'Bathrooms'}
                 data={[
                   {id: 1, name: '+1'},
                   {id: 2, name: '+2'},
@@ -497,8 +432,6 @@ const FilterScreen = ({}) => {
                 settype={setBath_id}
               />
 
-           
-            </View>
             <View
               style={{
                 display: 'flex',
@@ -507,6 +440,8 @@ const FilterScreen = ({}) => {
                 flexDirection: 'row',
               }}>
               <BasicButton
+              styleText={{fontSize:15}}
+              height={50}
                 text={
                   isLoadingReset ? (
                     <ActivityIndicator size="large" color="white" />
@@ -523,6 +458,7 @@ const FilterScreen = ({}) => {
                 color={COLORS.blue}
               />
               <BasicButton
+               styleText={{fontSize:15}}
                 text={
                   isLoading ? (
                     <ActivityIndicator size="large" color="white" />
@@ -530,6 +466,7 @@ const FilterScreen = ({}) => {
                     'Apply'
                   )
                 }
+                height={50}
                 width={250}
                 onPress={() => {
                   // console.log(navigation);
