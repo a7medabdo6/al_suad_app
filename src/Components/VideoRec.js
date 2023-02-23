@@ -61,7 +61,8 @@ const App = ({callCreateReq, setIsprogress, Isprogress}) => {
         {Isprogress ? (
           <>
             <View>
-              <Text style={{fontWeight: 'bold', fontSize: 20}}>
+              <Text
+                style={{fontWeight: 'bold', fontSize: 20, color: COLORS.dark}}>
                 Please Wait..
               </Text>
             </View>
@@ -108,7 +109,7 @@ const App = ({callCreateReq, setIsprogress, Isprogress}) => {
                   flexDirection: 'row',
                   height: 50,
                 }}>
-                <Text>Rec</Text>
+                <Text style={{color: COLORS.dark}}>Rec</Text>
                 <View
                   style={{
                     width: 15,

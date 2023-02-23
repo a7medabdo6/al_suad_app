@@ -36,11 +36,11 @@ const PickFiles = ({result, setResult, setallFilesdata, seturis}) => {
     console.log(uri, 'uri');
     try {
       const res = await task;
-      // console.error(res.metadata.fullPath, 'res res');
-      seturis(old => [
-        old,
-        `https://firebasestorage.googleapis.com/v0/b/realestate-3b42f.appspot.com/o/${res.metadata.fullPath}`,
-      ]);
+      console.error(res.metadata, 'res res');
+      seturis(
+        old =>
+          `${old},https://firebasestorage.googleapis.com/v0/b/realestate-3b42f.appspot.com/o/${res.metadata.fullPath}?alt=media&token=${res.metadata.downloadTokens}`,
+      );
       // Alert.alert(
       //   'Photo uploaded!',
       //   `https://firebasestorage.googleapis.com/v0/b/realestate-3b42f.appspot.com/o/${res.metadata.fullPath}`,

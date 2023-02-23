@@ -38,7 +38,7 @@ const CreateRequestScreen = ({navigation, route}) => {
   const [RequestTypeData, setRequestTypeData] = useState([]);
   const [photo, setphoto] = React.useState('');
   const [disable, setDisable] = React.useState(false);
-  const [uris, seturis] = React.useState([]);
+  const [uris, seturis] = React.useState('');
 
   const [name, setname] = useState('');
   const [type, settype] = useState('');
@@ -65,10 +65,10 @@ const CreateRequestScreen = ({navigation, route}) => {
     try {
       const res = await task;
       // console.error(res.metadata.fullPath, 'res res');
-      seturis(old => [
-        ...old,
-        `https://firebasestorage.googleapis.com/v0/b/realestate-3b42f.appspot.com/o/${res.metadata.fullPath}`,
-      ]);
+      seturis(
+        old =>
+          `${old},https://firebasestorage.googleapis.com/v0/b/realestate-3b42f.appspot.com/o/${res.metadata.fullPath}?alt=media&token=${res.metadata.downloadTokens}`,
+      );
       Alert.alert(
         'Photo uploaded!',
         `https://firebasestorage.googleapis.com/v0/b/realestate-3b42f.appspot.com/o/${res.metadata.fullPath}`,
@@ -128,7 +128,7 @@ const CreateRequestScreen = ({navigation, route}) => {
             backgroundColor: 'orange',
           });
 
-          navigation.goBack();
+          navigation.push('PaymentScreen', {index: 1});
         }
         // console.log(result, 'helpdesk');
       } catch (error) {
@@ -144,8 +144,8 @@ const CreateRequestScreen = ({navigation, route}) => {
   const data = route.params;
 
   useEffect(() => {
-    if (data?.length > 0) {
-      seturis(data);
+    if (data) {
+      seturis(data.data);
     }
     console.log(data, 'data v data');
     return () => {};

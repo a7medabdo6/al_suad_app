@@ -41,7 +41,7 @@ const VideoRecScreen = ({navigation, route}) => {
   const [photo, setphoto] = React.useState('');
   const [disable, setDisable] = React.useState(false);
 
-  const [uris, seturis] = React.useState([]);
+  const [uris, seturis] = React.useState('');
 
   const [Isprogress, setIsprogress] = React.useState(false);
 
@@ -67,10 +67,10 @@ const VideoRecScreen = ({navigation, route}) => {
     try {
       const res = await task;
       // console.error(res.metadata.fullPath, 'res res');
-      seturis(old => [
-        ...old,
-        `https://firebasestorage.googleapis.com/v0/b/realestate-3b42f.appspot.com/o/${res.metadata.fullPath}`,
-      ]);
+      seturis(
+        old =>
+          `${old},https://firebasestorage.googleapis.com/v0/b/realestate-3b42f.appspot.com/o/${res.metadata.fullPath}?alt=media&token=${res.metadata.downloadTokens}`,
+      );
       // Alert.alert(
       //   'Photo uploaded!',
       //   `https://firebasestorage.googleapis.com/v0/b/realestate-3b42f.appspot.com/o/${res.metadata.fullPath}`,
@@ -81,7 +81,7 @@ const VideoRecScreen = ({navigation, route}) => {
   };
   var callRequested = false;
   const callCreateReq = async video => {
-    // setIsprogress(true);
+    setIsprogress(true);
     uploadImagetoFirebase(video);
     // try {
     //   setDisable(true);

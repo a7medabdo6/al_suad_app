@@ -27,6 +27,7 @@ const SheetCard = ({
   const selectedProp = useSelector(state => state.MyProperties.selectedProp);
   const {mutate: MaintianenceApi, isLoading} = useMaintianenceApi();
 
+  console.log(MaintainenceSelceted?.attachments, 'MaintainenceSelceted');
   const Submit = async () => {
     try {
       const res = await api.post(`api/property_send_feed_back`, {
@@ -142,17 +143,25 @@ const SheetCard = ({
 
             <View style={{display: 'flex', flexDirection: 'row'}}>
               {MaintainenceSelceted?.attachments?.map(attach => {
-                return (
-                  <Image
-                    style={{
-                      width: 50,
-                      height: 50,
-                      borderRadius: 5,
-                      marginRight: 5,
-                    }}
-                    source={{uri: `data:image/png;base64,${attach.datas}`}}
-                  />
-                );
+                console.log(attach.url, 'attach.url');
+                if (attach.url) {
+                  if(attach.url.includes("mp4")){
+                    <View>
+                      
+                      </View>
+                  }
+                  return (
+                    <Image
+                      style={{
+                        width: 50,
+                        height: 50,
+                        borderRadius: 5,
+                        marginRight: 5,
+                      }}
+                      source={{uri: `${attach?.url}`}}
+                    />
+                  );
+                }
               })}
             </View>
           </View>
