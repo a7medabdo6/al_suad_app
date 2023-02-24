@@ -52,7 +52,7 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
   const HandleLogin = async event => {
     validate({
       password: {required: true, minlength: 2},
-      email: {required: true, minlength: 5},
+      email: {required: true, minlength: 2},
     });
 
     // console.log(getErrorMessages());
@@ -66,7 +66,7 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
           db: 'odooerp-ae-property-developmentstage-7168665',
         }),
       );
-
+      console.log('test');
       const result = await LoginApi({email, password});
       // showToast();
     }
