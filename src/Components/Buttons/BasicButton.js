@@ -5,7 +5,18 @@ import {Text, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const Example = ({text, width, type, onPress, color, Icon, disable,height=55,styleText}) => {
+const Example = ({
+  text,
+  width,
+  type,
+  onPress,
+  color,
+  Icon,
+  disable,
+  height = 55,
+  styleText,
+  style,
+}) => {
   return (
     <NativeBaseProvider>
       <Center flex={1} px="3" style={{marginVertical: 20}}>
@@ -25,6 +36,7 @@ const Example = ({text, width, type, onPress, color, Icon, disable,height=55,sty
             backgroundColor: color ? color : COLORS.red,
             borderColor: color ? COLORS.grey : 'transparent',
             borderWidth: 1,
+            ...style,
           }}
           mx={width ? width : '180'}
           size={'lg'}>
@@ -50,7 +62,7 @@ const Example = ({text, width, type, onPress, color, Icon, disable,height=55,sty
                 fontSize: 18,
                 color: COLORS.white,
                 marginHorizontal: 8,
-                ...styleText
+                ...styleText,
               }}>
               {text}
             </Text>

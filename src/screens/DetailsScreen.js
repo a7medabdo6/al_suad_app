@@ -11,7 +11,7 @@ import {
   Dimensions,
   ScrollView,
   Pressable,
-  Linking
+  Linking,
 } from 'react-native';
 import AnimatedCorner from '../Components/Buttons/AnimatedCorner';
 import {useDispatch, useSelector} from 'react-redux';
@@ -23,7 +23,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import house from '../consts/houses';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
-
+import BasicButton from '../Components/Buttons/BasicButton';
 import COLORS from '../consts/colors';
 import {Button} from 'react-native';
 const {width} = Dimensions.get('screen');
@@ -58,15 +58,14 @@ const DetailsScreen = ({route}) => {
   }, [HomeDetailedData]);
   const HandleMap = () => {
     // openMap({latitude: 37.865101, longitude: -119.53833});
-    const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+    const scheme = Platform.select({ios: 'maps:0,0?q=', android: 'geo:0,0?q='});
     const latLng = `${37.865101},${-119.53833}`;
     const label = 'Custom Label';
     const url = Platform.select({
       ios: `${scheme}${label}@${latLng}`,
-      android: `${scheme}${latLng}(${label})`
+      android: `${scheme}${latLng}(${label})`,
     });
 
-        
     Linking.openURL(url);
   };
   return (
@@ -103,14 +102,14 @@ const DetailsScreen = ({route}) => {
               </View>
             </Pressable>
             <View style={style.twoIcon}>
-              <Pressable
+              {/* <Pressable
                 onPress={() =>
                   navigation.push('Inquiry', {id: HomeDetailedData?.id})
                 }>
                 <View style={style.headerBtn}>
                   <Ionicons name="push-outline" style={style.icon} size={18} />
                 </View>
-              </Pressable>
+              </Pressable> */}
 
               <View style={style.headerBtn}>
                 <Ionicons name="heart-outline" style={style.icon} size={18} />
@@ -251,26 +250,34 @@ const DetailsScreen = ({route}) => {
                   flexDirection: 'column',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  flexDirection:'row'
+                  flexDirection: 'row',
                 }}>
-                  <View>
+                <View>
                   <Text
-                  style={{
-                    fontSize: 16,
-                    fontWeight: '500',
-                    color: COLORS.dark,
-                    marginBottom: 10,
-                  }}>
-                  Location
-                </Text>
-                <Text
-                  style={{fontWeight: '500', color: COLORS.grey, fontSize: 14}}>
-                  {HomeDetailedData?.building_id?.[1]} -
-                  {HomeDetailedData?.state_id?.[1]}
-                </Text>
-                  </View>
-                  <MaterialIcons name="directions" onPress={HandleMap} size={40} color={COLORS.blue} />
-               
+                    style={{
+                      fontSize: 16,
+                      fontWeight: '500',
+                      color: COLORS.dark,
+                      marginBottom: 10,
+                    }}>
+                    Location
+                  </Text>
+                  <Text
+                    style={{
+                      fontWeight: '500',
+                      color: COLORS.grey,
+                      fontSize: 14,
+                    }}>
+                    {HomeDetailedData?.building_id?.[1]} -
+                    {HomeDetailedData?.state_id?.[1]}
+                  </Text>
+                </View>
+                <MaterialIcons
+                  name="directions"
+                  onPress={HandleMap}
+                  size={40}
+                  color={COLORS.blue}
+                />
               </View>
             </View>
             <View style={style.line}></View>
@@ -285,8 +292,8 @@ const DetailsScreen = ({route}) => {
                   justifyContent: 'flex-start',
                   alignItems: 'flex-start',
                 }}>
-                  {HomeDetailedData?.amenities_compile &&
-                    arr?.length > 0 &&  <Text
+                {HomeDetailedData?.amenities_compile && arr?.length > 0 && (
+                  <Text
                     style={{
                       fontSize: 16,
                       fontWeight: '500',
@@ -294,8 +301,9 @@ const DetailsScreen = ({route}) => {
                       marginBottom: 10,
                     }}>
                     Amenities
-                  </Text>}
-               
+                  </Text>
+                )}
+
                 <View
                   style={{
                     flexDirection: 'row',
@@ -348,7 +356,13 @@ const DetailsScreen = ({route}) => {
         </View>
       </ScrollView>
       <View>
-        <AnimatedCorner />
+        <BasicButton
+          text="Request"
+          width={150}
+          onPress={() => navigation.push('Inquiry', {id: HomeDetailedData?.id})}
+          style={{bottom: 60}}
+        />
+        {/* <AnimatedCorner /> */}
         {/* <MaterialIcons name="support-agent" color={COLORS.white} size={40} /> */}
       </View>
     </SafeAreaView>
