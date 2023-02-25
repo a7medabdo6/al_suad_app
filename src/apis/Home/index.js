@@ -10,8 +10,9 @@ import {setFav, setHomeData} from '../../Store/HomeData/HomeSlice';
 import {setmyproperties} from '../../Store/MyProperty/MyPropertySlice';
 import {setCreateVisit} from '../../Store/CreateVisit/CreateVistSlice';
 import {setMaintainence} from '../../Store/Maintainence/MaintainenceSlice';
-import {setPayments} from '../../Store/Payments/PaymentsSlice';
+import {setPayments, setpaymentLink} from '../../Store/Payments/PaymentsSlice';
 import {setHelpCenter} from '../../Store/HelpCenterSlice/HelpCenterSlice';
+
 import RNRestart from 'react-native-restart';
 
 import {
@@ -37,8 +38,16 @@ const getMaintianenceData = async data => {
     },
   });
 };
+const GetPayment = async data => {
+  return await api.post('api/generate_payment_link', {
+    params: {
+      type: 'payment',
+      payment_id: 251,
+    },
+  });
+};
 const ChangePersonalInfo = async data => {
-  console.log(data, 'data per');
+  // console.log(data, 'data per');
   return await api.post('api/change_personal_info', {
     params: {
       name: data.name,
@@ -140,16 +149,30 @@ const useMyPropertyApi = data => {
       //   headers: res.headers,
       //   data: res.data,
       // };
-      console.log(res.data, 'result');
+      // console.log(res.data, 'result');
       let reversed = [...res.data?.result];
       dispatch(setmyproperties(reversed));
       return res.data;
     },
     onError: err => {
-      console.log(err, 'err');
-
+      // console.log(err, 'err');
       //   dispatch(errorAtLogin(err.response.data.detail));
       //  return err;
+    },
+  });
+};
+const usePaymentApi = data => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+  return useMutation(GetPayment, {
+    onSuccess: res => {
+      console.log(res.data, 'result Payment');
+      dispatch(setpaymentLink(res.data?.result?.payment_link));
+      return res.data;
+    },
+    onError: err => {
+      console.log(err, 'err');
     },
   });
 };
@@ -164,13 +187,12 @@ const useHelpCenterApi = data => {
       //   headers: res.headers,
       //   data: res.data,
       // };
-      console.log(res.data, 'HelpCenterApi HelpCenterApi');
+      // console.log(res.data, 'HelpCenterApi HelpCenterApi');
       dispatch(setHelpCenter(res.data?.result));
       return res.data;
     },
     onError: err => {
-      console.log(err, 'err');
-
+      // console.log(err, 'err');
       //   dispatch(errorAtLogin(err.response.data.detail));
       //  return err;
     },
@@ -216,8 +238,7 @@ const useMaintianenceApi = data => {
       return res.data;
     },
     onError: err => {
-      console.log(err, 'err');
-
+      // console.log(err, 'err');
       //   dispatch(errorAtLogin(err.response.data.detail));
       //  return err;
     },
@@ -230,7 +251,7 @@ const useChangePersonalInfo = data => {
   return useMutation(ChangePersonalInfo, {
     onSuccess: async res => {
       dispatch(setPersonalInfo(res.data?.result));
-      console.log(res.data?.result?.uid, 'res.data?.result uid');
+      // console.log(res.data?.result?.uid, 'res.data?.result uid');
       dispatch(setuserInfo(res.data?.result));
       const jsonValue = JSON.stringify(res.data?.result);
       // console.log(jsonValue, 'jsonValue');
@@ -241,7 +262,7 @@ const useChangePersonalInfo = data => {
       return res.data;
     },
     onError: err => {
-      console.log(err, 'err');
+      // console.log(err, 'err');
     },
   });
 };
@@ -254,11 +275,11 @@ const useChangeassword = data => {
       // dispatch(setPassword(res.data?.result));
       // navigation.push('SettingScreen');
       dispatch(setPass(res?.data?.result));
-      console.log(res.data, 'change password');
+      // console.log(res.data, 'change password');
       return res.data;
     },
     onError: err => {
-      console.log(err, 'err');
+      // console.log(err, 'err');
     },
   });
 };
@@ -278,8 +299,7 @@ const usePaymentsForTenantApi = data => {
       return res.data;
     },
     onError: err => {
-      console.log(err, 'err');
-
+      // console.log(err, 'err');
       //   dispatch(errorAtLogin(err.response.data.detail));
       //  return err;
     },
@@ -297,13 +317,12 @@ const useFavApi = data => {
       //   headers: res.headers,
       //   data: res.data,
       // };
-      console.log(res.data, 'result');
+      // console.log(res.data, 'result');
       dispatch(setFav(res.data?.result));
       return res.data;
     },
     onError: err => {
-      console.log(err, 'err');
-
+      // console.log(err, 'err');
       //   dispatch(errorAtLogin(err.response.data.detail));
       //  return err;
     },
@@ -340,4 +359,5 @@ export {
   useHelpCenterApi,
   useChangePersonalInfo,
   useChangeassword,
+  usePaymentApi,
 };

@@ -112,8 +112,19 @@ export default function MyStack() {
 
       <Stack.Screen
         options={{
-          headerTitle: props => (
-            <BasicHeader {...props} title="Payment Method" />
+          header: props => (
+            <BasicHeader
+              {...props}
+              title="Payment Method"
+              Icon={
+                <MaterialIcons
+                  name="arrow-back-ios"
+                  size={20}
+                  color="black"
+                  // onPress={navigation.goBack}
+                />
+              }
+            />
           ),
           headerShown: true,
         }}
@@ -149,7 +160,7 @@ export default function MyStack() {
         name="CreateRequestScreen"
         component={CreateRequestScreen}
       />
-       <Stack.Screen
+      <Stack.Screen
         options={{
           header: props => <LogoTitle {...props} item={selectedProp} />,
           headerLeft: false,

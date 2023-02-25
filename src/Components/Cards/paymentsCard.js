@@ -91,6 +91,7 @@ const PaymentCard = ({Item}) => {
               </Text>
             </View>
           </View>
+          {console.log(Item)}
           {Item?.state == 'draft' ? (
             <TouchableOpacity
               onPress={() => navigation.push('PaymentMethod', {Item})}>
