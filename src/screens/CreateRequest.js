@@ -144,9 +144,11 @@ const CreateRequestScreen = ({navigation, route}) => {
   const data = route.params;
 
   useEffect(() => {
-    if (data) {
+    if (data?.data) {
       seturis(data.data);
     }
+    console.log(data, 'data');
+    // setname(data.)
     console.log(data, 'data v data');
     return () => {};
   }, [data]);

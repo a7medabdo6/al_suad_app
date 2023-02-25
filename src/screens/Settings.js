@@ -90,7 +90,7 @@ const Setting = () => {
                   />
                 }
               />
-              <ArrowIcon
+              {/* <ArrowIcon
                 title={'My Properties'}
                 // onPress={() => navigation.navigate('RecoveryPassword')}
                 icon={
@@ -101,7 +101,7 @@ const Setting = () => {
                     size={16}
                   />
                 }
-              />
+              /> */}
               <ArrowIcon
                 title={'My Visits'}
                 onPress={() => navigation.push('myVisits')}

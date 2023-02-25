@@ -55,9 +55,10 @@ const VideoRecScreen = ({navigation, route}) => {
   const selectedProp = useSelector(state => state.MyProperties.selectedProp);
   useEffect(() => {
     if (uris?.length > 0) {
-      navigation.push('CreateRequestScreen', {data: uris});
+      navigation.push('CreateRequestScreen', {data: uris, ...data});
     }
   }, [uris]);
+  const [transferred, setTransferred] = useState(0);
   const uploadImagetoFirebase = async uri => {
     // const { uri } = image;
     const filename = uri.substring(uri.lastIndexOf('/') + 1);
@@ -67,6 +68,11 @@ const VideoRecScreen = ({navigation, route}) => {
     try {
       const res = await task;
       // console.error(res.metadata.fullPath, 'res res');
+      task.on('state_changed', snapshot => {
+        setTransferred(
+          Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000,
+        );
+      });
       seturis(
         old =>
           `${old},https://firebasestorage.googleapis.com/v0/b/realestate-3b42f.appspot.com/o/${res.metadata.fullPath}?alt=media&token=${res.metadata.downloadTokens}`,
@@ -126,6 +132,7 @@ const VideoRecScreen = ({navigation, route}) => {
             callCreateReq={callCreateReq}
             setIsprogress={setIsprogress}
             Isprogress={Isprogress}
+            transferred={transferred}
           />
         </View>
       </ScrollView>

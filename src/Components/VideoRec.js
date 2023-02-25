@@ -1,10 +1,11 @@
+// import {Progress} from 'native-base';
 import React, {useRef, useState, useEffect} from 'react';
 import {StyleSheet, View, Text, Pressable} from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import RNFS from 'react-native-fs';
 import COLORS from '../consts/colors';
 
-const App = ({callCreateReq, setIsprogress, Isprogress}) => {
+const App = ({callCreateReq, setIsprogress, Isprogress, transferred}) => {
   const [IsRec, setIsRec] = useState(false);
   const camera = useRef(null);
   const [video, setVideo] = useState(null);
@@ -65,6 +66,7 @@ const App = ({callCreateReq, setIsprogress, Isprogress}) => {
                 style={{fontWeight: 'bold', fontSize: 20, color: COLORS.dark}}>
                 Please Wait..
               </Text>
+              {/* <Progress value={transferred} width={300} /> */}
             </View>
           </>
         ) : (
