@@ -27,9 +27,12 @@ import BasicButton from '../Components/Buttons/BasicButton';
 import COLORS from '../consts/colors';
 import {Button} from 'react-native';
 const {width} = Dimensions.get('screen');
+import {setisAuth} from '../Store/Message/MessageSlice';
 const DetailsScreen = ({route}) => {
   const navigation = useNavigation();
   const HomeDetailedData = useSelector(state => state.Home.Detailed);
+  const {userInfo} = useSelector(state => state.userinfo);
+  const dispatch = useDispatch();
   const [arr, setArr] = useState([]);
   const [images_urls, setimages_urls] = useState([]);
   const [videoId, setvideoId] = useState('');
@@ -359,8 +362,13 @@ const DetailsScreen = ({route}) => {
         <BasicButton
           text="Request"
           width={150}
-          onPress={() => navigation.push('Inquiry', {id: HomeDetailedData?.id})}
-          style={{bottom: 60}}
+          onPress={() =>
+            userInfo?.uid
+              ? navigation.push('Inquiry', {id: HomeDetailedData?.id})
+              : dispatch(setisAuth(false))
+          }
+          style={{bottom: 60, width: 110, borderRadius: 100}}
+          styleText={{fontSize: 14}}
         />
         {/* <AnimatedCorner /> */}
         {/* <MaterialIcons name="support-agent" color={COLORS.white} size={40} /> */}
