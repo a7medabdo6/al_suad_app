@@ -28,11 +28,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Skeleton from '../Components/Skeleton';
 import {setHomeDetailedData} from '../Store/HomeData/HomeSlice';
 import {api} from '../axios';
-import { setisAuth } from '../Store/Message/MessageSlice';
+import {setisAuth} from '../Store/Message/MessageSlice';
 
 const HomeScreen = ({route}) => {
-  const {data, isLoading} = useHomeApi();
+  const {data, isLoading} = useHomeApi()
   const [AllLoved, setAllLoved] = useState([]);
+  const [refreshing, setRefreshing] = React.useState(false);
   const {userInfo} = useSelector(state => state.userinfo);
   const HomeData = useSelector(state => state.Home.data);
 
@@ -50,6 +51,12 @@ const HomeScreen = ({route}) => {
     dispatch(setHomeDetailedData(house));
     navigation.push('DetailsScreenInStack');
   };
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   const HandleFavClick = async id => {
     setAllLoved(old => [...old, id]);
@@ -189,7 +196,7 @@ const HomeScreen = ({route}) => {
     );
   }
   return (
-    <SafeAreaView style={{backgroundColor: COLORS.white, flex: 1,}}>
+    <SafeAreaView style={{backgroundColor: COLORS.white, flex: 1}}>
       {/* Customise status bar */}
       <StatusBar
         translucent={false}
@@ -226,7 +233,6 @@ const HomeScreen = ({route}) => {
         <Pressable onPress={() => dispatch(setisAuth(false))}>
           <View style={style.sortBtn}>
             <Icon
-
               name="login"
               color={COLORS.dark}
               style={{
@@ -280,10 +286,12 @@ const HomeScreen = ({route}) => {
             data={HomeData}
             removeClippedSubviews={true}
             initialNumToRender={2} // Reduce initial render amount
-                    maxToRenderPerBatch={1} // Reduce number in each render batch
-                    updateCellsBatchingPeriod={100} // Increase time between renders
-                    windowSize={7} // Reduce the window size
+            maxToRenderPerBatch={1} // Reduce number in each render batch
+            updateCellsBatchingPeriod={100} // Increase time between renders
+            windowSize={7} // Reduce the window size
             renderItem={({item}) => <Card house={item} />}
+            onRefresh={onRefresh}
+            refreshing={refreshing}
           />
         ) : (
           <Text style={{color: 'black', fontWeight: 'bold'}}>No Data</Text>
