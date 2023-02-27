@@ -64,18 +64,20 @@ const VideoRecScreen = ({navigation, route}) => {
     const filename = uri.substring(uri.lastIndexOf('/') + 1);
     const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
     const task = storage().ref(filename).putFile(uploadUri);
+    task.on('state_changed', snapshot => {
+      console.log(snapshot.bytesTransferred, 'bytesTransferred');
+      setTransferred(
+        Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000,
+      );
+    });
     console.log(uri, 'uri');
     try {
       const res = await task;
       // console.error(res.metadata.fullPath, 'res res');
-      task.on('state_changed', snapshot => {
-        setTransferred(
-          Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000,
-        );
-      });
+
       seturis(
         old =>
-          `${old},https://firebasestorage.googleapis.com/v0/b/realestate-3b42f.appspot.com/o/${res.metadata.fullPath}?alt=media&token=${res.metadata.downloadTokens}`,
+          `https://firebasestorage.googleapis.com/v0/b/realestate-3b42f.appspot.com/o/${res.metadata.fullPath}?alt=media&token=${res.metadata.downloadTokens},${old}`,
       );
       // Alert.alert(
       //   'Photo uploaded!',

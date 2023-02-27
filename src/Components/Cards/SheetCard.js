@@ -14,6 +14,8 @@ import {api} from '../../axios';
 import {useSelector} from 'react-redux';
 import {useState} from 'react';
 import {useMaintianenceApi} from '../../apis/Home';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {TouchableOpacity} from '@gorhom/bottom-sheet';
 const SheetCard = ({
   openModal,
   setOpenModal,
@@ -56,6 +58,11 @@ const SheetCard = ({
     <View>
       <ScrollView>
         <View style={style.flexcolstart}>
+          <View>
+            <TouchableOpacity onPress={handleCloseModal}>
+              <FontAwesome style={{color: 'red', fontSize: 20}} name="close" />
+            </TouchableOpacity>
+          </View>
           <View style={style.flexRowbtw}>
             <View style={style.flexcolstart2}>
               <Text style={{color: COLORS.dark, fontWeight: 'bold'}}>
@@ -146,7 +153,6 @@ const SheetCard = ({
                 console.log(attach.url, 'attach.url');
                 if (attach.url) {
                   if (attach.url.includes('mp4')) {
-                    
                     return (
                       <View>
                         <Video
@@ -324,7 +330,7 @@ const style = StyleSheet.create({
     borderRadius: 12,
     marginVertical: 5,
     marginHorizontal: 6,
-    width: '80%',
+    width: '75%',
   },
   input: {
     height: 50,

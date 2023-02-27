@@ -16,6 +16,7 @@ import DetailsScreen from '../../screens/DetailsScreen';
 import ContractDetails from '../../screens/ContractDetails';
 import PdfView from '../../screens/PdfVeiw';
 import VideoRecScreen from '../../screens/VideoRec';
+import PaymentWebView from '../../screens/PaymentWebView';
 const Stack = createStackNavigator();
 
 export default function MyStack() {
@@ -140,6 +141,16 @@ export default function MyStack() {
         }}
         name="SuccessPaymentScreen"
         component={SuccessPaymentScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerTitle: props => (
+            <BasicHeader {...props} title="Payment GateWay" />
+          ),
+          headerShown: true,
+        }}
+        name="PaymentWebView"
+        component={PaymentWebView}
       />
       <Stack.Screen
         options={{

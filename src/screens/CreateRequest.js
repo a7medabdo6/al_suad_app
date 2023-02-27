@@ -33,6 +33,7 @@ import PickFiles from '../Components/PickFiles';
 import {useSelector} from 'react-redux';
 import {useValidation} from 'react-native-form-validator';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import Video from 'react-native-video';
 
 const CreateRequestScreen = ({navigation, route}) => {
   const [RequestTypeData, setRequestTypeData] = useState([]);
@@ -69,10 +70,10 @@ const CreateRequestScreen = ({navigation, route}) => {
         old =>
           `${old},https://firebasestorage.googleapis.com/v0/b/realestate-3b42f.appspot.com/o/${res.metadata.fullPath}?alt=media&token=${res.metadata.downloadTokens}`,
       );
-      Alert.alert(
-        'Photo uploaded!',
-        `https://firebasestorage.googleapis.com/v0/b/realestate-3b42f.appspot.com/o/${res.metadata.fullPath}`,
-      );
+      // Alert.alert(
+      //   'Photo uploaded!',
+      //   `https://firebasestorage.googleapis.com/v0/b/realestate-3b42f.appspot.com/o/${res.metadata.fullPath}`,
+      // );
     } catch (e) {
       console.error(e, 'eeeee');
     }
@@ -150,6 +151,9 @@ const CreateRequestScreen = ({navigation, route}) => {
     console.log(data, 'data');
     // setname(data.)
     console.log(data, 'data v data');
+    setDescription(data?.description);
+    setname(data?.name);
+    settype(data?.type);
     return () => {};
   }, [data]);
 
@@ -375,6 +379,20 @@ const CreateRequestScreen = ({navigation, route}) => {
                 }}>
                 Attachments
               </Text>
+              {data?.data && (
+                <View>
+                  <Video
+                    controls={true}
+                    style={{
+                      width: 50,
+                      height: 50,
+                      borderRadius: 5,
+                      marginRight: 5,
+                    }}
+                    source={{uri: data?.data}}
+                  />
+                </View>
+              )}
               {allFilesdata.map((file, index) => {
                 return <Card file={file} index={index} />;
               })}

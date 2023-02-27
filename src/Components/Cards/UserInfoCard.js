@@ -21,6 +21,7 @@ const UserInfoCard = ({Item}) => {
         paddingHorizontal: 10,
         backgroundColor: COLORS.white,
         paddingVertical: 5,
+        overflow: 'hidden',
       }}>
       <View style={style.row}>
         <View
@@ -113,7 +114,9 @@ const UserInfoCard = ({Item}) => {
               marginHorizontal: 5,
               fontWeight: '400',
               fontSize: 14,
-            }}>
+            }}
+            numberOfLines={1}
+            ellipsizeMode="tail">
             {Item?.description}
           </Text>
         </View>

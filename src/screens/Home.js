@@ -31,9 +31,9 @@ import {api} from '../axios';
 import {setisAuth} from '../Store/Message/MessageSlice';
 
 const HomeScreen = ({route}) => {
-  const {data, isLoading} = useHomeApi()
-  const [AllLoved, setAllLoved] = useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
+  const {data, isLoading} = useHomeApi(refreshing);
+  const [AllLoved, setAllLoved] = useState([]);
   const {userInfo} = useSelector(state => state.userinfo);
   const HomeData = useSelector(state => state.Home.data);
 
@@ -43,7 +43,6 @@ const HomeScreen = ({route}) => {
   const navigation = useNavigation();
   useEffect(() => {
     if (!userInfo) {
-      // console.log(login, 'login');
       navigation.push('login');
     }
   }, [userInfo]);
@@ -64,7 +63,6 @@ const HomeScreen = ({route}) => {
     let concated = '';
     if (!oldfav) {
       const fav = await AsyncStorage.setItem('Fav', id.toString());
-      // console.log(JSON.parse(fav), 'fav', id.toString());
 
       return;
     }

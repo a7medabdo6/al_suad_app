@@ -42,7 +42,7 @@ const GetPayment = async data => {
   return await api.post('api/generate_payment_link', {
     params: {
       type: 'payment',
-      payment_id: 251,
+      payment_id: data.id,
     },
   });
 };
@@ -111,30 +111,19 @@ const postCreateUserrequest = async data => {
   });
 };
 
-const useHomeApi = data => {
+const useHomeApi = refreshing => {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
   const {DontMakeAnotherCall} = useSelector(state => state.Home);
 
-  return useQuery(['home'], getHomeData, {
+  return useQuery(['home', refreshing], getHomeData, {
     onSuccess: res => {
-      // const result = {
-      //   status: res.status + '-' + res.statusText,
-      //   headers: res.headers,
-      //   data: res.data,
-      // };
-      // console.log(res.data?.result.reverse(), 'result');
       let reversed = [...res.data?.result];
       if (!DontMakeAnotherCall) {
         dispatch(setHomeData(reversed.reverse()));
       }
       return res.data;
     },
-    onError: err => {
-      // console.log(err, 'err');
-      //   dispatch(errorAtLogin(err.response.data.detail));
-      //  return err;
-    },
+    onError: err => {},
   });
 };
 

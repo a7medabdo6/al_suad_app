@@ -24,16 +24,9 @@ import {setpaymentLink} from '../Store/Payments/PaymentsSlice';
 
 const PaymentMethod = ({navigation, route}) => {
   console.log(route.params, 'route.params;');
-  const {mutate: SetPayment} = usePaymentApi();
   const {Item} = route.params;
-  const {payment_link} = useSelector(state => state.Payments);
   const dispatch = useDispatch();
 
-  const SubmitPayment = async () => {
-    dispatch(setpaymentLink(null));
-
-    SetPayment({id: Item?.id});
-  };
   return (
     <SafeAreaView
       style={{
@@ -49,42 +42,31 @@ const PaymentMethod = ({navigation, route}) => {
         barStyle="dark-content"
       />
 
-      {payment_link ? (
-        <View
+      <View
+        style={{
+          width: '90%',
+        }}>
+        <Text
           style={{
-            width: '90%',
-            height: '100%',
+            fontSize: 18,
+            fontWeight: 'bold',
+            marginTop: 20,
+            marginBottom: 10,
+            color: COLORS.dark,
           }}>
-          <PaymentWebView payment_link={payment_link} />
-        </View>
-      ) : (
-        <View
-          style={{
-            width: '90%',
-          }}>
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: 'bold',
-              marginTop: 20,
-              marginBottom: 10,
-              color: COLORS.dark,
-            }}>
-            Payment Details
-          </Text>
-          <UserInfoCard Item={Item} />
+          Payment Details
+        </Text>
+        <UserInfoCard Item={Item} />
 
-          <BasicButton
-            text="Pay"
-            width={250}
-            onPress={() => {
-              // console.log(navigation);
-              SubmitPayment();
-              // navigation.navigate('SuccessPaymentScreen');
-            }}
-          />
-        </View>
-      )}
+        <BasicButton
+          text="Pay"
+          width={250}
+          onPress={() => {
+            // console.log(navigation);
+            navigation.navigate('PaymentWebView', {id: Item?.id});
+          }}
+        />
+      </View>
     </SafeAreaView>
   );
 };

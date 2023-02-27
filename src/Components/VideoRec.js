@@ -1,4 +1,4 @@
-// import {Progress} from 'native-base';
+import {Progress, NativeBaseProvider} from 'native-base';
 import React, {useRef, useState, useEffect} from 'react';
 import {StyleSheet, View, Text, Pressable} from 'react-native';
 import {RNCamera} from 'react-native-camera';
@@ -61,12 +61,15 @@ const App = ({callCreateReq, setIsprogress, Isprogress, transferred}) => {
       <>
         {Isprogress ? (
           <>
+            {console.log(transferred, 'transferred')}
             <View>
               <Text
                 style={{fontWeight: 'bold', fontSize: 20, color: COLORS.dark}}>
                 Please Wait..
               </Text>
-              {/* <Progress value={transferred} width={300} /> */}
+              <NativeBaseProvider>
+                <Progress value={transferred} width={300} />
+              </NativeBaseProvider>
             </View>
           </>
         ) : (
