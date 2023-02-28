@@ -29,11 +29,39 @@ import Skeleton from '../Components/Skeleton';
 import {setHomeDetailedData} from '../Store/HomeData/HomeSlice';
 import {api} from '../axios';
 import {setisAuth} from '../Store/Message/MessageSlice';
+import SmallCadList from '../Components/Lists/SmallCadList';
+import MediumCadList from '../Components/Lists/MediumCadList';
 
 const HomeScreen = ({route}) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const {data, isLoading} = useHomeApi(refreshing);
   const [AllLoved, setAllLoved] = useState([]);
+  const [dummy, setDummy] = useState([
+    {
+      title: 'Project',
+      image: 'https://static.thenounproject.com/png/2085889-200.png',
+      dec: '55 Projects',
+      bg: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Burj_Khalifa_2021.jpg/1200px-Burj_Khalifa_2021.jpg',
+    },
+    {
+      title: 'Project',
+      image: 'https://static.thenounproject.com/png/2085889-200.png',
+      dec: '55 Projects',
+      bg: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Burj_Khalifa_2021.jpg/1200px-Burj_Khalifa_2021.jpg',
+    },
+    {
+      title: 'Project',
+      image: 'https://static.thenounproject.com/png/2085889-200.png',
+      dec: '55 Projects',
+      bg: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Burj_Khalifa_2021.jpg/1200px-Burj_Khalifa_2021.jpg',
+    },
+    {
+      title: 'Project',
+      image: 'https://static.thenounproject.com/png/2085889-200.png',
+      dec: '55 Projects',
+      bg: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Burj_Khalifa_2021.jpg/1200px-Burj_Khalifa_2021.jpg',
+    },
+  ]);
   const {userInfo} = useSelector(state => state.userinfo);
   const HomeData = useSelector(state => state.Home.data);
 
@@ -265,6 +293,10 @@ const HomeScreen = ({route}) => {
 
       {/* Render categories */}
       {/* <ListCategories /> */}
+      <ScrollView>
+        <SmallCadList data={dummy} />
+        <MediumCadList data={dummy} headText={'Popular Areas'} />
+      </ScrollView>
 
       {/* Render Card */}
       <View
@@ -300,6 +332,7 @@ const HomeScreen = ({route}) => {
 };
 
 const style = StyleSheet.create({
+  container: {marginHorizontal: 20},
   header: {
     paddingVertical: 20,
     flexDirection: 'row',
