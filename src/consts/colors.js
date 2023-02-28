@@ -8,6 +8,9 @@ const COLORS = {
   tranparent: 'rgba(0,0,0,0)',
   backgroundblue: '#EFF5FA',
   line: '#79A5CA',
+  lightGrey: '#969494',
+  black: '#161616',
+  lightBorder: '#EEEEEE',
 };
 
 export default COLORS;
