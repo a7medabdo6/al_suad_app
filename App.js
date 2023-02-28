@@ -1,6 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React, {useState, useEffect} from 'react';
-import {useColorScheme} from 'react-native';
+import {useColorScheme, View} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import MyTabs from './src/Components/Navigation/BottomStackNavigaion';
 import 'react-native-gesture-handler';
@@ -16,7 +16,8 @@ import AuthStack from './src/Components/Navigation/AuthStack';
 import {setuserInfo} from './src/Store/Message/MessageSlice';
 import {useSelector, useDispatch} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
-
+import NewHomeCard from './src/Components/Cards/NewHomeCard';
+import SCREEN from './Layout';
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
   // const [isAuth, setIsAuth] = useState(false);
@@ -47,7 +48,20 @@ function App() {
   useEffect(() => {
     getAuth();
   }, [logout]);
-  return userInfo?.uid || isAuth ? <AllStack /> : <AuthStack />;
+  return (
+    <View
+      style={{
+        backgroundColor: 'white',
+        flex: 1,
+        height: SCREEN.HEIGHT,
+        width: '100%',
+        justifyContent: 'center',
+        display: 'flex',
+        alignItems: 'center',
+      }}>
+      <NewHomeCard />
+    </View>
+  ); // userInfo?.uid || isAuth ? <AllStack /> : <AuthStack />;
 }
 
 export default App;
