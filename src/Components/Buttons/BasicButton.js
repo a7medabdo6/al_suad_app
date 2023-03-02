@@ -19,7 +19,7 @@ const Example = ({
 }) => {
   return (
     <NativeBaseProvider>
-      <Center flex={1} px="3" style={{marginVertical: 20}}>
+      <Center flex={1} px="3" style={{marginVertical: 50}}>
         <Button
           w={{
             base: '62%',
@@ -31,7 +31,7 @@ const Example = ({
           disabled={disable}
           fontWeight="bold"
           fontSize={22}
-          borderRadius={10}
+          borderRadius={12}
           style={{
             backgroundColor: color ? color : COLORS.red,
             borderColor: color ? COLORS.grey : 'transparent',

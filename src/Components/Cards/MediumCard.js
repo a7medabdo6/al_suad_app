@@ -1,24 +1,33 @@
-import {StyleSheet, Text, View, Image, ImageBackground} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ImageBackground,
+  TouchableOpacity,
+} from 'react-native';
 import React from 'react';
 import COLORS from '../../consts/colors';
 import font from '../../consts/font';
-const MediumCard = ({img, title, dec, style, styleImg}) => {
+const MediumCard = ({img, title, dec, style, styleImg, onPress}) => {
   return (
     <View style={styles.border}>
-      <ImageBackground
-        source={{uri: img}}
-        style={[styles.container, {...style}]}>
-        <View style={styles.transparent}>
-          <View style={styles.overLay}>
-            <Text style={styles.title} numberOfLines={1}>
-              {title}
-            </Text>
-            <Text style={styles.dec} numberOfLines={1}>
-              {dec}
-            </Text>
+      <TouchableOpacity onPress={onPress}>
+        <ImageBackground
+          source={{uri: img}}
+          style={[styles.container, {...style}]}>
+          <View style={styles.transparent}>
+            <View style={styles.overLay}>
+              <Text style={styles.title} numberOfLines={1}>
+                {title}
+              </Text>
+              <Text style={styles.dec} numberOfLines={1}>
+                {dec}
+              </Text>
+            </View>
           </View>
-        </View>
-      </ImageBackground>
+        </ImageBackground>
+      </TouchableOpacity>
     </View>
   );
 };

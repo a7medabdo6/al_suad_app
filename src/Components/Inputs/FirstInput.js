@@ -3,24 +3,27 @@ import {Input, Box, Center, NativeBaseProvider, Icon} from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import COLORS from '../../consts/colors';
 
-const Example = ({text, Icon, value, fun, type}) => {
+const Example = ({text, Icon, value, fun, type, height, width, bgcolor}) => {
   return (
     <NativeBaseProvider>
-      <Box alignItems="center" style={{marginTop: 15}}>
+      <Box alignItems="center">
         <Input
           type={type ? type : 'text'}
           InputLeftElement={Icon}
           w={{
-            base: '75%',
-            md: '25%',
+            base: '95%',
+            md: '20%',
           }}
-          mx="190"
-          size="lg"
-          height={55}
+          // mx={width ? width : 155}
+          size="sm"
+          height={height ? height : 55}
           placeholder={text}
           value={value}
+          variant="filled"
           onChangeText={e => fun(e)}
-          borderRadius={10}
+          borderRadius={8}
+          bgColor={bgcolor ? bgcolor : 'white'}
+          style={{width: '100%'}}
         />
       </Box>
     </NativeBaseProvider>

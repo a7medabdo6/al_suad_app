@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
     borderRadius: SCREEN.RADIUS,
     borderWidth: 2,
     padding: 10,
+    marginHorizontal: 5,
   },
   box: {
     height: SCREEN.WIDTH * 0.775 * 0.365,

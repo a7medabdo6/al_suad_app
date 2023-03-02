@@ -28,6 +28,7 @@ import COLORS from '../consts/colors';
 import {Button} from 'react-native';
 const {width} = Dimensions.get('screen');
 import {setisAuth} from '../Store/Message/MessageSlice';
+import ImageGallery from '../Components/Slider/ImageGallery';
 const DetailsScreen = ({route}) => {
   const navigation = useNavigation();
   const HomeDetailedData = useSelector(state => state.Home.Detailed);
@@ -37,28 +38,28 @@ const DetailsScreen = ({route}) => {
   const [images_urls, setimages_urls] = useState([]);
   const [videoId, setvideoId] = useState('');
 
-  useEffect(() => {
-    var strarr = HomeDetailedData?.amenities_compile.split(',');
-    var IconsArr = HomeDetailedData?.amenities_icons_compile.split(',');
-    var newArr = [];
-    for (let i = 0; i < strarr?.length; i++) {
-      newArr.push({name: strarr[i], icon: IconsArr[i]});
-    }
-    setArr(newArr);
-    if (HomeDetailedData?.images_urls) {
-      var images = HomeDetailedData?.images_urls.split(',');
-      setimages_urls(images);
-    }
-    if (HomeDetailedData?.video_url) {
-      var video_id = HomeDetailedData?.video_url.split('v=')[1];
-      var ampersandPosition = video_id.indexOf('&');
-      if (ampersandPosition != -1) {
-        video_id = video_id.substring(0, ampersandPosition);
-      }
-      setvideoId(video_id);
-    }
-    return () => {};
-  }, [HomeDetailedData]);
+  // useEffect(() => {
+  //   var strarr = HomeDetailedData?.amenities_compile.split(',');
+  //   var IconsArr = HomeDetailedData?.amenities_icons_compile.split(',');
+  //   var newArr = [];
+  //   for (let i = 0; i < strarr?.length; i++) {
+  //     newArr.push({name: strarr[i], icon: IconsArr[i]});
+  //   }
+  //   setArr(newArr);
+  //   if (HomeDetailedData?.images_urls) {
+  //     var images = HomeDetailedData?.images_urls.split(',');
+  //     setimages_urls(images);
+  //   }
+  //   if (HomeDetailedData?.video_url) {
+  //     var video_id = HomeDetailedData?.video_url.split('v=')[1];
+  //     var ampersandPosition = video_id.indexOf('&');
+  //     if (ampersandPosition != -1) {
+  //       video_id = video_id.substring(0, ampersandPosition);
+  //     }
+  //     setvideoId(video_id);
+  //   }
+  //   return () => {};
+  // }, [HomeDetailedData]);
   const HandleMap = () => {
     // openMap({latitude: 37.865101, longitude: -119.53833});
     const scheme = Platform.select({ios: 'maps:0,0?q=', android: 'geo:0,0?q='});
@@ -72,12 +73,15 @@ const DetailsScreen = ({route}) => {
     Linking.openURL(url);
   };
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {/* House image */}
-        <StatusBar barStyle="light-content" backgroundColor="transparent" />
+    <SafeAreaView style={{flex: 1, backgroundColor: COLORS.black}}>
+      <StatusBar translucent backgroundColor="transparent" />
 
-        <View style={style.backgroundImageContainer}>
+      <ScrollView
+        // style={{position: 'absolute', top: -20}}
+        showsVerticalScrollIndicator={false}>
+        {/* House image */}
+        <ImageGallery />
+        {/* <View style={style.backgroundImageContainer}>
           {images_urls?.length > 0 ? (
             <View style={{height: '100%'}}>
               <Slider Data={images_urls} />
@@ -100,29 +104,21 @@ const DetailsScreen = ({route}) => {
                   name="arrow-back-ios"
                   size={20}
                   color={COLORS.grey}
-                  // onPress={navigation.goBack}
                 />
               </View>
             </Pressable>
             <View style={style.twoIcon}>
-              {/* <Pressable
-                onPress={() =>
-                  navigation.push('Inquiry', {id: HomeDetailedData?.id})
-                }>
-                <View style={style.headerBtn}>
-                  <Ionicons name="push-outline" style={style.icon} size={18} />
-                </View>
-              </Pressable> */}
+              
 
               <View style={style.headerBtn}>
                 <Ionicons name="heart-outline" style={style.icon} size={18} />
               </View>
             </View>
           </View>
-        </View>
+        </View> */}
 
         <View style={style.detailsContainer}>
-          <View style={style.dashline}></View>
+          {/* <View style={style.dashline}></View> */}
           <View>
             <View style={{marginTop: 10}}>
               {/* Title and price container */}
@@ -362,11 +358,11 @@ const DetailsScreen = ({route}) => {
         <BasicButton
           text="Request"
           width={150}
-          onPress={() =>
-            userInfo?.uid
-              ? navigation.push('Inquiry', {id: HomeDetailedData?.id})
-              : dispatch(setisAuth(false))
-          }
+          // onPress={() =>
+          //   userInfo?.uid
+          //     ? navigation.push('Inquiry', {id: HomeDetailedData?.id})
+          //     : dispatch(setisAuth(false))
+          // }
           style={{bottom: 60, width: 110, borderRadius: 100}}
           styleText={{fontSize: 14}}
         />
@@ -459,13 +455,14 @@ const style = StyleSheet.create({
   detailsContainer: {
     // flex: 1,
     paddingHorizontal: 20,
-    marginTop: 40,
+    // marginTop: 40,
     //  position: 'absolute',
-    top: -80,
+    // top: -80,
     // marginHorizontal:10,
     backgroundColor: COLORS.white,
     zIndex: 5,
-    borderRadius: 25,
+    borderTopRightRadius: 25,
+    borderTopLeftRadius: 25,
     paddingTop: 20,
   },
   facility: {flexDirection: 'row', marginRight: 15},

@@ -7,7 +7,10 @@ const GREY = '#EEEEEE';
 const RADIUS = 16;
 const BLUE = '#185894';
 const DARKGREY = '#969494';
+const MIDDLEGREY = '#DEDEDE';
+
 const OREANGE = '#E9612F';
+const BLUE_TRANSPARENT = 'rgba(26, 60, 105, 0.72)';
 
 export default {
   WIDTH,
@@ -16,7 +19,9 @@ export default {
   GREY,
   WHITE,
   BLUE,
+  MIDDLEGREY,
   RADIUS,
   DARKGREY,
   OREANGE,
+  BLUE_TRANSPARENT,
 };

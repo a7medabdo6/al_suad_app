@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 import COLORS from '../consts/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import HomeTopCard from '../Components/Cards/HomeTopCard';
 import {useDispatch, useSelector} from 'react-redux';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -31,6 +31,9 @@ import {api} from '../axios';
 import {setisAuth} from '../Store/Message/MessageSlice';
 import SmallCadList from '../Components/Lists/SmallCadList';
 import MediumCadList from '../Components/Lists/MediumCadList';
+import NewNavDesign from '../Components/Navigation/NewNavDesign';
+import NewHomeCard from '../Components/Cards/NewHomeCard';
+import LargeCadList from '../Components/Lists/LargeCardList';
 
 const HomeScreen = ({route}) => {
   const [refreshing, setRefreshing] = React.useState(false);
@@ -71,12 +74,12 @@ const HomeScreen = ({route}) => {
   const navigation = useNavigation();
   useEffect(() => {
     if (!userInfo) {
-      navigation.push('login');
+      // navigation.push('login');
     }
   }, [userInfo]);
   const handleHomeClick = house => {
     dispatch(setHomeDetailedData(house));
-    navigation.push('DetailsScreenInStack');
+    // navigation.push('DetailsScreenInStack');
   };
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -212,23 +215,24 @@ const HomeScreen = ({route}) => {
       </Pressable>
     );
   };
-  if (isLoading) {
-    return (
-      <>
-        <Skeleton />
-        <Skeleton />
-        <Skeleton />
-      </>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <>
+  //       <Skeleton />
+  //       <Skeleton />
+  //       <Skeleton />
+  //     </>
+  //   );
+  // }
   return (
-    <SafeAreaView style={{backgroundColor: COLORS.white, flex: 1}}>
+    <SafeAreaView
+      style={{
+        backgroundColor: COLORS.white,
+        flex: 1,
+        height: '100%',
+      }}>
       {/* Customise status bar */}
-      <StatusBar
-        translucent={false}
-        backgroundColor={COLORS.white}
-        barStyle="dark-content"
-      />
+
       {/* Header container */}
       {/* <View style={style.header}>
         <View>
@@ -243,15 +247,14 @@ const HomeScreen = ({route}) => {
         />
       </View> */}
       {/* Input and sort button container */}
-      <View
+      {/* <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
           paddingHorizontal: 20,
         }}>
         <View style={style.searchInputContainer}>
-          {/* <Icon name="search" color={COLORS.grey} size={25} /> */}
-          {/* <TextInput placeholder="Search address, city, location" /> */}
+      
           <Text style={{fontWeight: '600', color: COLORS.dark, fontSize: 14}}>
             {HomeData?.length} results
           </Text>
@@ -286,7 +289,7 @@ const HomeScreen = ({route}) => {
             />
           </View>
         </Pressable>
-      </View>
+      </View> */}
 
       {/* Render list options */}
       {/* <ListOptions /> */}
@@ -294,12 +297,15 @@ const HomeScreen = ({route}) => {
       {/* Render categories */}
       {/* <ListCategories /> */}
       <ScrollView>
+        <HomeTopCard />
         <SmallCadList data={dummy} />
         <MediumCadList data={dummy} headText={'Popular Areas'} />
+        <LargeCadList data={dummy} headText={'Recommended'} />
       </ScrollView>
 
+      <NewNavDesign />
       {/* Render Card */}
-      <View
+      {/* <View
         style={{
           flex: 1,
           justifyContent: 'center',
@@ -326,7 +332,7 @@ const HomeScreen = ({route}) => {
         ) : (
           <Text style={{color: 'black', fontWeight: 'bold'}}>No Data</Text>
         )}
-      </View>
+      </View> */}
     </SafeAreaView>
   );
 };

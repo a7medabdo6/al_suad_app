@@ -3,10 +3,17 @@ import React from 'react';
 import COLORS from '../../consts/colors';
 import font from '../../consts/font';
 import MediumCard from '../Cards/MediumCard';
+import {useNavigation} from '@react-navigation/native';
 
 const MediumCadList = ({data, headText}) => {
+  const navigation = useNavigation();
   const Item = ({item}) => (
-    <MediumCard title={item.title} img={item.bg} dec={item.dec} />
+    <MediumCard
+      onPress={() => navigation.push('houses')}
+      title={item.title}
+      img={item.bg}
+      dec={item.dec}
+    />
   );
   return (
     <View>

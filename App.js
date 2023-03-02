@@ -18,6 +18,10 @@ import {useSelector, useDispatch} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import NewHomeCard from './src/Components/Cards/NewHomeCard';
 import SCREEN from './Layout';
+import NewNavDesign from './src/Components/Navigation/NewNavDesign';
+import HomeScreen from './src/screens/Home';
+import Welcome from './src/screens/Welcome';
+import MainStack from './src/Components/Navigation/MainNav';
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
   // const [isAuth, setIsAuth] = useState(false);
@@ -48,20 +52,22 @@ function App() {
   useEffect(() => {
     getAuth();
   }, [logout]);
-  return (
-    <View
-      style={{
-        backgroundColor: 'white',
-        flex: 1,
-        height: SCREEN.HEIGHT,
-        width: '100%',
-        justifyContent: 'center',
-        display: 'flex',
-        alignItems: 'center',
-      }}>
-      <NewHomeCard />
-    </View>
-  ); // userInfo?.uid || isAuth ? <AllStack /> : <AuthStack />;
+  // return (
+  //   <View
+  //     style={{
+  //       backgroundColor: 'white',
+  //       flex: 1,
+  //       height: SCREEN.HEIGHT,
+  //       width: '100%',
+  //       justifyContent: 'center',
+  //       display: 'flex',
+  //       alignItems: 'center',
+  //     }}>
+  //     <NewHomeCard />
+  //     <NewNavDesign />
+  //   </View>
+  // ); // ;
+  return <MainStack />; //<Welcome />; //<HomeScreen />; //userInfo?.uid || isAuth ? <AllStack /> : <AuthStack />;
 }
 
 export default App;
