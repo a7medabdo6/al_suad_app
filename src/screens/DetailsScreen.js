@@ -13,6 +13,8 @@ import {
   Pressable,
   Linking,
 } from 'react-native';
+import SCREEN from '../../Layout';
+
 import AnimatedCorner from '../Components/Buttons/AnimatedCorner';
 import {useDispatch, useSelector} from 'react-redux';
 import openMap from 'react-native-open-maps';
@@ -22,6 +24,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import house from '../consts/houses';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import {useNavigation} from '@react-navigation/native';
 import BasicButton from '../Components/Buttons/BasicButton';
 import COLORS from '../consts/colors';
@@ -29,6 +32,7 @@ import {Button} from 'react-native';
 const {width} = Dimensions.get('screen');
 import {setisAuth} from '../Store/Message/MessageSlice';
 import ImageGallery from '../Components/Slider/ImageGallery';
+import DetailScreenTab from '../Components/Tab/DetailScreenTab';
 const DetailsScreen = ({route}) => {
   const navigation = useNavigation();
   const HomeDetailedData = useSelector(state => state.Home.Detailed);
@@ -118,7 +122,34 @@ const DetailsScreen = ({route}) => {
         </View> */}
 
         <View style={style.detailsContainer}>
-          {/* <View style={style.dashline}></View> */}
+          <View style={style.greyBox}>
+            <Text style={style.header}>Flat/SNA - 101 Block B view</Text>
+            <View style={style.codebox}>
+              <Text style={style.code}>Code: SNA-101</Text>
+              <Text style={{marginHorizontal: 15, color: SCREEN.DARKGREY}}>
+                <Ionicons name="star" size={16} color="gold" /> 5
+              </Text>
+            </View>
+            <View style={style.lastbox}>
+              <Text style={{...style.fontextralarge, color: SCREEN.OREANGE}}>
+                12000.00 AED
+              </Text>
+              <Text
+                style={{
+                  ...style.textGrey,
+                  marginHorizontal: 10,
+                  ...style.fontlarge,
+                }}>
+                Annually
+              </Text>
+              <Text style={{...style.Residential, color: SCREEN.OREANGE}}>
+                Residential
+              </Text>
+            </View>
+          </View>
+          <View style={{width: '100%', height: 400}}>
+            <DetailScreenTab index={0} />
+          </View>
           <View>
             <View style={{marginTop: 10}}>
               {/* Title and price container */}
@@ -567,6 +598,52 @@ const style = StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject,
+  },
+  greyBox: {
+    backgroundColor: '#F9F9F9',
+    width: SCREEN.WIDTH * 0.92,
+    height: SCREEN.WIDTH * 0.92 * 0.34,
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'flex-start',
+    padding: 10,
+    borderRadius: 10,
+  },
+  codebox: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+  },
+  code: {color: SCREEN.DARKGREY},
+  header: {
+    color: 'black',
+  },
+  fontlarge: {
+    fontSize: 14,
+  },
+  fontextralarge: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  textGrey: {
+    color: SCREEN.DARKGREY,
+    fontSize: 10,
+    marginHorizontal: 2,
+  },
+  lastbox: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: '100%',
+    flexDirection: 'row',
+  },
+  Residential: {
+    paddingHorizontal: 8,
+    backgroundColor: SCREEN.GREY,
+    borderRadius: 5,
+    paddingVertical: 5,
+    marginHorizontal: 20,
   },
 });
 

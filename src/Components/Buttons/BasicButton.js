@@ -16,10 +16,16 @@ const Example = ({
   height = 55,
   styleText,
   style,
+  outline,
+  textcolor,
+  textSize,
 }) => {
   return (
     <NativeBaseProvider>
-      <Center flex={1} px="3" style={{marginVertical: 50}}>
+      <Center
+        // flex={1}
+        px="3"
+        style={{height: 50}}>
         <Button
           w={{
             base: '62%',
@@ -34,12 +40,12 @@ const Example = ({
           borderRadius={12}
           style={{
             backgroundColor: color ? color : COLORS.red,
-            borderColor: color ? COLORS.grey : 'transparent',
+            borderColor: outline ? outline : 'transparent',
             borderWidth: 1,
             ...style,
           }}
           mx={width ? width : '180'}
-          size={'lg'}>
+          size={'md'}>
           <View
             style={{
               display: 'flex',
@@ -59,8 +65,8 @@ const Example = ({
             <Text
               style={{
                 fontWeight: 'bold',
-                fontSize: 18,
-                color: COLORS.white,
+                fontSize: textSize ? textSize : 18,
+                color: textcolor ? textcolor : COLORS.white,
                 marginHorizontal: 8,
                 ...styleText,
               }}>
