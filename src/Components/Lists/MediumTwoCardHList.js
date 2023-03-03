@@ -1,22 +1,20 @@
 import {FlatList, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React from 'react';
+import MediumTwoCardH from '../Cards/MediumTwoCardH';
 import COLORS from '../../consts/colors';
 import font from '../../consts/font';
-import NewHomeCard from '../Cards/NewHomeCard';
 
-const LargeCadList = ({data, headText, viewAll = false, onPressViewAll}) => {
-  const Item = ({item}) => <NewHomeCard data={item} />;
+const MediumTwoCardHList = ({data, onPressViewAll, headText, viewAll}) => {
+  const Item = ({item}) => <MediumTwoCardH data={item} />;
   return (
     <View>
       <TouchableOpacity onPress={onPressViewAll} style={styles.container}>
         <Text style={styles.headText}>{headText}</Text>
         {viewAll && <Text style={styles.moreView}>View All</Text>}
       </TouchableOpacity>
-
       <FlatList
         data={data}
         horizontal
-        ListHeaderComponent={() => <View style={styles.top} />}
         showsHorizontalScrollIndicator={false}
         renderItem={Item}
         keyExtractor={item => item.id}
@@ -25,7 +23,7 @@ const LargeCadList = ({data, headText, viewAll = false, onPressViewAll}) => {
   );
 };
 
-export default LargeCadList;
+export default MediumTwoCardHList;
 
 const styles = StyleSheet.create({
   headText: {

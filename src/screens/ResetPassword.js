@@ -28,7 +28,7 @@ import BasicButton from '../Components/Buttons/BasicButton';
 const {width} = Dimensions.get('screen');
 import {useLoginApi} from '../apis/Auth/index';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {setEnabled} from 'react-native/libraries/performance/systrace';
+// import {setEnabled} from 'react-native/libraries/performance/systrace';
 const ResetPassword = ({
   navigation,
   route,

@@ -21,7 +21,7 @@ const ArrowIcon = ({title, icon, onPress}) => {
             flexDirection: 'row',
           }}>
           {icon}
-          <Text style={{color: 'black'}}>{title}</Text>
+          <Text style={{color: 'black', marginHorizontal: 10}}>{title}</Text>
         </View>
         <View>
           <FontAwesome name="angle-right" color="black" size={18} />

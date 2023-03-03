@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet, Image} from 'react-native';
 import React from 'react';
 import SCREEN from '../../../Layout';
-const NewHomeCard = () => {
+const NewHomeCard = ({data}) => {
   return (
     <View style={styles.container}>
       <View style={styles.box}>

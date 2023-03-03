@@ -2,15 +2,7 @@ import {View, Text} from 'react-native';
 import React from 'react';
 import COLORS from '../../consts/colors';
 
-const SettingCard = ({
-  Header,
-  title,
-  container,
-  FirstRow,
-  SecondRow,
-  ThiredRow,
-  ForthRow,
-}) => {
+const SettingCard = ({title, container}) => {
   return (
     <View
       style={{
@@ -19,7 +11,7 @@ const SettingCard = ({
         padding: 20,
         marginTop: 20,
         marginHorizontal: 20,
-        backgroundColor: 'white',
+        backgroundColor: COLORS.lightWhite,
         borderRadius: 16,
         paddingHorizontal: 20,
       }}>
@@ -28,9 +20,9 @@ const SettingCard = ({
           marginLeft: 10,
           paddingBottom: 15,
           borderBottomWidth: 1.5,
-          borderBottomColor: 'rgba(0,0,0,.2)',
+          borderBottomColor: COLORS.bottomBorder,
         }}>
-        <Text style={{fontWeight: 'bold', color: 'black'}}>{title}</Text>
+        <Text style={{fontWeight: '600', color: 'black'}}>{title}</Text>
       </View>
       {container}
     </View>

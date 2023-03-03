@@ -8,6 +8,8 @@ import Welcome from '../../screens/Welcome';
 import HomeScreen from '../../screens/Home';
 import Houses from '../../screens/Houses';
 import DetailsScreen from '../../screens/DetailsScreen';
+import ExploreScreen from '../../screens/ExploreScreen';
+import SettingsScreen from '../../screens/Settings';
 const Stack = createStackNavigator();
 
 export default function MainStack() {
@@ -38,6 +40,34 @@ export default function MainStack() {
         }}
         name="Main"
         component={HomeScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.white,
+            height: 70,
+          },
+
+          headerLeft: false,
+          headerBackTitleVisible: false,
+          headerShown: false,
+        }}
+        name="Settings"
+        component={SettingsScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.white,
+            height: 70,
+          },
+
+          headerLeft: false,
+          headerBackTitleVisible: false,
+          headerShown: false,
+        }}
+        name="Explore"
+        component={ExploreScreen}
       />
       <Stack.Screen
         options={{

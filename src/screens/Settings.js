@@ -31,6 +31,20 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useHelpCenterApi} from '../apis/Home/index';
 import Header from '../Components/Header';
 import ArrowIcon from '../Components/ArrowIcon';
+import NewNavDesign from '../Components/Navigation/NewNavDesign';
+import font from '../consts/font';
+
+//svg
+import Profile from '../assets/svg/Profile.svg';
+import Lock from '../assets/svg/Lock.svg';
+import Building from '../assets/svg/building.svg';
+import Calendar from '../assets/svg/Calendar.svg';
+import Heart from '../assets/svg/Heart.svg';
+import Bell from '../assets/svg/bell.svg';
+import Language from '../assets/svg/language.svg';
+import Help from '../assets/svg/help.svg';
+import Key from '../assets/svg/key.svg';
+
 const Setting = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
@@ -53,66 +67,42 @@ const Setting = () => {
   }, []);
 
   return (
-    <SafeAreaView
-      style={{backgroundColor: COLORS.backgroundblue, height: '100%'}}>
+    <SafeAreaView style={{backgroundColor: COLORS.white, height: '100%'}}>
       <StatusBar
         barStyle="light-content"
         backgroundColor="transparent"
         translucent={true}
       />
-      <Header title={'More'}/>
+      <Header title={'More'} />
       <ScrollView>
-      <SettingCard
+        <SettingCard
           title={'Account'}
           container={
             <View>
               <ArrowIcon
                 title={'Person Information'}
                 onPress={() => navigation.navigate('PersonalInformation')}
-                icon={
-                  <Ionicons
-                    style={{paddingRight: 20, paddingLeft: 10}}
-                    name="person"
-                    color="black"
-                    size={18}
-                  />
-                }
+                icon={<Profile />}
               />
               <ArrowIcon
                 title={'Recovery Password'}
                 onPress={() => navigation.navigate('CreateNewPassword')}
-                icon={
-                  <FontAwesome
-                    style={{paddingRight: 20, paddingLeft: 10}}
-                    name="lock"
-                    color="black"
-                    size={18}
-                  />
-                }
+                icon={<Lock />}
               />
-              {/* <ArrowIcon
+              <ArrowIcon
                 title={'My Properties'}
                 // onPress={() => navigation.navigate('RecoveryPassword')}
-                icon={
-                  <Fontisto
-                    style={{paddingRight: 20, paddingLeft: 10}}
-                    name="holiday-village"
-                    color="black"
-                    size={16}
-                  />
-                }
-              /> */}
+                icon={<Building />}
+              />
               <ArrowIcon
                 title={'My Visits'}
-                onPress={() => navigation.push('myVisits')}
-                icon={
-                  <FontAwesome
-                    style={{paddingRight: 20, paddingLeft: 10}}
-                    name="calendar"
-                    color="black"
-                    size={18}
-                  />
-                }
+                onPress={() => navigation.navigate('myVisits')}
+                icon={<Calendar />}
+              />
+              <ArrowIcon
+                title={'My Favourits'}
+                // onPress={() => navigation.push('myVisits')}
+                icon={<Heart />}
               />
             </View>
           }
@@ -137,14 +127,11 @@ const Setting = () => {
                     alignItems: 'center',
                     flexDirection: 'row',
                   }}>
-                  <Ionicons
-                    style={{paddingRight: 20, paddingLeft: 10}}
-                    name="notifications"
-                    color="black"
-                    size={18}
-                  />
+                  <Bell />
 
-                  <Text style={{color: 'black'}}>Notification</Text>
+                  <Text style={{color: 'black', marginHorizontal: 10}}>
+                    Notification
+                  </Text>
                 </View>
                 <View style={{marginLeft: 20}}>
                   <Switch
@@ -160,76 +147,41 @@ const Setting = () => {
               <ArrowIcon
                 title={'Language'}
                 // onPress={() => navigation.navigate('RecoveryPassword')}
-                icon={
-                  <FontAwesome
-                    style={{paddingRight: 20, paddingLeft: 10}}
-                    name="language"
-                    color="black"
-                    size={18}
-                  />
-                }
+                icon={<Language />}
               />
               <ArrowIcon
                 title={'Help Center'}
                 onPress={() => navigation.push('HelpCenterScreen')}
-                icon={
-                  <FontAwesome5
-                    style={{paddingRight: 20, paddingLeft: 10}}
-                    name="hands-helping"
-                    color="black"
-                    size={16}
-                  />
-                }
+                icon={<Help />}
               />
             </View>
           }
         />
 
-<SettingCard
+        <SettingCard
           title={'About'}
           container={
             <View>
               <ArrowIcon
                 title={'Privacy & Policy'}
                 onPress={() => navigation.navigate('Policy')}
-                icon={
-                  <MaterialIcons
-                    style={{paddingRight: 20, paddingLeft: 10}}
-                    name="privacy-tip"
-                    color="black"
-                    size={18}
-                  />
-                }
+                icon={<Key />}
               />
 
               <ArrowIcon
                 title={'Terms of Services'}
                 onPress={() => navigation.navigate('TermsOfService')}
-                icon={
-                  <FontAwesome
-                    style={{paddingRight: 20, paddingLeft: 10}}
-                    name="server"
-                    color="black"
-                    size={18}
-                  />
-                }
+                icon={<Key />}
               />
               <ArrowIcon
                 title={'About us'}
                 onPress={() => navigation.navigate('AboutUs')}
-                icon={
-                  <FontAwesome
-                    style={{paddingRight: 20, paddingLeft: 10}}
-                    name="info"
-                    color="black"
-                    size={16}
-                  />
-                }
+                icon={<Help />}
               />
             </View>
           }
         />
-      
+
         <Pressable onPress={() => logout()}>
           <View
             style={{
@@ -248,141 +200,10 @@ const Setting = () => {
             <Text style={{fontSize: 15, color: COLORS.red}}>Logout</Text>
           </View>
         </Pressable>
+        <View style={styles.down} />
       </ScrollView>
 
-      {/* <View
-        style={{
-          paddingVertical: 50,
-          width: '100%',
-        }}>
-        <View
-          style={{width: '100%', paddingLeft: 20, backgroundColor: COLORS.red}}>
-          <Text style={styles.text}>Setting</Text>
-          <View>
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                paddingBottom: 20,
-              }}>
-              <View>
-                <Image
-                  style={styles.tinyLogo}
-                  source={{
-                    uri: `data:image/png;base64,${userInfo.partner[0].avatar_128}`,
-                  }}
-                />
-              </View>
-
-              <View
-                style={{
-                  paddingLeft: 20,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'flex-start',
-                }}>
-                <Text
-                  style={{fontSize: 20, color: 'white', fontWeight: 'bold'}}>
-                  {userInfo?.name}
-                </Text>
-                <Text
-                  style={{fontSize: 15, color: 'white', fontWeight: 'bold'}}>
-                  {userInfo?.partner[0].email}
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-      
-        <Pressable onPress={() => logout()}>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row-reverse',
-              justifyContent: 'space-between',
-              paddingTop: 15,
-              alignItems: 'center',
-            }}>
-            <View style={{paddingRight: 20}}>
-              <Icon
-                style={{marginTop: 5}}
-                name="angle-right"
-                size={30}
-                color="#1F1F1F"
-              />
-            </View>
-
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                paddingHorizontal: 20,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <View
-                style={{
-                  backgroundColor: '#91A5AF',
-                  borderRadius: 50,
-                  width: 50,
-                  height: 50,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <MaterialCommunityIcons name="logout" size={30} color="white" />
-              </View>
-              <Text style={{color: '#1F1F1F', paddingLeft: 20, marginTop: 5}}>
-                Logout
-              </Text>
-            </View>
-          </View>
-        </Pressable>
-        <Pressable onPress={() => navigation.push('myVisits')}>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row-reverse',
-              justifyContent: 'space-between',
-              paddingTop: 15,
-              alignItems: 'center',
-            }}>
-            <View style={{paddingRight: 20}}>
-              <Icon
-                style={{marginTop: 5}}
-                name="angle-right"
-                size={30}
-                color="#1F1F1F"
-              />
-            </View>
-
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                paddingHorizontal: 20,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <View
-                style={{
-                  backgroundColor: '#91A5AF',
-                  borderRadius: 50,
-                  width: 50,
-                  height: 50,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Feather name="map-pin" size={30} color="white" />
-              </View>
-              <Text style={{color: '#1F1F1F', paddingLeft: 20, marginTop: 5}}>
-                My Visits
-              </Text>
-            </View>
-          </View>
-        </Pressable>
-      </View> */}
+      <NewNavDesign navigation={navigation} index={4} />
     </SafeAreaView>
   );
 };
@@ -406,6 +227,7 @@ const styles = StyleSheet.create({
     lineHeight: 80,
     fontWeight: 'bold',
   },
+  down: {height: font.height * 0.18},
 });
 
 export default Setting;

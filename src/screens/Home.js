@@ -34,6 +34,7 @@ import MediumCadList from '../Components/Lists/MediumCadList';
 import NewNavDesign from '../Components/Navigation/NewNavDesign';
 import NewHomeCard from '../Components/Cards/NewHomeCard';
 import LargeCadList from '../Components/Lists/LargeCardList';
+import font from '../consts/font';
 
 const HomeScreen = ({route}) => {
   const [refreshing, setRefreshing] = React.useState(false);
@@ -301,9 +302,10 @@ const HomeScreen = ({route}) => {
         <SmallCadList data={dummy} />
         <MediumCadList data={dummy} headText={'Popular Areas'} />
         <LargeCadList data={dummy} headText={'Recommended'} />
+        <View style={style.down} />
       </ScrollView>
 
-      <NewNavDesign />
+      <NewNavDesign navigation={navigation} index={0} />
       {/* Render Card */}
       {/* <View
         style={{
@@ -474,5 +476,6 @@ const style = StyleSheet.create({
     fontSize: 12,
     marginHorizontal: 3,
   },
+  down: {height: font.height * 0.18},
 });
 export default HomeScreen;
