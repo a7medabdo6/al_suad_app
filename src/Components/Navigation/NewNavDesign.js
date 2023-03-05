@@ -21,9 +21,11 @@ const NewNavDesign = ({navigation, index}) => {
       <ImageBackground
         style={styles.ImageBackground}
         source={require('../../assets/backnav.png')}>
-        <View style={styles.itemSearch}>
+        <TouchableOpacity
+          onPress={() => navigation.push('MyProperties')}
+          style={styles.itemSearch}>
           <Image source={require('../../assets/Search.png')} />
-        </View>
+        </TouchableOpacity>
         <View style={styles.AllItems}>
           <TouchableOpacity
             style={styles.item}
