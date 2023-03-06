@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {useIsFocused} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import TouchableOpacityBtn from '../Components/Buttons/TouchBtn';
+import SCREEN from '../../Layout';
 
 import {
   ImageBackground,
@@ -18,7 +20,6 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 // import Toast from 'react-native-toast-message';
-
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useValidation} from 'react-native-form-validator';
 import COLORS from '../consts/colors';
@@ -28,6 +29,11 @@ const {width} = Dimensions.get('screen');
 import {useLoginApi} from '../apis/Auth/index';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {setisAuth} from '../Store/Message/MessageSlice';
+import Close from '../assets/svg/close.svg';
+import Google from '../assets/svg/google.svg';
+
+import {TextInput} from '@react-native-material/core';
+
 const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
   const [email, setEmail] = useState(null);
   const [password, setpassword] = useState(null);
@@ -100,28 +106,66 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
   // }, [navigation]);
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent={true}
+      />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={{
+          flex: 1,
+          backgroundColor: '#eeeeee',
+          width: '90%',
+          marginTop: 50,
+          height: '100%',
+        }}>
         {/* House image */}
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor="transparent"
-          translucent={true}
-        />
 
-        <View style={style.backgroundImageContainer}>
+        {/* <View style={style.backgroundImageContainer}>
           <ImageBackground
             style={style.backgroundImage}
             source={require('../assets/bg_login.png')}></ImageBackground>
+        </View> */}
+        <View
+          style={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+            // height: '10%',
+            backgroundColor: '#eee',
+            marginBottom: 50,
+          }}>
+          <Close />
         </View>
         <View style={style.detailsContainer}>
-          <Image
-            style={{marginVertical: 10}}
-            source={require('../assets/logo.png')}
+          <Text style={style.text}>Hello Again! </Text>
+          <Text style={style.textGrey}> Please sign in to your account</Text>
+          <TextInput
+            variant="outlined"
+            label="Email address"
+            placeholderTextColor={COLORS.blue}
+            style={{marginTop: 15, borderRadius: 15}}
+            color={COLORS.blue}
+            borderRadius={10}
           />
-          <Text style={style.text}>Login to manage </Text>
-          <Text style={style.text}> and explore properties</Text>
-          <FirstInput
+          <TextInput
+            variant="outlined"
+            label="Password"
+            placeholderTextColor={COLORS.blue}
+            style={{margin: 5}}
+            color={COLORS.blue}
+          />
+
+          {/* <FirstInput
             text="Email addres"
             value={email}
             fun={e => setEmail(e)}
@@ -133,14 +177,14 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
                 color={COLORS.red}
               />
             }
-          />
+          /> */}
           {isFieldInError('email') &&
             getErrorsInField('email').map(errorMessage => (
               <Text key={errorMessage} style={{color: 'red'}}>
                 {errorMessage}
               </Text>
             ))}
-          <FirstInput
+          {/* <FirstInput
             text="password"
             type="password"
             value={password}
@@ -153,7 +197,7 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
                 color={COLORS.red}
               />
             }
-          />
+          /> */}
           {isFieldInError('password') &&
             getErrorsInField('password').map(errorMessage => (
               <Text key={errorMessage} style={{color: 'red'}}>
@@ -163,8 +207,27 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
           <Text style={{color: 'red'}}>
             {userInfo && userInfo == 'Invalid credentials.' ? userInfo : null}
           </Text>
-
-          <BasicButton
+          <Pressable
+            style={{
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'flex-end',
+              alignItems: 'flex-end',
+              marginVertical: 15,
+              marginBottom: 35,
+            }}
+            onPress={() => navigation.push('ResetPassword')}>
+            <View>
+              <Text
+                style={{
+                  color: COLORS.blue,
+                  fontSize: 14,
+                }}>
+                Forgot your password?
+              </Text>
+            </View>
+          </Pressable>
+          {/* <BasicButton
             text={
               isLoading ? (
                 <ActivityIndicator size="large" color="white" />
@@ -173,31 +236,62 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
               )
             }
             onPress={() => HandleLogin()}
+            type="basic"
+            width={'100%'}
+          /> */}
+          <TouchableOpacityBtn
+            color={SCREEN.OREANGE}
+            text="Sign In "
+            width={'100%'}
+            style={{
+              borderRadius: 10,
+              paddingVertical: 15,
+              marginVertical: 15,
+            }}
+            textcolor={COLORS.WHITE}
+            // outline={SCREEN.OREANGE}
+            // onPress={navigation.push('login')}
+            type="basic"
+            textSize={14}
+            // outline={SCREEN.DARKGREY}
           />
-          <Pressable onPress={() => navigation.push('ResetPassword')}>
-            <View>
-              <Text
-                style={{
-                  color: COLORS.dark,
-                  fontWeight: 'bold',
-                  fontSize: 16,
-                  textDecorationLine: 'underline',
-                }}>
-                Forgot password?
-              </Text>
-            </View>
-          </Pressable>
-
-          <View>
+          <TouchableOpacityBtn
+            color={SCREEN.WHITE}
+            text="Sign In with google"
+            width={'100%'}
+            style={{
+              borderRadius: 10,
+              paddingVertical: 15,
+              marginVertical: 15,
+            }}
+            textcolor={COLORS.dark}
+            // outline={SCREEN.OREANGE}
+            // onPress={navigation.push('login')}
+            type="basic"
+            textSize={14}
+            outline={SCREEN.DARKGREY}
+            Icon={<Google />}
+          />
+          <View
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'row',
+              width: '100%',
+            }}>
+            <Text style={{color: COLORS.dark, marginHorizontal: 2}}>
+              Don’t have an Account?
+            </Text>
             <Pressable onPress={() => navigation.push('signup')}>
               <Text
                 style={{
-                  color: COLORS.dark,
-                  fontWeight: 'bold',
-                  fontSize: 16,
-                  textDecorationLine: 'underline',
+                  color: COLORS.blue,
+                  // fontWeight: 'bold',
+                  fontSize: 14,
+                  marginHorizontal: 2,
                 }}>
-                Register?
+                Sign Up
               </Text>
             </Pressable>
           </View>
@@ -208,7 +302,7 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Pressable onPress={() => dispatch(setisAuth(true))}>
+            {/* <Pressable onPress={() => dispatch(setisAuth(true))}>
               <View style={style.bluebox}>
                 <View style={style.blueboxtext}>
                   <Ionicons
@@ -222,7 +316,7 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
                   </Text>
                 </View>
               </View>
-            </Pressable>
+            </Pressable> */}
             {/* <Pressable
               onPress={() => navigation.push('Loved')}
               style={{
@@ -315,30 +409,42 @@ const style = StyleSheet.create({
   detailsContainer: {
     // flex: 1,
     paddingHorizontal: 20,
-    marginTop: 40,
-    margin: 'auto',
+    //marginTop: 40,
+    // margin: 'auto',
     //  position: 'absolute',
     // marginHorizontal:10,
-    backgroundColor: COLORS.white,
+    paddingVertical: 50,
+    borderRadius: 20,
+    backgroundColor: 'white',
     zIndex: 5,
-    paddingTop: 20,
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    alignItems: 'center',
+    // paddingTop: 20,
+    // display: 'flex',
+    // justifyContent: 'center',
+    // flexDirection: 'column',
+    // alignItems: 'center',
+    // height: '90%',
   },
 
   text: {
     color: COLORS.dark,
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 30,
     // width: '50%',
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
   },
-
+  textGrey: {
+    color: COLORS.grey,
+    fontSize: 14,
+    // width: '50%',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginTop: 5,
+  },
   bluebox: {
     width: '90%',
     backgroundColor: COLORS.backgroundblue,

@@ -14,7 +14,7 @@ import {
   Linking,
 } from 'react-native';
 import SCREEN from '../../Layout';
-
+import Contact from '../assets/svg/contact.svg';
 import AnimatedCorner from '../Components/Buttons/AnimatedCorner';
 import {useDispatch, useSelector} from 'react-redux';
 import openMap from 'react-native-open-maps';
@@ -24,6 +24,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import house from '../consts/houses';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import TouchableOpacityBtn from '../Components/Buttons/TouchBtn';
 
 import {useNavigation} from '@react-navigation/native';
 import BasicButton from '../Components/Buttons/BasicButton';
@@ -33,6 +34,11 @@ const {width} = Dimensions.get('screen');
 import {setisAuth} from '../Store/Message/MessageSlice';
 import ImageGallery from '../Components/Slider/ImageGallery';
 import DetailScreenTab from '../Components/Tab/DetailScreenTab';
+import NewBottomSheet from '../Components/Sheets/New_BottomSheet';
+import Whatsapp from '../assets/svg/whatsapp.svg';
+import Call from '../assets/svg/call.svg';
+import Mail from '../assets/svg/mail.svg';
+
 const DetailsScreen = ({route}) => {
   const navigation = useNavigation();
   const HomeDetailedData = useSelector(state => state.Home.Detailed);
@@ -147,10 +153,68 @@ const DetailsScreen = ({route}) => {
               </Text>
             </View>
           </View>
-          <View style={{width: '100%', height: 400}}>
+          <View style={{width: '100%'}}>
             <DetailScreenTab index={0} />
+            <View style={style.flexbox}>
+              <NewBottomSheet
+                Height={200}
+                Content={
+                  <View style={{...style.flexboxcolumn, width: '90%'}}>
+                    <View
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: '90%',
+                      }}>
+                      <Text style={{color: 'black', fontWeight: 'bold'}}>
+                        Customer Service
+                      </Text>
+                      <View style={style.line} />
+                    </View>
+                    <View style={{...style.flexbox, width: '100%'}}>
+                      <View style={style.whatsapp}>
+                        <View>
+                          <Whatsapp />
+                        </View>
+                        <Text style={{color: 'black'}}>whatsapp</Text>
+                      </View>
+                      <View style={style.whatsapp}>
+                        <View>
+                          <Call />
+                        </View>
+                        <Text style={{color: 'black'}}>Phone call</Text>
+                      </View>
+                      <View style={style.whatsapp}>
+                        <View>
+                          <Mail />
+                        </View>
+                        <Text style={{color: 'black'}}>Mail</Text>
+                      </View>
+                    </View>
+                  </View>
+                }
+              />
+
+              <TouchableOpacityBtn
+                color={SCREEN.OREANGE}
+                text="Call us"
+                width={'45%'}
+                style={{
+                  borderRadius: 10,
+                  paddingVertical: 12,
+                  marginVertical: 15,
+                }}
+                textcolor={SCREEN.WHITE}
+                // outline={SCREEN.OREANGE}
+                onPress={() => navigation.push('login')}
+                type="basic"
+                textSize={14}
+                Icon={<Contact />}
+              />
+            </View>
           </View>
-          <View>
+          <View style={{display: 'none'}}>
             <View style={{marginTop: 10}}>
               {/* Title and price container */}
               <View
@@ -242,7 +306,7 @@ const DetailsScreen = ({route}) => {
             <View style={style.line}></View>
           </View>
           {/* Description */}
-          <View>
+          <View style={{display: 'none'}}>
             <View style={{marginTop: 10}}>
               {/* Title and price container */}
               <View
@@ -272,7 +336,7 @@ const DetailsScreen = ({route}) => {
           </View>
           {/* Location */}
 
-          <View>
+          <View style={{display: 'none'}}>
             <View style={{marginTop: 10}}>
               {/* Title and price container */}
               <View
@@ -312,9 +376,11 @@ const DetailsScreen = ({route}) => {
             </View>
             <View style={style.line}></View>
           </View>
-          <View>{videoId && <VideoPlayer videoId={videoId} />}</View>
+          <View style={{display: 'none'}}>
+            {videoId && <VideoPlayer videoId={videoId} />}
+          </View>
           <View>
-            <View style={{marginTop: 10}}>
+            <View style={{marginTop: 10, display: 'none'}}>
               {/* Title and price container */}
               <View
                 style={{
@@ -385,7 +451,7 @@ const DetailsScreen = ({route}) => {
           </View>
         </View>
       </ScrollView>
-      <View>
+      <View style={{display: 'none'}}>
         <BasicButton
           text="Request"
           width={150}
@@ -405,6 +471,16 @@ const DetailsScreen = ({route}) => {
 };
 
 const style = StyleSheet.create({
+  line: {
+    borderBottomColor: SCREEN.MIDDLEGREY,
+    borderRightColor: 'transparent',
+    height: 5,
+    borderWidth: 1,
+    width: '100%',
+    borderLeftColor: 'transparent',
+    borderTopColor: 'transparent',
+    marginVertical: 5,
+  },
   backgroundImageContainer: {
     elevation: 20,
     // marginHorizontal: 20,
@@ -644,6 +720,24 @@ const style = StyleSheet.create({
     borderRadius: 5,
     paddingVertical: 5,
     marginHorizontal: 20,
+  },
+  flexbox: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    width: '100%',
+    flexDirection: 'row',
+  },
+  flexboxcolumn: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: '100%',
+  },
+  whatsapp: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

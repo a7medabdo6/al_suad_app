@@ -17,8 +17,9 @@ import FirstInput from '../Components/Inputs/FirstInput';
 import LargeHomeCard from '../Components/Cards/LargeHomeCard';
 import BottomSheet from '../Components/Sheets/New_BottomSheet';
 import BasicBtn from '../Components/Buttons/BasicButton';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 const Houses = () => {
-  const [text, onChangeText] = React.useState('Useless Text');
+  const [search, setSearch] = React.useState(null);
   const [number, onChangeNumber] = React.useState('');
   //Details_Screen
   const navigation = useNavigation();
@@ -50,6 +51,7 @@ const Houses = () => {
             width={130}
             height={42}
             bgcolor={'#FAFAFA'}
+            fun={e => setSearch(e)}
           />
           <View style={styles.orangeboxmain}>
             <TouchableOpacity>
@@ -74,224 +76,367 @@ const Houses = () => {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.secondbox}>
-          <BottomSheet
-            Item={
-              <View style={styles.imageContainer}>
-                <Text style={styles.text}>Type</Text>
-                <View style={styles.textContainer}>
-                  <Text style={styles.textGrey}>Flat</Text>
-                </View>
-              </View>
-            }
-            Content={
+        {search && (
+          <View
+            style={{
+              flex: 1,
+              display: 'flex',
+              justifyContent: 'flex-start',
+              backgroundColor: 'white',
+              height: SCREEN.HEIGHT,
+              alignItems: 'flex-start',
+              width: '90%',
+            }}>
+            <Text
+              style={{
+                color: SCREEN.DARKGREY,
+                fontWeight: 'bold',
+                fontSize: 16,
+              }}>
+              Recent Search
+            </Text>
+            <View
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginVertical: 15,
+              }}>
+              <Fontisto color={SCREEN.BLUE} name="clock" size={15} />
+              <Text style={{color: 'black', marginHorizontal: 5}}>
+                Flat SNA
+              </Text>
+            </View>
+            <View
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start',
+              }}>
+              <Text
+                style={{
+                  color: SCREEN.DARKGREY,
+                  fontWeight: 'bold',
+                  fontSize: 16,
+                }}>
+                Popular Searches
+              </Text>
               <View
                 style={{
                   display: 'flex',
                   justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  flexDirection: 'column',
+                  flexDirection: 'row',
+                  alignItems: 'flex-start',
+                  marginVertical: 15,
                   width: '100%',
+                  flexWrap: 'wrap',
                 }}>
                 <Text
                   style={{
-                    color: '#000000',
-                    marginHorizontal: 10,
-                    fontSize: 18,
-                    // fontWeight: 'bold',
-                    borderBottomColor: '#E8E8E8',
-                    borderWidth: 2,
-                    width: '100%',
-                    alignSelf: 'center',
-                    alignItems: 'center',
-                    alignContent: 'center',
-                    textAlign: 'center',
-                    borderTopColor: 'transparent',
-                    borderRightColor: 'transparent',
-                    borderLeftColor: 'transparent',
-                    paddingBottom: 15,
-                    marginBottom: 15,
-                  }}>
-                  Property Type
-                </Text>
-                <View
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    flexDirection: 'row',
-                    width: '100%',
-                    borderColor: SCREEN.GREY,
-                    borderWidth: 1,
-                    borderRadius: 5,
-                    paddingHorizontal: 15,
-                    height: 50,
-                    marginVertical: 5,
-                  }}>
-                  <Image
-                    style={{height: 25, width: 25}}
-                    source={require('../assets/boxes.png')}
-                  />
-                  <Text
-                    style={{
-                      color: SCREEN.DARKGREY,
-                      marginHorizontal: 10,
-                      fontSize: 14,
-                    }}>
-                    All
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    flexDirection: 'row',
-                    width: '100%',
+                    color: SCREEN.BLUE,
                     borderColor: SCREEN.BLUE,
-                    backgroundColor: '#FAFAFA',
+                    borderRadius: 8,
                     borderWidth: 1,
-                    borderRadius: 5,
+                    padding: 7,
                     paddingHorizontal: 15,
-                    height: 50,
-                    marginVertical: 5,
+                    marginHorizontal: 3,
+                    marginVertical: 3,
                   }}>
-                  <Image
-                    style={{height: 25, width: 25}}
-                    source={require('../assets/build.png')}
-                  />
-                  <Text
-                    style={{
-                      color: SCREEN.DARKGREY,
-                      marginHorizontal: 10,
-                      fontSize: 14,
-                    }}>
-                    Flat
-                  </Text>
-                </View>
-                <View
+                  Dubai
+                </Text>
+                <Text
                   style={{
-                    display: 'flex',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    flexDirection: 'row',
-                    width: '100%',
-                    borderColor: SCREEN.GREY,
+                    color: SCREEN.BLUE,
+                    borderColor: SCREEN.BLUE,
+                    borderRadius: 8,
                     borderWidth: 1,
-                    borderRadius: 5,
+                    padding: 7,
                     paddingHorizontal: 15,
-                    height: 50,
-                    marginVertical: 5,
+                    marginHorizontal: 3,
+                    marginVertical: 3,
                   }}>
-                  <Image
-                    style={{height: 25, width: 25}}
-                    source={require('../assets/build.png')}
-                  />
-                  <Text
-                    style={{
-                      color: SCREEN.DARKGREY,
-                      marginHorizontal: 10,
-                      fontSize: 14,
-                    }}>
-                    All
-                  </Text>
-                </View>
-                <View
+                  Dubai
+                </Text>
+                <Text
                   style={{
-                    display: 'flex',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    flexDirection: 'row',
-                    width: '100%',
-                    borderColor: SCREEN.GREY,
+                    color: SCREEN.BLUE,
+                    borderColor: SCREEN.BLUE,
+                    borderRadius: 8,
                     borderWidth: 1,
-                    borderRadius: 5,
+                    padding: 7,
                     paddingHorizontal: 15,
-                    height: 50,
-                    marginVertical: 5,
+                    marginHorizontal: 3,
+                    marginVertical: 3,
                   }}>
-                  <Image
-                    style={{height: 25, width: 25}}
-                    source={require('../assets/boxes.png')}
-                  />
-                  <Text
-                    style={{
-                      color: SCREEN.DARKGREY,
-                      marginHorizontal: 10,
-                      fontSize: 14,
-                    }}>
-                    All
-                  </Text>
-                </View>
-                <View
+                  Dubai
+                </Text>
+                <Text
                   style={{
-                    display: 'flex',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    flexDirection: 'row',
-                    width: '100%',
-                    borderColor: SCREEN.GREY,
+                    color: SCREEN.BLUE,
+                    borderColor: SCREEN.BLUE,
+                    borderRadius: 8,
                     borderWidth: 1,
-                    borderRadius: 5,
+                    padding: 7,
                     paddingHorizontal: 15,
-                    height: 50,
-                    marginVertical: 5,
+                    marginHorizontal: 3,
+                    marginVertical: 3,
                   }}>
-                  <Image
-                    style={{height: 25, width: 25}}
-                    source={require('../assets/boxes.png')}
-                  />
-                  <Text
-                    style={{
-                      color: SCREEN.DARKGREY,
-                      marginHorizontal: 10,
-                      fontSize: 14,
-                    }}>
-                    All
-                  </Text>
-                </View>
-                <BasicBtn type="basic" text="Done" width={190} />
+                  Dubai
+                </Text>
+                <Text
+                  style={{
+                    color: SCREEN.BLUE,
+                    borderColor: SCREEN.BLUE,
+                    borderRadius: 8,
+                    borderWidth: 1,
+                    padding: 7,
+                    paddingHorizontal: 15,
+                    marginHorizontal: 3,
+                    marginVertical: 3,
+                  }}>
+                  Dubai
+                </Text>
+                <Text
+                  style={{
+                    color: SCREEN.BLUE,
+                    borderColor: SCREEN.BLUE,
+                    borderRadius: 8,
+                    borderWidth: 1,
+                    padding: 7,
+                    paddingHorizontal: 15,
+                    marginHorizontal: 3,
+                    marginVertical: 3,
+                  }}>
+                  Dubai
+                </Text>
               </View>
-            }
-          />
+            </View>
+          </View>
+        )}
+        {!search && (
+          <>
+            <View style={styles.secondbox}>
+              <BottomSheet
+                Item={
+                  <View style={styles.imageContainer}>
+                    <Text style={styles.text}>Type</Text>
+                    <View style={styles.textContainer}>
+                      <Text style={styles.textGrey}>Flat</Text>
+                    </View>
+                  </View>
+                }
+                Content={
+                  <View
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      flexDirection: 'column',
+                      width: '100%',
+                    }}>
+                    <Text
+                      style={{
+                        color: '#000000',
+                        marginHorizontal: 10,
+                        fontSize: 18,
+                        // fontWeight: 'bold',
+                        borderBottomColor: '#E8E8E8',
+                        borderWidth: 2,
+                        width: '100%',
+                        alignSelf: 'center',
+                        alignItems: 'center',
+                        alignContent: 'center',
+                        textAlign: 'center',
+                        borderTopColor: 'transparent',
+                        borderRightColor: 'transparent',
+                        borderLeftColor: 'transparent',
+                        paddingBottom: 15,
+                        marginBottom: 15,
+                      }}>
+                      Property Type
+                    </Text>
+                    <View
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                        width: '100%',
+                        borderColor: SCREEN.GREY,
+                        borderWidth: 1,
+                        borderRadius: 5,
+                        paddingHorizontal: 15,
+                        height: 50,
+                        marginVertical: 5,
+                      }}>
+                      <Image
+                        style={{height: 25, width: 25}}
+                        source={require('../assets/boxes.png')}
+                      />
+                      <Text
+                        style={{
+                          color: SCREEN.DARKGREY,
+                          marginHorizontal: 10,
+                          fontSize: 14,
+                        }}>
+                        All
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                        width: '100%',
+                        borderColor: SCREEN.BLUE,
+                        backgroundColor: '#FAFAFA',
+                        borderWidth: 1,
+                        borderRadius: 5,
+                        paddingHorizontal: 15,
+                        height: 50,
+                        marginVertical: 5,
+                      }}>
+                      <Image
+                        style={{height: 25, width: 25}}
+                        source={require('../assets/build.png')}
+                      />
+                      <Text
+                        style={{
+                          color: SCREEN.DARKGREY,
+                          marginHorizontal: 10,
+                          fontSize: 14,
+                        }}>
+                        Flat
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                        width: '100%',
+                        borderColor: SCREEN.GREY,
+                        borderWidth: 1,
+                        borderRadius: 5,
+                        paddingHorizontal: 15,
+                        height: 50,
+                        marginVertical: 5,
+                      }}>
+                      <Image
+                        style={{height: 25, width: 25}}
+                        source={require('../assets/build.png')}
+                      />
+                      <Text
+                        style={{
+                          color: SCREEN.DARKGREY,
+                          marginHorizontal: 10,
+                          fontSize: 14,
+                        }}>
+                        All
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                        width: '100%',
+                        borderColor: SCREEN.GREY,
+                        borderWidth: 1,
+                        borderRadius: 5,
+                        paddingHorizontal: 15,
+                        height: 50,
+                        marginVertical: 5,
+                      }}>
+                      <Image
+                        style={{height: 25, width: 25}}
+                        source={require('../assets/boxes.png')}
+                      />
+                      <Text
+                        style={{
+                          color: SCREEN.DARKGREY,
+                          marginHorizontal: 10,
+                          fontSize: 14,
+                        }}>
+                        All
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                        width: '100%',
+                        borderColor: SCREEN.GREY,
+                        borderWidth: 1,
+                        borderRadius: 5,
+                        paddingHorizontal: 15,
+                        height: 50,
+                        marginVertical: 5,
+                      }}>
+                      <Image
+                        style={{height: 25, width: 25}}
+                        source={require('../assets/boxes.png')}
+                      />
+                      <Text
+                        style={{
+                          color: SCREEN.DARKGREY,
+                          marginHorizontal: 10,
+                          fontSize: 14,
+                        }}>
+                        All
+                      </Text>
+                    </View>
+                    <BasicBtn type="basic" text="Done" width={190} />
+                  </View>
+                }
+              />
 
-          <View style={styles.imageContainer}>
-            <Text style={styles.text}>Rooms</Text>
-            <View style={styles.textContainer}>
-              <Text style={styles.textGrey}>All</Text>
+              <View style={styles.imageContainer}>
+                <Text style={styles.text}>Rooms</Text>
+                <View style={styles.textContainer}>
+                  <Text style={styles.textGrey}>All</Text>
+                </View>
+              </View>
+              <View style={styles.imageContainer}>
+                <Text style={styles.text}>Price</Text>
+                <View style={styles.textContainer}>
+                  <Text style={styles.textGrey}>All</Text>
+                </View>
+              </View>
+              <View style={styles.imageContainer}>
+                <Image
+                  style={{width: 20, height: 20}}
+                  source={require('../assets/arrow.png')}
+                />
+              </View>
             </View>
-          </View>
-          <View style={styles.imageContainer}>
-            <Text style={styles.text}>Price</Text>
-            <View style={styles.textContainer}>
-              <Text style={styles.textGrey}>All</Text>
+            <View
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-start',
+                width: SCREEN.WIDTH * 0.91,
+                marginVertical: 3,
+              }}>
+              <Text style={styles.textGrey}>2500 Flats</Text>
             </View>
-          </View>
-          <View style={styles.imageContainer}>
-            <Image
-              style={{width: 20, height: 20}}
-              source={require('../assets/arrow.png')}
-            />
-          </View>
-        </View>
-        <View
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-start',
-            width: SCREEN.WIDTH * 0.91,
-            marginVertical: 3,
-          }}>
-          <Text style={styles.textGrey}>2500 Flats</Text>
-        </View>
-        <View>
-          <FlatList
-            data={[0, 1, 1]}
-            vertical
-            showsHorizontalScrollIndicator={false}
-            renderItem={Item}
-            keyExtractor={item => item}
-          />
-        </View>
+            <View>
+              <FlatList
+                data={[0, 1, 1]}
+                vertical
+                showsHorizontalScrollIndicator={false}
+                renderItem={Item}
+                keyExtractor={item => item}
+              />
+            </View>
+          </>
+        )}
       </View>
     </ScrollView>
   );

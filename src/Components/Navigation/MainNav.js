@@ -10,6 +10,7 @@ import Houses from '../../screens/Houses';
 import DetailsScreen from '../../screens/DetailsScreen';
 import ExploreScreen from '../../screens/ExploreScreen';
 import SettingsScreen from '../../screens/Settings';
+import Signup from '../../screens/SignUp';
 const Stack = createStackNavigator();
 
 export default function MainStack() {
@@ -82,6 +83,34 @@ export default function MainStack() {
         }}
         name="houses"
         component={Houses}
+      />
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.white,
+            height: 70,
+          },
+
+          headerLeft: false,
+          headerBackTitleVisible: false,
+          headerShown: false,
+        }}
+        name="signup"
+        component={Signup}
+      />
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.white,
+            height: 70,
+          },
+
+          headerLeft: false,
+          headerBackTitleVisible: false,
+          headerShown: false,
+        }}
+        name="login"
+        component={LoginScreen}
       />
       <Stack.Screen
         options={{
