@@ -11,6 +11,8 @@ import DetailsScreen from '../../screens/DetailsScreen';
 import ExploreScreen from '../../screens/ExploreScreen';
 import SettingsScreen from '../../screens/Settings';
 import Signup from '../../screens/SignUp';
+import MyPropertiesScreen from '../../screens/MyProperties';
+import PaymentScreen from '../../screens/Payment';
 const Stack = createStackNavigator();
 
 export default function MainStack() {
@@ -55,6 +57,34 @@ export default function MainStack() {
         }}
         name="Settings"
         component={SettingsScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.white,
+            height: 70,
+          },
+
+          headerLeft: false,
+          headerBackTitleVisible: false,
+          headerShown: false,
+        }}
+        name="MyProperties"
+        component={MyPropertiesScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.white,
+            height: 70,
+          },
+
+          headerLeft: false,
+          headerBackTitleVisible: false,
+          headerShown: false,
+        }}
+        name="PaymentScreen"
+        component={PaymentScreen}
       />
       <Stack.Screen
         options={{

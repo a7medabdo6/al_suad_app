@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   View,
@@ -23,6 +23,8 @@ import Skeleton from '../Components/Skeleton';
 const {width} = Dimensions.get('screen');
 import houses from '../consts/houses';
 import {useMyPropertyApi} from '../apis/Home';
+import NewNavDesign from '../Components/Navigation/NewNavDesign';
+import Header from '../Components/Header';
 const MyProperties = ({}) => {
   const navigation = useNavigation();
   const {mutate: GetmyProp, isLoading} = useMyPropertyApi();
@@ -32,26 +34,36 @@ const MyProperties = ({}) => {
     state => state.MyProperties.myproperties,
   );
   useEffect(() => {
-    GetmyProp({partner_id: userInfo.partner_id});
+    GetmyProp({partner_id: 853 || userInfo.partner_id});
     return () => {};
   }, []);
-
-  if (isLoading) {
-    return (
-      <>
-        <Skeleton />
-        <Skeleton />
-        <Skeleton />
-      </>
-    );
-  }
+  const [data, setData] = useState([
+    {
+      name: 'Flat/SNA - 101 Block B view',
+      project_id: {name: 'hello'},
+      code: '122',
+      contract: {
+        total_value: 10,
+        rent_period_type: 2,
+        date_to: '10/2/2',
+        id: 10,
+      },
+    },
+  ]);
+  // if (isLoading) {
+  //   return (
+  //     <>
+  //       <Skeleton />
+  //       <Skeleton />
+  //       <Skeleton />
+  //     </>
+  //   );
+  // }
   return (
     <SafeAreaView
       style={{
-        backgroundColor: COLORS.backgroundblue,
+        backgroundColor: COLORS.white,
         flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
       }}>
       {/* Customise status bar */}
       <StatusBar
@@ -59,6 +71,7 @@ const MyProperties = ({}) => {
         backgroundColor={COLORS.white}
         barStyle="dark-content"
       />
+      <Header title={'My Properties'} />
       {/* <View
         style={{
           width: '90%',
@@ -70,9 +83,10 @@ const MyProperties = ({}) => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{marginVertical: 10, marginHorizontal: 10}}
         vertical
-        data={MyPropertiesData}
+        data={data || MyPropertiesData}
         renderItem={({item}) => <PropertyCard item={item} />}
       />
+      <NewNavDesign navigation={navigation} index={2} />
     </SafeAreaView>
   );
 };
