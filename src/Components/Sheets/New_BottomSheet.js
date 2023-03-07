@@ -8,7 +8,7 @@ import SCREEN from '../../../Layout';
 
 import COLORS from '../../consts/colors';
 import {useNavigation} from '@react-navigation/native';
-export default function BottomSheet({Item, Content, Height}) {
+export default function BottomSheet({Item, Content, Height, width}) {
   const refRBSheet = useRef();
 
   const navigation = useNavigation();
@@ -16,7 +16,7 @@ export default function BottomSheet({Item, Content, Height}) {
     refRBSheet.current.open();
   };
   return (
-    <View style={{width: '50%'}}>
+    <View style={{width: width ? width : '50%'}}>
       {Item ? (
         <Pressable onPress={() => HandleOpenModal()}>{Item}</Pressable>
       ) : (
@@ -70,6 +70,7 @@ export default function BottomSheet({Item, Content, Height}) {
               justifyContent: 'center',
               alignItems: 'center',
               flexDirection: 'row',
+              // backgroundColor: 'red',
             }}>
             {Content}
           </View>

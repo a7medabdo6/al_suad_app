@@ -40,6 +40,7 @@ const HomeScreen = ({route}) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const {data, isLoading} = useHomeApi(refreshing);
   const [AllLoved, setAllLoved] = useState([]);
+
   const [dummy, setDummy] = useState([
     {
       title: 'Project',

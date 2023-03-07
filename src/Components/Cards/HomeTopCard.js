@@ -33,10 +33,12 @@ const TopCard = () => {
             <Text style={styles.textGrey}>Welcome back,</Text>
             <Text style={styles.text}>Mostafa Mohamed</Text>
           </View>
-          <Image
-            style={styles.image}
-            source={require('../../assets/noty.png')}
-          />
+          <TouchableOpacity onPress={() => navigation.push('Navigation')}>
+            <Image
+              style={styles.image}
+              source={require('../../assets/noty.png')}
+            />
+          </TouchableOpacity>
         </View>
 
         <View

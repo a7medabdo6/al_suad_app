@@ -13,6 +13,8 @@ import SettingsScreen from '../../screens/Settings';
 import Signup from '../../screens/SignUp';
 import MyPropertiesScreen from '../../screens/MyProperties';
 import PaymentScreen from '../../screens/Payment';
+import Navigation from '../../screens/Notification';
+import LiveVisit from '../../screens/LiveVisit';
 const Stack = createStackNavigator();
 
 export default function MainStack() {
@@ -156,6 +158,34 @@ export default function MainStack() {
         name="Details_Screen"
         component={DetailsScreen}
       />
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.white,
+            height: 70,
+          },
+
+          headerBackTitleVisible: false,
+          headerShown: true,
+        }}
+        name="Navigation"
+        component={Navigation}
+      />
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.white,
+            height: 70,
+          },
+
+          headerBackTitleVisible: false,
+          headerShown: true,
+          headerTitle: 'Request a live visit',
+        }}
+        name="LiveVisit"
+        component={LiveVisit}
+      />
+
       <Stack.Screen
         options={{
           headerStyle: {
