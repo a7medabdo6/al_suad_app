@@ -4,10 +4,21 @@ import COLORS from '../../consts/colors';
 import font from '../../consts/font';
 import NewHomeCard from '../Cards/NewHomeCard';
 
-const LargeCadList = ({data, headText, viewAll = false, onPressViewAll}) => {
-  const Item = ({item}) => <NewHomeCard data={item} />;
+const LargeCadList = ({
+  data,
+  headText,
+  viewAll = false,
+  onPressViewAll,
+  horizontal = true,
+  isFav,
+  spaceDown = false,
+  ListFooterComponent,
+}) => {
+  const Item = ({item}) => (
+    <NewHomeCard data={item} horizontal={horizontal} isFav={isFav} />
+  );
   return (
-    <View >
+    <View>
       <TouchableOpacity onPress={onPressViewAll} style={styles.container}>
         <Text style={styles.headText}>{headText}</Text>
         {viewAll && <Text style={styles.moreView}>View All</Text>}
@@ -15,12 +26,17 @@ const LargeCadList = ({data, headText, viewAll = false, onPressViewAll}) => {
 
       <FlatList
         data={data}
-        horizontal
+        horizontal={horizontal}
+        ItemSeparatorComponent={() => (
+          <View style={{marginTop: horizontal ? 0 : 10}} />
+        )}
         ListHeaderComponent={() => <View style={styles.top} />}
         showsHorizontalScrollIndicator={false}
         renderItem={Item}
+        ListFooterComponent={ListFooterComponent}
         keyExtractor={item => item.id}
       />
+      {spaceDown && <View style={styles.down} />}
     </View>
   );
 };
@@ -46,4 +62,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  down: {height: font.height * 0.18},
 });

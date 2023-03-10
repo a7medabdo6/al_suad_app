@@ -12,6 +12,7 @@ import {
   Dimensions,
   ScrollView,
   Pressable,
+  SafeAreaView,
 } from 'react-native';
 
 import {TabView, SceneMap} from 'react-native-tab-view';
@@ -23,6 +24,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Accordian from '../Components/Accordian';
 import HelpCenterCard from '../Components/Accordian/HelpCenterCard';
 import {useSelector} from 'react-redux';
+import Header from '../Components/Header';
 const FirstRoute = () => {
   //   useEffect(() => {
 
@@ -252,12 +254,20 @@ export default class TabViewExample extends React.Component {
 
   render() {
     return (
-      <TabView
-        navigationState={this.state}
-        renderScene={this._renderScene}
-        renderTabBar={this._renderTabBar}
-        onIndexChange={this._handleIndexChange}
-      />
+      <SafeAreaView style={{backgroundColor: COLORS.white, flex: 1}}>
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor="transparent"
+          translucent={true}
+        />
+        <Header title={'Help Center'} back />
+        <TabView
+          navigationState={this.state}
+          renderScene={this._renderScene}
+          renderTabBar={this._renderTabBar}
+          onIndexChange={this._handleIndexChange}
+        />
+      </SafeAreaView>
     );
   }
 }

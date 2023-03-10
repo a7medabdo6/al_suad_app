@@ -15,6 +15,7 @@ const COLORS = {
   primary: '#E9612F',
   lightWhite: 'rgba(250, 250, 250, 1)',
   bottomBorder: 'rgba(238, 238, 238, 1)',
+  error: '#DA0000',
 };
 
 export default COLORS;
