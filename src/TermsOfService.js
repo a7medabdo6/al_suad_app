@@ -1,26 +1,41 @@
-import {View, Text, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StatusBar,
+  SafeAreaView,
+  StyleSheet,
+} from 'react-native';
 import React from 'react';
 import {ScrollView} from 'react-native';
 import COLORS from './consts/colors';
 import {useSelector} from 'react-redux';
-
+import Header from './Components/Header';
+import HTMLView from 'react-native-htmlview';
 const TermsOfService = () => {
   const {HelpCenter} = useSelector(state => state.HelpCenter);
-
   return (
-    <ScrollView style={{flex: 1, backgroundColor: COLORS.backgroundblue}}>
-      <View style={{backgroundColor: 'white'}}>
-        <View style={{marginTop: 40, marginHorizontal: 15}}>
-          <Text style={{color: COLORS.red, fontSize: 17}}>
-            {' '}
-            Lorem Ipsum is simply dummy text of the printing{' '}
-          </Text>
-          <Text style={{marginTop: 10, color: COLORS.dark}}>
-            {HelpCenter?.company_id?.[0].terms_of_services}
-          </Text>
-        </View>
+    <SafeAreaView style={{backgroundColor: COLORS.white, flex: 1}}>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent={true}
+      />
+      <Header title={'Terms Of Service'} back />
+      <ScrollView>
+        <View style={{backgroundColor: 'white', marginHorizontal: 20}}>
+          <HTMLView
+            value={`${HelpCenter?.company_id?.[0].terms_of_services}`}
+            stylesheet={styles}
+          />
+          {/* <Text style={{marginTop: 10, color: COLORS.dark}}>
+              {HelpCenter?.company_id?.[0].terms_of_services.replace(
+                /<\/?[^>]+(>|$)/g,
+                '',
+              )}
+            </Text> */}
 
-        {/* <View style={{marginTop: 40, marginHorizontal: 15}}>
+          {/* <View style={{marginTop: 40, marginHorizontal: 15}}>
           <Text style={{color: COLORS.red, fontSize: 17}}>
             {' '}
             Lorem Ipsum is simply dummy text of the printing{' '}
@@ -38,7 +53,7 @@ const TermsOfService = () => {
           </Text>
         </View> */}
 
-        {/* <View
+          {/* <View
           style={{
             marginTop: 40,
             marginBottom: 10,
@@ -75,9 +90,17 @@ const TermsOfService = () => {
             <Text style={{color: 'white'}}>Accept</Text>
           </TouchableOpacity>
         </View> */}
-      </View>
-    </ScrollView>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 export default TermsOfService;
+
+const styles = StyleSheet.create({
+  a: {
+    fontWeight: '300',
+    color: '#FF3366', // make links coloured pink
+  },
+});

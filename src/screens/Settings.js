@@ -140,7 +140,7 @@ const Setting = () => {
               />
               <ArrowIcon
                 title={'Help Center'}
-                onPress={() => navigation.push('HelpCenterScreen')}
+                onPress={() => navigation.navigate('HelpCenterScreen')}
                 icon={<Image source={require('../assets/png/help.png')} />}
               />
             </View>

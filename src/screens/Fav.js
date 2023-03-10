@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   View,
@@ -24,7 +24,10 @@ import {useFavApi} from '../apis/Home';
 import {useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {setHomeDetailedData} from '../Store/HomeData/HomeSlice';
-import { useDispatch } from 'react-redux';
+import {useDispatch} from 'react-redux';
+import NewNavDesign from '../Components/Navigation/NewNavDesign';
+import LargeCadList from '../Components/Lists/LargeCardList';
+import font from '../consts/font';
 
 const FavScreen = () => {
   const optionsList = [
@@ -34,6 +37,39 @@ const FavScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
+  const [dummy, setDummy] = useState([
+    {
+      id: 1,
+      title: 'Project',
+      image: 'https://static.thenounproject.com/png/2085889-200.png',
+      dec: '55 Projects',
+      bg: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Burj_Khalifa_2021.jpg/1200px-Burj_Khalifa_2021.jpg',
+    },
+    {
+      id: 2,
+
+      title: 'Project',
+      image: 'https://static.thenounproject.com/png/2085889-200.png',
+      dec: '55 Projects',
+      bg: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Burj_Khalifa_2021.jpg/1200px-Burj_Khalifa_2021.jpg',
+    },
+    {
+      id: 3,
+
+      title: 'Project',
+      image: 'https://static.thenounproject.com/png/2085889-200.png',
+      dec: '55 Projects',
+      bg: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Burj_Khalifa_2021.jpg/1200px-Burj_Khalifa_2021.jpg',
+    },
+    {
+      id: 4,
+
+      title: 'Project',
+      image: 'https://static.thenounproject.com/png/2085889-200.png',
+      dec: '55 Projects',
+      bg: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Burj_Khalifa_2021.jpg/1200px-Burj_Khalifa_2021.jpg',
+    },
+  ]);
   const Card = ({house}) => {
     const handleHomeClick = house => {
       dispatch(setHomeDetailedData(house));
@@ -177,7 +213,7 @@ const FavScreen = () => {
       </View> */}
       {/* Input and sort button container */}
 
-      <View
+      {/* <View
         style={{
           flex: 1,
           justifyContent: 'center',
@@ -191,13 +227,24 @@ const FavScreen = () => {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{paddingLeft: 20, paddingVertical: 20}}
             vertical
-            data={fav}
+            data={data}
             renderItem={({item}) => <Card house={item} />}
           />
         ) : (
           <Text style={{color: 'black', fontWeight: 'bold'}}>No Data</Text>
         )}
+      </View> */}
+      <View>
+        <LargeCadList
+          data={dummy}
+          headText={'My Favourite'}
+          horizontal={false}
+          isFav
+          ListFooterComponent={() => <View style={style.down} />}
+        />
       </View>
+
+      <NewNavDesign navigation={navigation} index={3} />
       {/* Render list options */}
       {/* <ListOptions /> */}
 
@@ -345,5 +392,6 @@ const style = StyleSheet.create({
     fontSize: 12,
     marginHorizontal: 3,
   },
+  down: {height: font.height * 0.35},
 });
 export default FavScreen;

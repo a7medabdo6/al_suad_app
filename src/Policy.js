@@ -1,37 +1,27 @@
-import {View, Text} from 'react-native';
+import {View, Text, SafeAreaView, StatusBar} from 'react-native';
 import React from 'react';
 import {ScrollView} from 'react-native';
 import COLORS from './consts/colors';
 import {useSelector} from 'react-redux';
+import Header from './Components/Header';
+import HTMLView from 'react-native-htmlview';
 
 const Policy = () => {
   const {HelpCenter} = useSelector(state => state.HelpCenter);
 
   return (
-    <ScrollView style={{flex: 1, height: '100%'}}>
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: COLORS.backgroundblue,
-          height: '100%',
-        }}>
-        <View
-          style={{
-            backgroundColor: 'white',
-            marginHorizontal: 15,
-            marginTop: 10,
-            height: '100%',
-          }}>
-          <View style={{marginTop: 40, marginHorizontal: 15}}>
-            <Text style={{color: COLORS.red, fontSize: 17}}>
-              {' '}
-              Lorem Ipsum is simply dummy text of the printing{' '}
-            </Text>
-            <Text style={{marginTop: 10, color: COLORS.dark}}>
-              {HelpCenter?.company_id?.[0].privacy_policy}
-            </Text>
-          </View>
-          {/* 
+    <SafeAreaView style={{backgroundColor: COLORS.white, flex: 1}}>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent={true}
+      />
+      <Header title={'Privacy & Policy'} back />
+      <ScrollView>
+        <View style={{paddingTop: 20, paddingHorizontal: 20}}>
+          <HTMLView value={`${HelpCenter?.company_id?.[0].privacy_policy}`} />
+        </View>
+        {/* 
           <View style={{marginTop: 40, marginHorizontal: 15}}>
             <Text style={{color: COLORS.red, fontSize: 17}}>
               {' '}
@@ -69,9 +59,8 @@ const Policy = () => {
               Lorem Ipsum.
             </Text>
           </View> */}
-        </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

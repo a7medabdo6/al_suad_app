@@ -15,6 +15,11 @@ import MyPropertiesScreen from '../../screens/MyProperties';
 import PaymentScreen from '../../screens/Payment';
 import Navigation from '../../screens/Notification';
 import LiveVisit from '../../screens/LiveVisit';
+import FavScreen from '../../screens/Fav';
+import TermsOfService from '../../TermsOfService';
+import AboutUs from '../../AboutUs';
+import Policy from '../../Policy';
+import HelpCenterScreen from '../../screens/HelpCenterScreen';
 const Stack = createStackNavigator();
 
 export default function MainStack() {
@@ -59,6 +64,20 @@ export default function MainStack() {
         }}
         name="Settings"
         component={SettingsScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.white,
+            height: 70,
+          },
+
+          headerLeft: false,
+          headerBackTitleVisible: false,
+          headerShown: false,
+        }}
+        name="Fav"
+        component={FavScreen}
       />
       <Stack.Screen
         options={{
@@ -185,7 +204,60 @@ export default function MainStack() {
         name="LiveVisit"
         component={LiveVisit}
       />
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.white,
+            height: 70,
+          },
 
+          headerLeft: false,
+          headerBackTitleVisible: false,
+          headerShown: false,
+        }}
+        name="TermsOfService"
+        component={TermsOfService}
+      />
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.white,
+            height: 70,
+          },
+
+          headerLeft: false,
+          headerBackTitleVisible: false,
+          headerShown: false,
+        }}
+        name="AboutUs"
+        component={AboutUs}
+      />
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.white,
+            height: 70,
+          },
+          headerLeft: false,
+          headerBackTitleVisible: false,
+          headerShown: false,
+        }}
+        name="Policy"
+        component={Policy}
+      />
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.white,
+            height: 70,
+          },
+          headerLeft: false,
+          headerBackTitleVisible: false,
+          headerShown: false,
+        }}
+        name="HelpCenterScreen"
+        component={HelpCenterScreen}
+      />
       <Stack.Screen
         options={{
           headerStyle: {

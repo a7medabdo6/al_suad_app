@@ -50,11 +50,16 @@ const NewNavDesign = ({navigation, index}) => {
             {index == 1 && <View style={{...styles.dot}}></View>}
           </TouchableOpacity>
 
-          <View style={styles.item}>
+          <TouchableOpacity
+            onPress={() => navigation.push('Fav')}
+            style={styles.item}>
             <Image source={require('../../assets/Heart.png')} />
-            <Text style={styles.textgrey}>My Favourite</Text>
+            <Text style={index == 3 ? styles.text : styles.textgrey}>
+              My Favourite
+            </Text>
+            {index == 3 && <View style={{...styles.dot}}></View>}
             {/* <View style={{...styles.dot}}></View> */}
-          </View>
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.push('Settings')}
             style={styles.item}>
