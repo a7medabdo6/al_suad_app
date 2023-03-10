@@ -60,7 +60,7 @@ const useLoginApi = data => {
           backgroundColor: 'orange',
         });
 
-        navigation.push('Main');
+        navigation.push('LiveVisit');
       }
       return res.data;
     },

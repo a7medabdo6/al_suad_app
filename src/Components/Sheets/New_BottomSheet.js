@@ -21,20 +21,20 @@ export default function BottomSheet({Item, Content, Height, width}) {
         <Pressable onPress={() => HandleOpenModal()}>{Item}</Pressable>
       ) : (
         <TouchableOpacityBtn
-          color={'rgba(24, 88, 148, 0.05)'}
-          text="live visit"
+          color={SCREEN.OREANGE}
+          text="Call us"
           width={'100%'}
           style={{
             borderRadius: 10,
             paddingVertical: 12,
             marginVertical: 15,
           }}
-          onPress={() => HandleOpenModal()}
-          textcolor={SCREEN.BLUE}
+          textcolor={SCREEN.WHITE}
           // outline={SCREEN.OREANGE}
+          onPress={() => HandleOpenModal()}
           type="basic"
           textSize={14}
-          // Icon={<Contact />}
+          Icon={<Image source={require('../../assets/png/contact.png')} />}
         />
       )}
 

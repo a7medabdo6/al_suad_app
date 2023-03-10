@@ -22,8 +22,8 @@ export default class Example extends React.Component {
             backgroundColor: 'white',
             color: 'black',
             opacity: 1,
-            width: SCREENS.WIDTH - 50,
-            marginHorizontal: 25,
+            width: SCREENS.WIDTH,
+            // marginHorizontal: 25,
             // margin: 'auto',
           }}
           headerStyle={{backgroundColor: 'rgba(89, 82, 208, 0.03)'}}

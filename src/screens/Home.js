@@ -34,6 +34,7 @@ import MediumCadList from '../Components/Lists/MediumCadList';
 import NewNavDesign from '../Components/Navigation/NewNavDesign';
 import NewHomeCard from '../Components/Cards/NewHomeCard';
 import LargeCadList from '../Components/Lists/LargeCardList';
+import UpcommingVisitCard from '../Components/Cards/UpcommingVisitCard';
 // import font from '../consts/font';
 
 const HomeScreen = ({route}) => {
@@ -307,6 +308,13 @@ const HomeScreen = ({route}) => {
       {/* <ListCategories /> */}
       <ScrollView>
         <HomeTopCard />
+        {userInfo && (
+          <>
+            <Text style={style.headText}>Upcoming visits</Text>
+            <UpcommingVisitCard />
+          </>
+        )}
+
         <SmallCadList data={dummy} />
         <MediumCadList data={dummy} headText={'Popular Areas'} />
         <LargeCadList data={dummy} headText={'Recommended'} />
@@ -387,6 +395,13 @@ const style = StyleSheet.create({
     borderRadius: 20,
     paddingTop: 10,
     paddingHorizontal: 10,
+  },
+  headText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: COLORS.black,
+    marginVertical: 15,
+    marginHorizontal: 15,
   },
   optionsCardImage: {
     height: 140,

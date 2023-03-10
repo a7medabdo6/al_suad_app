@@ -4,10 +4,11 @@ const CreateVisitSlice = createSlice({
   name: 'CreateVisit',
   initialState: {
     CreateVisit: {},
+    stateOfCreateVisit: null,
   },
   reducers: {
     setCreateVisit(state, action) {
-      state.data = action.payload;
+      state.stateOfCreateVisit = action.payload;
     },
     // setHomeDetailedData(state, action) {
     //   state.Detailed = action.payload;

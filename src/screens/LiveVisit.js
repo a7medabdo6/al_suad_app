@@ -1,5 +1,5 @@
 import {View, Text, StyleSheet} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Calenders from '../Components/Calenders';
 import Time from '../Components/Calenders/Time';
 import COLORS from '../consts/colors';
@@ -7,9 +7,47 @@ import {TextInput} from '@react-native-material/core';
 import TouchableOpacityBtn from '../Components/Buttons/TouchBtn';
 import SCREENS from '../../Layout';
 import {ScrollView} from 'react-native';
-const LiveVisit = () => {
+import {useCreateVistApi} from '../apis/Home';
+import {useSelector} from 'react-redux';
+import ModalPopup from '../Components/Modal';
+
+const LiveVisit = ({route}) => {
+  const [name, setName] = useState(null);
+  const [mobile, setmobile] = useState(null);
+  const [email, setemail] = useState(null);
+  const [description, setdescription] = useState(null);
+  const [flat, setflat] = useState(route?.params?.id);
+  const [modalVisible, setModalVisible] = useState(true);
+
+  const stateOfCreateVisit = useSelector(
+    state => state.CreateVist.stateOfCreateVisit,
+  );
+
+  //
+  const {mutate: createVisit, isLoading} = useCreateVistApi();
+
+  const HandlecreateVisit = async () => {
+    await createVisit({name, mobile, email, flat: 669, description});
+    console.log(stateOfCreateVisit, 'stateOfCreateVisit');
+  };
+  useEffect(() => {
+    if (stateOfCreateVisit) {
+      setModalVisible(true);
+    }
+  }, [stateOfCreateVisit]);
+
   return (
     <ScrollView style={{height: '100%'}}>
+      {/* <ModalPopup
+        setModalVisible={setModalVisible}
+        modalVisible={modalVisible}
+      /> */}
+      {stateOfCreateVisit && (
+        <ModalPopup
+          setModalVisible={setModalVisible}
+          modalVisible={modalVisible}
+        />
+      )}
       <View style={styles.container}>
         <View style={styles.box}>
           <Text style={styles.text}>
@@ -36,13 +74,47 @@ const LiveVisit = () => {
               placeholderTextColor={COLORS.blue}
               style={{margin: 5}}
               color={COLORS.blue}
+              value={name}
+              onChangeText={e => setName(e)}
+            />
+            <TextInput
+              variant="outlined"
+              label="E-mail "
+              placeholderTextColor={COLORS.blue}
+              style={{margin: 5}}
+              color={COLORS.blue}
+              value={email}
+              onChangeText={e => setemail(e)}
+            />
+            <TextInput
+              variant="outlined"
+              label="Mobile"
+              placeholderTextColor={COLORS.blue}
+              style={{margin: 5}}
+              color={COLORS.blue}
+              value={mobile}
+              onChangeText={e => setmobile(e)}
+            />
+            <TextInput
+              variant="outlined"
+              label="Description"
+              placeholderTextColor={COLORS.blue}
+              style={{margin: 5}}
+              color={COLORS.blue}
+              value={description}
+              onChangeText={e => setdescription(e)}
             />
           </View>
 
           <TouchableOpacityBtn
-            color={SCREENS.DARKGREY}
+            color={
+              name && email && mobile && description
+                ? SCREENS.OREANGE
+                : SCREENS.DARKGREY
+            }
             text="Send Visit Request"
             width={'100%'}
+            disable={name && email && mobile && description ? false : true}
             style={{
               borderRadius: 10,
               paddingVertical: 20,
@@ -50,7 +122,7 @@ const LiveVisit = () => {
             }}
             textcolor={SCREENS.WHITE}
             // outline={SCREEN.OREANGE}
-            // onPress={navigation.push('login')}
+            onPress={HandlecreateVisit}
             type="basic"
             textSize={14}
             // outline={SCREEN.DARKGREY}

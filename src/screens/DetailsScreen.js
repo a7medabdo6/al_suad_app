@@ -97,7 +97,7 @@ const DetailsScreen = ({route}) => {
             source={
               house.image_128
                 ? {uri: `data:image/jpeg;base64,${house.image_128}`}
-                : require('../assets/unknown.jpg')
+                : require('../assets/card_image.png')
             }
             style={style.cardImage}
           />
@@ -210,20 +210,24 @@ const DetailsScreen = ({route}) => {
               />
 
               <TouchableOpacityBtn
-                color={SCREEN.OREANGE}
-                text="Call us"
+                color={'rgba(24, 88, 148, 0.05)'}
+                text="live visit"
                 width={'45%'}
                 style={{
                   borderRadius: 10,
                   paddingVertical: 12,
                   marginVertical: 15,
                 }}
-                textcolor={SCREEN.WHITE}
+                onPress={() =>
+                  userInfo?.uid
+                    ? navigation.push('LiveVisit')
+                    : navigation.push('login')
+                }
+                textcolor={SCREEN.BLUE}
                 // outline={SCREEN.OREANGE}
-                onPress={() => navigation.push('login')}
                 type="basic"
                 textSize={14}
-                Icon={<Image source={require('../assets/png/contact.png')} />}
+                // Icon={<Contact />}
               />
             </View>
           </View>

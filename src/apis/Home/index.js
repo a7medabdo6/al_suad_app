@@ -200,7 +200,7 @@ const useCreateVistApi = data => {
         // let reversed = [...res.data?.result];
         // console.log(res.data?.result, 'res.data?.result');
 
-        navigation.push('SubmitInquiry');
+        // navigation.push('SubmitInquiry');
         dispatch(setCreateVisit(res.data?.result));
         // QueryClient.invalidateQueries('allMaintainence');
       }

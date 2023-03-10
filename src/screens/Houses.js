@@ -21,6 +21,7 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import {useHomeApi} from '../apis/Home';
 import {useSelector, useDispatch} from 'react-redux';
 import {setHomeDetailedData} from '../Store/HomeData/HomeSlice';
+import Skeleton from '../Components/Skeleton';
 
 const Houses = () => {
   const dispatch = useDispatch();
@@ -48,7 +49,15 @@ const Houses = () => {
       <LargeHomeCard width={SCREEN.WHITE} house={house} />
     </TouchableOpacity>
   );
-
+  if (isLoading) {
+    return (
+      <>
+        <Skeleton />
+        <Skeleton />
+        <Skeleton />
+      </>
+    );
+  }
   return (
     <ScrollView>
       <View
