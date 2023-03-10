@@ -26,8 +26,6 @@ import FirstInput from '../Components/Inputs/FirstInput';
 import BasicButton from '../Components/Buttons/BasicButton';
 const {width} = Dimensions.get('screen');
 import {useCreateUserHook} from '../apis/Auth/index';
-import Close from '../assets/svg/close.svg';
-import Google from '../assets/svg/google.svg';
 import {TextInput} from '@react-native-material/core';
 
 const SignupScreen = ({navigation, route, setIsAuth, setisRegister}) => {
@@ -104,7 +102,7 @@ const SignupScreen = ({navigation, route, setIsAuth, setisRegister}) => {
             backgroundColor: '#eee',
             marginBottom: 30,
           }}>
-          <Close />
+          <Image source={require('../assets/png/close.png')} />
         </View>
         <View style={style.detailsContainer}>
           <Text style={style.text}>Let’s Get Started </Text>

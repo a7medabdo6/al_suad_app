@@ -28,7 +28,7 @@ const getMyPropertiesData = async data => {
 const getHelpCenter = async data => {
   return await api.post(`api/get_company_info/`, {});
 };
-//https://odooerp-ae-property-developmentstage-7168665.dev.odoo.com/api/get_company_info
+//https://odooerp-ae-property2-developmentstage-7530125.dev.odoo.com/api/get_company_info
 const getMaintianenceData = async data => {
   return await api.post('api/property_requests', {
     params: {

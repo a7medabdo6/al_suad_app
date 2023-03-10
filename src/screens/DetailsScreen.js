@@ -14,7 +14,6 @@ import {
   Linking,
 } from 'react-native';
 import SCREEN from '../../Layout';
-import Contact from '../assets/svg/contact.svg';
 import AnimatedCorner from '../Components/Buttons/AnimatedCorner';
 import {useDispatch, useSelector} from 'react-redux';
 import openMap from 'react-native-open-maps';
@@ -29,15 +28,11 @@ import TouchableOpacityBtn from '../Components/Buttons/TouchBtn';
 import {useNavigation} from '@react-navigation/native';
 import BasicButton from '../Components/Buttons/BasicButton';
 import COLORS from '../consts/colors';
-import {Button} from 'react-native';
 const {width} = Dimensions.get('screen');
 import {setisAuth} from '../Store/Message/MessageSlice';
 import ImageGallery from '../Components/Slider/ImageGallery';
 import DetailScreenTab from '../Components/Tab/DetailScreenTab';
 import NewBottomSheet from '../Components/Sheets/New_BottomSheet';
-import Whatsapp from '../assets/svg/whatsapp.svg';
-import Call from '../assets/svg/call.svg';
-import Mail from '../assets/svg/mail.svg';
 
 const DetailsScreen = ({route}) => {
   const navigation = useNavigation();
@@ -48,28 +43,30 @@ const DetailsScreen = ({route}) => {
   const [images_urls, setimages_urls] = useState([]);
   const [videoId, setvideoId] = useState('');
 
-  // useEffect(() => {
-  //   var strarr = HomeDetailedData?.amenities_compile.split(',');
-  //   var IconsArr = HomeDetailedData?.amenities_icons_compile.split(',');
-  //   var newArr = [];
-  //   for (let i = 0; i < strarr?.length; i++) {
-  //     newArr.push({name: strarr[i], icon: IconsArr[i]});
-  //   }
-  //   setArr(newArr);
-  //   if (HomeDetailedData?.images_urls) {
-  //     var images = HomeDetailedData?.images_urls.split(',');
-  //     setimages_urls(images);
-  //   }
-  //   if (HomeDetailedData?.video_url) {
-  //     var video_id = HomeDetailedData?.video_url.split('v=')[1];
-  //     var ampersandPosition = video_id.indexOf('&');
-  //     if (ampersandPosition != -1) {
-  //       video_id = video_id.substring(0, ampersandPosition);
-  //     }
-  //     setvideoId(video_id);
-  //   }
-  //   return () => {};
-  // }, [HomeDetailedData]);
+  useEffect(() => {
+    if (HomeDetailedData) {
+      var strarr = HomeDetailedData?.amenities_compile?.split(',');
+      var IconsArr = HomeDetailedData?.amenities_icons_compile?.split(',');
+      var newArr = [];
+      for (let i = 0; i < strarr?.length; i++) {
+        newArr.push({name: strarr[i], icon: IconsArr[i]});
+      }
+      setArr(newArr);
+      if (HomeDetailedData?.images_urls) {
+        var images = HomeDetailedData?.images_urls?.split(',');
+        setimages_urls(images);
+      }
+      if (HomeDetailedData?.video_url) {
+        var video_id = HomeDetailedData?.video_url?.split('v=')[1];
+        var ampersandPosition = video_id.indexOf('&');
+        if (ampersandPosition != -1) {
+          video_id = video_id.substring(0, ampersandPosition);
+        }
+        setvideoId(video_id);
+      }
+    }
+    return () => {};
+  }, [HomeDetailedData]);
   const HandleMap = () => {
     // openMap({latitude: 37.865101, longitude: -119.53833});
     const scheme = Platform.select({ios: 'maps:0,0?q=', android: 'geo:0,0?q='});
@@ -90,7 +87,21 @@ const DetailsScreen = ({route}) => {
         // style={{position: 'absolute', top: -20}}
         showsVerticalScrollIndicator={false}>
         {/* House image */}
-        <ImageGallery />
+
+        {images_urls?.length > 0 ? (
+          <View style={{height: '100%'}}>
+            <ImageGallery Data={images_urls} />
+          </View>
+        ) : (
+          <Image
+            source={
+              house.image_128
+                ? {uri: `data:image/jpeg;base64,${house.image_128}`}
+                : require('../assets/unknown.jpg')
+            }
+            style={style.cardImage}
+          />
+        )}
         {/* <View style={style.backgroundImageContainer}>
           {images_urls?.length > 0 ? (
             <View style={{height: '100%'}}>
@@ -129,16 +140,16 @@ const DetailsScreen = ({route}) => {
 
         <View style={style.detailsContainer}>
           <View style={style.greyBox}>
-            <Text style={style.header}>Flat/SNA - 101 Block B view</Text>
+            <Text style={style.header}>{HomeDetailedData?.name}</Text>
             <View style={style.codebox}>
-              <Text style={style.code}>Code: SNA-101</Text>
+              <Text style={style.code}>Code: {HomeDetailedData?.code}</Text>
               <Text style={{marginHorizontal: 15, color: SCREEN.DARKGREY}}>
                 <Ionicons name="star" size={16} color="gold" /> 5
               </Text>
             </View>
             <View style={style.lastbox}>
               <Text style={{...style.fontextralarge, color: SCREEN.OREANGE}}>
-                12000.00 AED
+                {HomeDetailedData?.rent_value} AED
               </Text>
               <Text
                 style={{
@@ -146,15 +157,15 @@ const DetailsScreen = ({route}) => {
                   marginHorizontal: 10,
                   ...style.fontlarge,
                 }}>
-                Annually
+                {HomeDetailedData?.rent_type}
               </Text>
               <Text style={{...style.Residential, color: SCREEN.OREANGE}}>
-                Residential
+                {HomeDetailedData?.type}
               </Text>
             </View>
           </View>
           <View style={{width: '100%'}}>
-            <DetailScreenTab index={0} />
+            <DetailScreenTab index={0} item={HomeDetailedData} />
             <View style={style.flexbox}>
               <NewBottomSheet
                 Height={200}
@@ -175,19 +186,21 @@ const DetailsScreen = ({route}) => {
                     <View style={{...style.flexbox, width: '100%'}}>
                       <View style={style.whatsapp}>
                         <View>
-                          <Whatsapp />
+                          <Image
+                            source={require('../assets/png/whatsapp.png')}
+                          />
                         </View>
                         <Text style={{color: 'black'}}>whatsapp</Text>
                       </View>
                       <View style={style.whatsapp}>
                         <View>
-                          <Call />
+                          <Image source={require('../assets/png/call.png')} />
                         </View>
                         <Text style={{color: 'black'}}>Phone call</Text>
                       </View>
                       <View style={style.whatsapp}>
                         <View>
-                          <Mail />
+                          <Image source={require('../assets/png/mail.png')} />
                         </View>
                         <Text style={{color: 'black'}}>Mail</Text>
                       </View>
@@ -210,7 +223,7 @@ const DetailsScreen = ({route}) => {
                 onPress={() => navigation.push('login')}
                 type="basic"
                 textSize={14}
-                Icon={<Contact />}
+                Icon={<Image source={require('../assets/png/contact.png')} />}
               />
             </View>
           </View>
@@ -738,6 +751,11 @@ const style = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  cardImage: {
+    width: '100%',
+    height: 150,
+    borderRadius: 10,
   },
 });
 

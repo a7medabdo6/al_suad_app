@@ -34,17 +34,6 @@ import ArrowIcon from '../Components/ArrowIcon';
 import NewNavDesign from '../Components/Navigation/NewNavDesign';
 import font from '../consts/font';
 
-//svg
-import Profile from '../assets/svg/Profile.svg';
-import Lock from '../assets/svg/Lock.svg';
-import Building from '../assets/svg/building.svg';
-import Calendar from '../assets/svg/Calendar.svg';
-import Heart from '../assets/svg/Heart.svg';
-import Bell from '../assets/svg/bell.svg';
-import Language from '../assets/svg/language.svg';
-import Help from '../assets/svg/help.svg';
-import Key from '../assets/svg/key.svg';
-
 const Setting = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
@@ -82,27 +71,27 @@ const Setting = () => {
               <ArrowIcon
                 title={'Person Information'}
                 onPress={() => navigation.navigate('PersonalInformation')}
-                icon={<Profile />}
+                icon={<Image source={require('../assets/png/profile.png')} />}
               />
               <ArrowIcon
                 title={'Recovery Password'}
                 onPress={() => navigation.navigate('CreateNewPassword')}
-                icon={<Lock />}
+                icon={<Image source={require('../assets/png/lock.png')} />}
               />
               <ArrowIcon
                 title={'My Properties'}
                 // onPress={() => navigation.navigate('RecoveryPassword')}
-                icon={<Building />}
+                icon={<Image source={require('../assets/png/building.png')} />}
               />
               <ArrowIcon
                 title={'My Visits'}
                 onPress={() => navigation.navigate('myVisits')}
-                icon={<Calendar />}
+                icon={<Image source={require('../assets/png/Calendar.png')} />}
               />
               <ArrowIcon
                 title={'My Favourits'}
                 // onPress={() => navigation.push('myVisits')}
-                icon={<Heart />}
+                icon={<Image source={require('../assets/png/heart.png')} />}
               />
             </View>
           }
@@ -127,7 +116,7 @@ const Setting = () => {
                     alignItems: 'center',
                     flexDirection: 'row',
                   }}>
-                  <Bell />
+                  <Image source={require('../assets/png/bell.png')} />
 
                   <Text style={{color: 'black', marginHorizontal: 10}}>
                     Notification
@@ -147,12 +136,12 @@ const Setting = () => {
               <ArrowIcon
                 title={'Language'}
                 // onPress={() => navigation.navigate('RecoveryPassword')}
-                icon={<Language />}
+                icon={<Image source={require('../assets/png/language.png')} />}
               />
               <ArrowIcon
                 title={'Help Center'}
                 onPress={() => navigation.push('HelpCenterScreen')}
-                icon={<Help />}
+                icon={<Image source={require('../assets/png/help.png')} />}
               />
             </View>
           }
@@ -165,18 +154,18 @@ const Setting = () => {
               <ArrowIcon
                 title={'Privacy & Policy'}
                 onPress={() => navigation.navigate('Policy')}
-                icon={<Key />}
+                icon={<Image source={require('../assets/png/key.png')} />}
               />
 
               <ArrowIcon
                 title={'Terms of Services'}
                 onPress={() => navigation.navigate('TermsOfService')}
-                icon={<Key />}
+                icon={<Image source={require('../assets/png/key.png')} />}
               />
               <ArrowIcon
                 title={'About us'}
                 onPress={() => navigation.navigate('AboutUs')}
-                icon={<Help />}
+                icon={<Image source={require('../assets/png/help.png')} />}
               />
             </View>
           }

@@ -3,7 +3,7 @@ import {useIsFocused} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import TouchableOpacityBtn from '../Components/Buttons/TouchBtn';
 import SCREEN from '../../Layout';
-
+import {useNavigation} from '@react-navigation/native';
 import {
   ImageBackground,
   SafeAreaView,
@@ -17,6 +17,7 @@ import {
   ScrollView,
   Pressable,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 // import Toast from 'react-native-toast-message';
@@ -29,9 +30,7 @@ const {width} = Dimensions.get('screen');
 import {useLoginApi} from '../apis/Auth/index';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {setisAuth} from '../Store/Message/MessageSlice';
-import Close from '../assets/svg/close.svg';
-import Google from '../assets/svg/google.svg';
-
+// 
 import {TextInput} from '@react-native-material/core';
 
 const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
@@ -144,7 +143,9 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
             backgroundColor: '#eee',
             marginBottom: 50,
           }}>
-          <Close />
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Image source={require('../assets/png/close.png')} />
+          </TouchableOpacity>
         </View>
         <View style={style.detailsContainer}>
           <Text style={style.text}>Hello Again! </Text>
@@ -156,15 +157,30 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
             style={{marginTop: 15, borderRadius: 15}}
             color={COLORS.blue}
             borderRadius={10}
+            value={email}
+            onChangeText={e => setEmail(e)}
           />
+          {isFieldInError('email') &&
+            getErrorsInField('email').map(errorMessage => (
+              <Text key={errorMessage} style={{color: 'red'}}>
+                {errorMessage}
+              </Text>
+            ))}
           <TextInput
             variant="outlined"
             label="Password"
             placeholderTextColor={COLORS.blue}
-            style={{margin: 5}}
+            style={{borderRadius: 15}}
             color={COLORS.blue}
+            value={password}
+            onChangeText={e => setpassword(e)}
           />
-
+          {isFieldInError('password') &&
+            getErrorsInField('password').map(errorMessage => (
+              <Text key={errorMessage} style={{color: 'red'}}>
+                {errorMessage}
+              </Text>
+            ))}
           {/* <FirstInput
             text="Email addres"
             value={email}
@@ -178,12 +194,7 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
               />
             }
           /> */}
-          {isFieldInError('email') &&
-            getErrorsInField('email').map(errorMessage => (
-              <Text key={errorMessage} style={{color: 'red'}}>
-                {errorMessage}
-              </Text>
-            ))}
+
           {/* <FirstInput
             text="password"
             type="password"
@@ -198,12 +209,7 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
               />
             }
           /> */}
-          {isFieldInError('password') &&
-            getErrorsInField('password').map(errorMessage => (
-              <Text key={errorMessage} style={{color: 'red'}}>
-                {errorMessage}
-              </Text>
-            ))}
+
           <Text style={{color: 'red'}}>
             {userInfo && userInfo == 'Invalid credentials.' ? userInfo : null}
           </Text>
@@ -249,6 +255,7 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
               marginVertical: 15,
             }}
             textcolor={COLORS.WHITE}
+            onPress={() => HandleLogin()}
             // outline={SCREEN.OREANGE}
             // onPress={navigation.push('login')}
             type="basic"
@@ -270,7 +277,7 @@ const LoginScreen = ({navigation, route, setIsAuth, isAuth, setisRegister}) => {
             type="basic"
             textSize={14}
             outline={SCREEN.DARKGREY}
-            Icon={<Google />}
+            Icon={<Image source={require('../assets/png/google.png')} />}
           />
           <View
             style={{

@@ -9,7 +9,6 @@ import {useNavigation} from '@react-navigation/native';
 import {setselectedProp} from '../../Store/MyProperty/MyPropertySlice';
 import {useDispatch} from 'react-redux';
 import font from '../../consts/font';
-import Calendar from '../../assets/svg/Calendar.svg';
 const PropertyCard = ({item}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -150,7 +149,7 @@ const PropertyCard = ({item}) => {
             borderRadius: 8,
             marginVertical: 10,
           }}>
-          <Calendar width={15} />
+          <Image source={require('../../assets/png/Calendar.png')} />
           <Text style={{color: COLORS.blue, marginHorizontal: 5}}>
             Due in {Diff()} days
           </Text>

@@ -2,8 +2,6 @@ import {View, Text, StyleSheet, Image} from 'react-native';
 import React from 'react';
 import SCREEN from '../../../Layout';
 import COLORS from '../../consts/colors';
-import Setting from '../../assets/svg/setting.svg';
-import Calender from '../../assets/svg/calender.svg';
 const LargeNotificationCard = ({items, textone, texttwo, Btn}) => {
   return (
     <View style={styles.container}>
@@ -17,7 +15,7 @@ const LargeNotificationCard = ({items, textone, texttwo, Btn}) => {
                 display: 'flex',
                 flexDirection: 'row',
               }}>
-              <Setting />
+              <Image source={require('../../assets/png/setting.png')} />
               <View style={styles.secboxtext}>
                 <Text style={styles.name}>Salma Mohamed</Text>
                 <View style={styles.codebox}>
@@ -52,7 +50,8 @@ const LargeNotificationCard = ({items, textone, texttwo, Btn}) => {
               display: 'flex',
               flexDirection: 'row',
             }}>
-            <Calender />
+            <Image source={require('../../assets/png/Calendar.png')} />
+
             <View style={styles.secboxtext}>
               <Text style={styles.name}>Visit Request Successful</Text>
               <View style={styles.codebox}>

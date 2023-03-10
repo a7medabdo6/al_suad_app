@@ -22,7 +22,7 @@ const postrequest = async data => {
     params: {
       password: data.password,
       login: data.email,
-      db: 'odooerp-ae-property-developmentstage-7168665',
+      db: 'odooerp-ae-property2-developmentstage-7530125',
     },
   });
 };
@@ -60,7 +60,7 @@ const useLoginApi = data => {
           backgroundColor: 'orange',
         });
 
-        navigation.push('main');
+        navigation.push('Main');
       }
       return res.data;
     },

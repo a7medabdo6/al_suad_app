@@ -2,7 +2,6 @@ import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
 import COLORS from '../../consts/colors';
 import font from '../../consts/font';
-import Star from '../../assets/svg/star.svg';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 const MediumTwoCardH = ({data, style, styleImg}) => {
@@ -17,7 +16,7 @@ const MediumTwoCardH = ({data, style, styleImg}) => {
       </Text>
       <View style={styles.overView}>
         <View style={styles.lightColorStar}>
-          <Star />
+          <Image source={require('../../assets/png/star.png')} />
           <Text style={styles.space}>{data.rate}</Text>
         </View>
 

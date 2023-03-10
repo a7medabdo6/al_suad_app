@@ -29,7 +29,7 @@ const images = [
   },
 ];
 
-const MyGallery = () => {
+const MyGallery = ({Data}) => {
   const [isOpen, setIsOpen] = useState(true);
   const openGallery = () => setIsOpen(true);
   const closeGallery = () => setIsOpen(false);

@@ -31,16 +31,12 @@ import {useNavigation} from '@react-navigation/native';
 import NewBottomSheet from '../../Components/Sheets/NewBottomSheet';
 import {useMaintianenceApi, usePaymentsForTenantApi} from '../../apis/Home';
 import {useIsFocused} from '@react-navigation/native';
-import Ac from '../../assets/svg/ac.svg';
-import Wifi from '../../assets/svg/wifi.svg';
-import Balcony from '../../assets/svg/balcony.svg';
-import Parking from '../../assets/svg/parking.svg';
-import Gym from '../../assets/svg/gym.svg';
 
 import {useSelector} from 'react-redux';
 import Spinner from '../../Components/Spinner';
 const FirstRoute = () => {
   // console.log(userInfo, 'userInfo');
+  const HomeDetailedData = useSelector(state => state.Home.Detailed);
 
   return (
     <>
@@ -58,31 +54,31 @@ const FirstRoute = () => {
             <View style={styles.imageContainer}>
               <Image source={require('../../assets/bed.png')} />
               <View style={styles.textContainer}>
-                <Text style={styles.text}>3</Text>
+                <Text style={styles.text}>{HomeDetailedData?.room_no}</Text>
                 <Text style={styles.textGrey}>Rooms</Text>
               </View>
             </View>
             <View style={styles.imageContainer}>
-              <Image source={require('../../assets/bed.png')} />
+              <Image source={require('../../assets/bathroom.png')} />
               <View style={styles.textContainer}>
-                <Text style={styles.text}>3</Text>
-                <Text style={styles.textGrey}>Rooms</Text>
+                <Text style={styles.text}>{HomeDetailedData?.bathroom_no}</Text>
+                <Text style={styles.textGrey}>Bath</Text>
               </View>
             </View>
             <View style={styles.imageContainer}>
-              <Image source={require('../../assets/stair.png')} />
+              <Image source={require('../../assets/stairs.png')} />
               <View style={styles.textContainer}>
-                <Text style={styles.text}>3</Text>
-                <Text style={styles.textGrey}>Rooms</Text>
+                <Text style={styles.text}>{HomeDetailedData?.stairs}</Text>
+                <Text style={styles.textGrey}>Stairs</Text>
               </View>
             </View>
           </View>
           <View style={styles.thirdbox}>
             <View style={styles.imageContainer}>
-              <Image source={require('../../assets/bed.png')} />
+              <Image source={require('../../assets/area.png')} />
               <View style={styles.textContainer}>
-                <Text style={styles.text}>3</Text>
-                <Text style={styles.textGrey}>Rooms</Text>
+                <Text style={styles.text}>{HomeDetailedData?.area}</Text>
+                <Text style={styles.textGrey}>m2</Text>
               </View>
             </View>
             <View style={styles.imageContainer}>
@@ -120,38 +116,49 @@ const FirstRoute = () => {
             style={styles.fullmap}
             source={require('../../assets/fullmap.png')}
           />
-          <Text style={styles.Description}>Description</Text>
-          <Text style={styles.longDescription}>
-            Azco Real Estate is pleased to offer this magnificent Studio
-            Apartment in Tower 108. Property is spread over 449.50 sqft / 41.76
-            sqr.mtr and has a modern outstanding finishing...
-          </Text>
-          <Text style={styles.seeMOre}>See more</Text>
-          <Text style={styles.Amenities}>Amenities</Text>
-          <View style={styles.Amenitiesbox}>
-            <View style={styles.Amenitiesinnerbox}>
-              <Ac />
-              <Text style={styles.longDescription}>Ac</Text>
-            </View>
-            <View style={{...styles.Amenitiesinnerbox}}>
-              <View style={{height: 35}}>
-                <Wifi />
+          {HomeDetailedData?.description && (
+            <>
+              <Text style={styles.Description}>Description</Text>
+              <Text style={styles.longDescription}>
+                {HomeDetailedData?.description}
+              </Text>
+            </>
+          )}
+
+          {HomeDetailedData?.amenities_compile && arr?.length > 0 && (
+            <>
+              <Text style={styles.seeMOre}>See more</Text>
+
+              <Text style={styles.Amenities}>Amenities</Text>
+              <View style={styles.Amenitiesbox}>
+                <View style={styles.Amenitiesinnerbox}>
+                  <Image source={require('../../assets/png/ac.png')} />
+
+                  <Text style={styles.longDescription}>Ac</Text>
+                </View>
+                <View style={{...styles.Amenitiesinnerbox}}>
+                  <View style={{height: 35}}>
+                    <Image source={require('../../assets/png/wifi.png')} />
+                  </View>
+                  <Text style={{...styles.longDescription}}>Wifi</Text>
+                </View>
+                <View style={styles.Amenitiesinnerbox}>
+                  <Image source={require('../../assets/png/parking.png')} />
+
+                  <Text style={styles.longDescription}>Parking</Text>
+                </View>
+                <View style={styles.Amenitiesinnerbox}>
+                  <Image source={require('../../assets/png/gym.png')} />
+
+                  <Text style={styles.longDescription}>Gym</Text>
+                </View>
+                <View style={styles.Amenitiesinnerbox}>
+                  <Image source={require('../../assets/png/balcony.png')} />
+                  <Text style={styles.longDescription}>Balcony</Text>
+                </View>
               </View>
-              <Text style={{...styles.longDescription}}>Wifi</Text>
-            </View>
-            <View style={styles.Amenitiesinnerbox}>
-              <Parking />
-              <Text style={styles.longDescription}>Parking</Text>
-            </View>
-            <View style={styles.Amenitiesinnerbox}>
-              <Gym />
-              <Text style={styles.longDescription}>Gym</Text>
-            </View>
-            <View style={styles.Amenitiesinnerbox}>
-              <Balcony />
-              <Text style={styles.longDescription}>Balcony</Text>
-            </View>
-          </View>
+            </>
+          )}
         </View>
       </View>
     </>

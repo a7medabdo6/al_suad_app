@@ -3,10 +3,10 @@ import React from 'react';
 import SCREEN from '../../Layout';
 import {ImageBackground} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import {TouchableOpacity} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 const Welcome = () => {
-    const navigation =useNavigation()
+  const navigation = useNavigation();
   return (
     <ImageBackground
       resizeMode="cover"
@@ -19,12 +19,11 @@ const Welcome = () => {
         <Text style={styles.text}>Find your dream property</Text>
         <Text style={styles.textGrey}>Easy way to rent a perfect property</Text>
         <View style={styles.orangeboxmain}>
-            <TouchableOpacity onPress={()=>navigation.push("Main")}>
+          <TouchableOpacity onPress={() => navigation.push('Main')}>
             <View style={styles.orangebox}>
-            <Entypo name="chevron-right" color={'white'} size={30} />
-          </View>
-            </TouchableOpacity>
-         
+              <Entypo name="chevron-right" color={'white'} size={30} />
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     </ImageBackground>
@@ -42,7 +41,7 @@ const styles = StyleSheet.create({
     borderRadius: SCREEN.RADIUS,
     borderWidth: 2,
     padding: 10,
-    marginHorizontal: 5,
+    // marginHorizontal: 5,
   },
   box: {
     height: SCREEN.WIDTH * 0.775,

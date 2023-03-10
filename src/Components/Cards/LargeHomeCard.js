@@ -1,19 +1,22 @@
 import {View, Text, StyleSheet, Image} from 'react-native';
 import React from 'react';
 import SCREEN from '../../../Layout';
-const LargeHomeCard = () => {
+const LargeHomeCard = ({house}) => {
   return (
     <View style={styles.container}>
       <View style={styles.box}>
         <Image
           style={styles.image}
-          source={require('../../assets/card_image.png')}
+          //source={require('../../assets/card_image.png')}
+          source={
+            house?.image_128
+              ? {uri: `data:image/jpeg;base64,${house?.image_128}`}
+              : require('../../assets/card_image.png')
+          }
         />
       </View>
       <View style={styles.middlebox}>
-        <Text style={{...styles.text, ...styles.fontlarge}}>
-          Flat/SNA - 101 Block B view
-        </Text>
+        <Text style={{...styles.text, ...styles.fontlarge}}>{house?.name}</Text>
         <View
           style={{
             ...styles.text,
@@ -32,48 +35,49 @@ const LargeHomeCard = () => {
               width: '70%',
               flexDirection: 'row',
             }}>
-            <Text style={{...styles.text}}>Code: SNA-101</Text>
+            <Text style={{...styles.text}}>Code: {house?.code}</Text>
 
-            <Text style={styles.textminy}>Residential</Text>
+            <Text style={styles.textminy}>{house?.type}</Text>
           </View>
         </View>
         <Text style={{...styles.fontlarge, color: 'black'}}>
-          Flat No.12 - 55 B Street - Dubai
+          {house?.floor_id?.[1]} -{house?.building_id[1]} -{' '}
+          {house?.country_id?.[1]}
         </Text>
       </View>
       <View style={styles.secondbox}>
         <View style={styles.imageContainer}>
           <Image source={require('../../assets/bed.png')} />
           <View style={styles.textContainer}>
-            <Text style={styles.text}>3</Text>
+            <Text style={styles.text}>{house?.room_no}</Text>
             <Text style={styles.textGrey}>Rooms</Text>
           </View>
         </View>
         <View style={styles.imageContainer}>
-          <Image source={require('../../assets/bed.png')} />
+          <Image source={require('../../assets/bathroom.png')} />
           <View style={styles.textContainer}>
-            <Text style={styles.text}>3</Text>
-            <Text style={styles.textGrey}>Rooms</Text>
+            <Text style={styles.text}>{house?.bathroom_no}</Text>
+            <Text style={styles.textGrey}>Bath</Text>
           </View>
         </View>
         <View style={styles.imageContainer}>
-          <Image source={require('../../assets/bed.png')} />
+          <Image source={require('../../assets/stairs.png')} />
           <View style={styles.textContainer}>
-            <Text style={styles.text}>3</Text>
-            <Text style={styles.textGrey}>Rooms</Text>
+            <Text style={styles.text}>{house?.stairs}</Text>
+            <Text style={styles.textGrey}>Stairs</Text>
           </View>
         </View>
         <View style={styles.imageContainer}>
-          <Image source={require('../../assets/bed.png')} />
+          <Image source={require('../../assets/area.png')} />
           <View style={styles.textContainer}>
-            <Text style={styles.text}>3</Text>
-            <Text style={styles.textGrey}>Rooms</Text>
+            <Text style={styles.text}>{house?.area}</Text>
+            <Text style={styles.textGrey}>m2</Text>
           </View>
         </View>
       </View>
       <View style={styles.lastbox}>
         <Text style={{...styles.fontextralarge, color: SCREEN.OREANGE}}>
-          12000.00 AED
+          {house?.rent_value} AED
         </Text>
         <Text
           style={{
@@ -81,7 +85,7 @@ const LargeHomeCard = () => {
             marginHorizontal: 10,
             ...styles.fontlarge,
           }}>
-          Annually
+          {house?.rent_type}
         </Text>
       </View>
     </View>

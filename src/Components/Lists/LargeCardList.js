@@ -7,7 +7,7 @@ import NewHomeCard from '../Cards/NewHomeCard';
 const LargeCadList = ({data, headText, viewAll = false, onPressViewAll}) => {
   const Item = ({item}) => <NewHomeCard data={item} />;
   return (
-    <View>
+    <View >
       <TouchableOpacity onPress={onPressViewAll} style={styles.container}>
         <Text style={styles.headText}>{headText}</Text>
         {viewAll && <Text style={styles.moreView}>View All</Text>}

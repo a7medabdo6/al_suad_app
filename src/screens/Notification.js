@@ -25,7 +25,6 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import LargeNotificationCard from '../Components/Notification/LargeNotificationCard';
 import NewBottomSheet from '../Components/Sheets/New_BottomSheet';
 import COLORS from '../consts/colors';
-import Setting from '../assets/svg/setting.svg';
 
 const Notification = () => {
   const [search, setSearch] = React.useState(null);

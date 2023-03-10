@@ -34,7 +34,7 @@ import MediumCadList from '../Components/Lists/MediumCadList';
 import NewNavDesign from '../Components/Navigation/NewNavDesign';
 import NewHomeCard from '../Components/Cards/NewHomeCard';
 import LargeCadList from '../Components/Lists/LargeCardList';
-import font from '../consts/font';
+// import font from '../consts/font';
 
 const HomeScreen = ({route}) => {
   const [refreshing, setRefreshing] = React.useState(false);
@@ -43,24 +43,31 @@ const HomeScreen = ({route}) => {
 
   const [dummy, setDummy] = useState([
     {
+      id: 1,
       title: 'Project',
       image: 'https://static.thenounproject.com/png/2085889-200.png',
       dec: '55 Projects',
       bg: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Burj_Khalifa_2021.jpg/1200px-Burj_Khalifa_2021.jpg',
     },
     {
+      id: 2,
+
       title: 'Project',
       image: 'https://static.thenounproject.com/png/2085889-200.png',
       dec: '55 Projects',
       bg: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Burj_Khalifa_2021.jpg/1200px-Burj_Khalifa_2021.jpg',
     },
     {
+      id: 3,
+
       title: 'Project',
       image: 'https://static.thenounproject.com/png/2085889-200.png',
       dec: '55 Projects',
       bg: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Burj_Khalifa_2021.jpg/1200px-Burj_Khalifa_2021.jpg',
     },
     {
+      id: 4,
+
       title: 'Project',
       image: 'https://static.thenounproject.com/png/2085889-200.png',
       dec: '55 Projects',
@@ -303,7 +310,7 @@ const HomeScreen = ({route}) => {
         <SmallCadList data={dummy} />
         <MediumCadList data={dummy} headText={'Popular Areas'} />
         <LargeCadList data={dummy} headText={'Recommended'} />
-        <View style={style.down} />
+        {/* <View style={style.down} /> */}
       </ScrollView>
 
       <NewNavDesign navigation={navigation} index={0} />
@@ -477,6 +484,6 @@ const style = StyleSheet.create({
     fontSize: 12,
     marginHorizontal: 3,
   },
-  down: {height: font.height * 0.18},
+  // down: {height: font.height * 0.18},
 });
 export default HomeScreen;

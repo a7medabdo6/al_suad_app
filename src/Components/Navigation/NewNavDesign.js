@@ -8,13 +8,7 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import SCREEN from '../../../Layout';
-import {SvgUri} from 'react-native-svg';
-import Compass from '../../assets/svg/compass.svg';
-import Compass2 from '../../assets/svg/compass2.svg';
-import Home from '../../assets/svg/home.svg';
-import Home2 from '../../assets/svg/home2.svg';
-import More from '../../assets/svg/more.svg';
-import More2 from '../../assets/svg/More2.svg';
+
 const NewNavDesign = ({navigation, index}) => {
   return (
     <View style={styles.container}>
@@ -32,7 +26,11 @@ const NewNavDesign = ({navigation, index}) => {
             onPress={() => navigation.push('Main')}>
             {/* <Image source={require('../../assets/home.png')} /> */}
 
-            {index == 0 ? <Home2 /> : <Home />}
+            {index == 0 ? (
+              <Image source={require('../../assets/png/home2.png')} />
+            ) : (
+              <Image source={require('../../assets/png/home.png')} />
+            )}
             <Text style={index == 0 ? styles.text : styles.textgrey}>Home</Text>
             {index == 0 && <View style={{...styles.dot}}></View>}
           </TouchableOpacity>
@@ -41,7 +39,11 @@ const NewNavDesign = ({navigation, index}) => {
             onPress={() => navigation.push('Explore')}
             style={styles.item}>
             {/* <Image source={require('../../assets/campass.png')} /> */}
-            {index == 1 ? <Compass2 /> : <Compass />}
+            {index == 1 ? (
+              <Image source={require('../../assets/png/compass2.png')} />
+            ) : (
+              <Image source={require('../../assets/png/compass.png')} />
+            )}
             <Text style={index == 1 ? styles.text : styles.textgrey}>
               Explore
             </Text>
@@ -56,7 +58,11 @@ const NewNavDesign = ({navigation, index}) => {
           <TouchableOpacity
             onPress={() => navigation.push('Settings')}
             style={styles.item}>
-            {index == 4 ? <More /> : <More2 />}
+            {index == 4 ? (
+              <Image source={require('../../assets/png/more2.png')} />
+            ) : (
+              <Image source={require('../../assets/png/more.png')} />
+            )}
             <Text style={index == 4 ? styles.text : styles.textgrey}>More</Text>
             {index == 4 && <View style={{...styles.dot}}></View>}
           </TouchableOpacity>
