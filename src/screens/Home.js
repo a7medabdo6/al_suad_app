@@ -23,7 +23,7 @@ import {useNavigation} from '@react-navigation/native';
 
 const {width} = Dimensions.get('screen');
 import houses from '../consts/houses';
-import {useHomeApi} from '../apis/Home';
+import {useHomeApi, useHomeProjectsApi, useHomeTypesApi} from '../apis/Home';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Skeleton from '../Components/Skeleton';
 import {setHomeDetailedData} from '../Store/HomeData/HomeSlice';
@@ -78,8 +78,12 @@ const HomeScreen = ({route}) => {
   ]);
   const {userInfo} = useSelector(state => state.userinfo);
   const HomeData = useSelector(state => state.Home.data);
+  const Homeprojects = useSelector(state => state.HomeProjects.projects);
+  const HomeTypes = useSelector(state => state.HomeTypes.types);
 
   const {DontMakeAnotherCall} = useSelector(state => state.Home);
+  const {data: Homeprojectsapi} = useHomeProjectsApi();
+  const {data: HomeTypesapi} = useHomeTypesApi();
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -113,119 +117,7 @@ const HomeScreen = ({route}) => {
     const fav = await AsyncStorage.setItem('Fav', concated);
     console.log(concated, 'oldfav', id);
   };
-  const Card = ({house}) => {
-    return (
-      <Pressable activeOpacity={0.8} onPress={() => handleHomeClick(house)}>
-        <View style={style.card}>
-          <View style={style.allIconflex}>
-            <View style={style.allIcon}>
-              <View></View>
-              <View style={style.twoIcon}>
-                <Ionicons name="push-outline" style={style.icon} size={18} />
-                <Pressable onPress={() => HandleFavClick(house.id)}>
-                  <View style={{...style.icon}}>
-                    <Ionicons
-                      name="heart"
-                      style={{
-                        color: AllLoved.includes(house.id) ? 'red' : 'grey',
-                      }}
-                      size={18}
-                    />
-                  </View>
-                </Pressable>
-              </View>
-            </View>
-          </View>
 
-          <Image
-            source={
-              house.image_128
-                ? {uri: `data:image/jpeg;base64,${house.image_128}`}
-                : require('../assets/unknown.jpg')
-            }
-            style={style.cardImage}
-          />
-
-          <View style={{marginTop: 10}}>
-            {/* Title and price container */}
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'flex-start',
-                marginTop: 10,
-              }}>
-              <Text
-                style={{fontSize: 12, fontWeight: '500', color: COLORS.dark}}>
-                Apartment
-              </Text>
-              <Text
-                style={{fontWeight: '500', color: COLORS.grey, fontSize: 12}}>
-                Ref No. {house.code}
-              </Text>
-            </View>
-
-            {/* Location text */}
-
-            <Text
-              style={{
-                color: COLORS.blue,
-                fontSize: 14,
-                marginTop: 5,
-                fontWeight: 'bold',
-              }}>
-              {house.rent_value}
-            </Text>
-            <Text
-              style={{
-                color: COLORS.grey,
-                fontSize: 12,
-                marginTop: 5,
-                fontWeight: '500',
-                textAlign: 'left',
-              }}>
-              {house.building_id[1]} - {house.state_id[1]}
-            </Text>
-            {/* Facilities container */}
-            <View style={{flexDirection: 'column'}}>
-              <View style={{marginTop: 10, flexDirection: 'row'}}>
-                <View style={style.facility}>
-                  <Ionicons name="bed-outline" size={18} color={COLORS.dark} />
-                  <Text style={style.facilityText}> {house.room_no} Rooms</Text>
-                </View>
-                <View style={style.facility}>
-                  <Icon name="bathtub-outline" size={18} color={COLORS.dark} />
-                  <Text style={style.facilityText}>
-                    {house.bathroom_no} Bathrooms
-                  </Text>
-                </View>
-                <View style={style.facility}>
-                  <Ionicons
-                    name="md-repeat-sharp"
-                    size={18}
-                    color={COLORS.dark}
-                  />
-                  <Text style={style.facilityText}>{house.area} ft2</Text>
-                </View>
-              </View>
-              {/* <View style={style.bluebox}>
-                <Text style={style.blueboxtext}>
-                  <Ionicons
-                    name="information-circle-outline"
-                    size={12}
-                    style={{marginHorizontal: 3}}
-                    color={COLORS.blue}
-                  />
-                  You have already sent an Inquiry: 14th of July
-                </Text>
-              </View> */}
-            </View>
-          </View>
-          <View style={style.line}></View>
-        </View>
-      </Pressable>
-    );
-  };
   // if (isLoading) {
   //   return (
   //     <>
@@ -244,64 +136,6 @@ const HomeScreen = ({route}) => {
       }}>
       {/* Customise status bar */}
 
-      {/* Header container */}
-      {/* <View style={style.header}>
-        <View>
-          <Text style={{color: COLORS.grey}}>Location</Text>
-          <Text style={{color: COLORS.dark, fontSize: 20, fontWeight: 'bold'}}>
-            Canada
-          </Text>
-        </View>
-        <Image
-          style={style.profileImage}
-          source={require('../assets/person.jpg')}
-        />
-      </View> */}
-      {/* Input and sort button container */}
-      {/* <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          paddingHorizontal: 20,
-        }}>
-        <View style={style.searchInputContainer}>
-      
-          <Text style={{fontWeight: '600', color: COLORS.dark, fontSize: 14}}>
-            {HomeData?.length} results
-          </Text>
-        </View>
-        <Pressable onPress={() => dispatch(setisAuth(false))}>
-          <View style={style.sortBtn}>
-            <Icon
-              name="login"
-              color={COLORS.dark}
-              style={{
-                borderWidth: 1,
-                padding: 5,
-                borderColor: COLORS.grey,
-                borderRadius: 4,
-              }}
-              size={18}
-            />
-          </View>
-        </Pressable>
-        <Pressable onPress={() => navigation.push('FilterScreen')}>
-          <View style={style.sortBtn}>
-            <Icon
-              name="tune-variant"
-              color={COLORS.dark}
-              style={{
-                borderWidth: 1,
-                padding: 5,
-                borderColor: COLORS.grey,
-                borderRadius: 4,
-              }}
-              size={18}
-            />
-          </View>
-        </Pressable>
-      </View> */}
-
       {/* Render list options */}
       {/* <ListOptions /> */}
 
@@ -310,14 +144,14 @@ const HomeScreen = ({route}) => {
       <ScrollView>
         <HomeTopCard />
         {userInfo && (
-          <>
+          <View style={style.margin}>
             <Text style={style.headText}>Upcoming visits</Text>
             <UpcommingVisitCard />
-          </>
+          </View>
         )}
-
-        <SmallCadList data={dummy} />
-        <MediumCadList data={dummy} headText={'Popular Areas'} />
+        {console.log(Homeprojects, 'Homeprojects')}
+        <SmallCadList data={Homeprojects} />
+        <MediumCadList data={HomeTypes} headText={'Popular Areas'} />
         <LargeCadList data={dummy} headText={'Recommended'} />
         <View style={style.down} />
       </ScrollView>
@@ -357,6 +191,9 @@ const HomeScreen = ({route}) => {
 };
 
 const style = StyleSheet.create({
+  margin: {
+    marginVertical: 15,
+  },
   container: {marginHorizontal: 20},
   header: {
     paddingVertical: 20,

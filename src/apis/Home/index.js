@@ -19,8 +19,16 @@ import {
   setPass,
   setPersonalInfo,
 } from '../../Store/PersonalInfoSlice/PersonalInfoSlice';
+import {setHomeTypes} from '../../Store/Hometypes/HometypesSlices';
+import { setHomeprojects } from '../../Store/HomeProjects/HomeProjectsSlices';
 const getHomeData = async data => {
   return await api.post('api/generic/property.flat', {});
+};
+const getHomeTypes = async data => {
+  return await api.post('api/generic/property.type', {});
+};
+const getHomeProjects = async data => {
+  return await api.post('api/generic/property.project', {});
 };
 const getMyPropertiesData = async data => {
   return await api.post(`api/get_my_property/${data.partner_id}`, {});
@@ -126,7 +134,33 @@ const useHomeApi = refreshing => {
     onError: err => {},
   });
 };
+const useHomeTypesApi = refreshing => {
+  const dispatch = useDispatch();
 
+  return useQuery(['hometypes', refreshing], getHomeTypes, {
+    onSuccess: res => {
+      let reversed = [...res.data?.result];
+      dispatch(setHomeTypes(res.data?.result));
+
+      return res.data;
+    },
+    onError: err => {},
+  });
+};
+const useHomeProjectsApi = refreshing => {
+  const dispatch = useDispatch();
+
+  return useQuery(['homeprojects', refreshing], getHomeProjects, {
+    onSuccess: res => {
+      let reversed = [...res.data?.result];
+      dispatch(setHomeprojects(res.data?.result));
+
+      return res.data;
+    },
+    onError: err => {},
+  });
+};
+//
 const useMyPropertyApi = data => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -349,4 +383,6 @@ export {
   useChangePersonalInfo,
   useChangeassword,
   usePaymentApi,
+  useHomeTypesApi,
+  useHomeProjectsApi,
 };

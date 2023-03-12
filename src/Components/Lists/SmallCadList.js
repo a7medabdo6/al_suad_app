@@ -4,7 +4,15 @@ import SmallCard from '../Cards/SmallCard';
 
 const SmallCadList = ({data}) => {
   const Item = ({item}) => (
-    <SmallCard title={item.title} img={item.image} dec={item.dec} />
+    <SmallCard
+      title={item.name}
+      img={
+        item.image_128
+          ? item.image_128
+          : 'https://static.thenounproject.com/png/2085889-200.png'
+      }
+      dec={item.dec}
+    />
   );
   return (
     <View>

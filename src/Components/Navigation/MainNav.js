@@ -20,6 +20,10 @@ import TermsOfService from '../../TermsOfService';
 import AboutUs from '../../AboutUs';
 import Policy from '../../Policy';
 import HelpCenterScreen from '../../screens/HelpCenterScreen';
+import RecoveryPassword from '../../screens/RecoveryPassword';
+import ResetNewPassword from '../../screens/ResetPassword';
+import OTPCode from '../../screens/OTPCode';
+import CreateNewPassword from '../../CreateNewPassword';
 const Stack = createStackNavigator();
 
 export default function MainStack() {
@@ -257,6 +261,32 @@ export default function MainStack() {
         }}
         name="HelpCenterScreen"
         component={HelpCenterScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.white,
+            height: 80,
+          },
+
+          headerShown: true,
+          headerTitle: 'Create New Password ',
+        }}
+        name="CreateNewPassword"
+        component={CreateNewPassword}
+      />
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.white,
+            height: 80,
+          },
+
+          headerShown: true,
+          headerTitle: 'Recovery password',
+        }}
+        name="welcome23"
+        component={RecoveryPassword}
       />
       <Stack.Screen
         options={{

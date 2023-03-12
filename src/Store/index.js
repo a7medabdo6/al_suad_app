@@ -7,6 +7,8 @@ import MaintainenceSlice from './Maintainence/MaintainenceSlice';
 import PaymentsSlice from './Payments/PaymentsSlice';
 import HelpCenterSlice from './HelpCenterSlice/HelpCenterSlice';
 import PersonalInfoSlice from './PersonalInfoSlice/PersonalInfoSlice';
+import HometypesSlices from './Hometypes/HometypesSlices';
+import HomeProjectsSlices from './HomeProjects/HomeProjectsSlices';
 export const store = configureStore({
   // ...
   reducer: {
@@ -18,6 +20,8 @@ export const store = configureStore({
     Payments: PaymentsSlice,
     HelpCenter: HelpCenterSlice,
     PersonalInfo: PersonalInfoSlice,
+    HomeTypes:HometypesSlices,
+    HomeProjects:HomeProjectsSlices
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

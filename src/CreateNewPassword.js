@@ -2,7 +2,6 @@ import {
   View,
   Text,
   Image,
-  TextInput,
   TouchableOpacity,
   ScrollView,
   Alert,
@@ -16,6 +15,7 @@ import {useState} from 'react';
 import {useChangeassword} from './apis/Home';
 import {useDispatch} from 'react-redux';
 import {setPass} from './Store/PersonalInfoSlice/PersonalInfoSlice';
+import {TextInput} from '@react-native-material/core';
 
 const CreateNewPassword = () => {
   const {userInfo} = useSelector(state => state.userinfo);
@@ -35,7 +35,7 @@ const CreateNewPassword = () => {
   return (
     <SafeAreaView style={{backgroundColor: '#FFFFFF', flex: 1}}>
       <ScrollView>
-        <View style={{marginTop: 100}}>
+        <View>
           <View
             style={{
               display: 'flex',
@@ -43,12 +43,58 @@ const CreateNewPassword = () => {
               alignItems: 'center',
             }}>
             <Image
-              style={{height: 250, width: '90%'}}
-              source={require('./assets/1.png')}
+              style={{
+                height: 200,
+                width: '60%',
+                marginVertical: 20,
+                marginLeft: 50,
+                alignSelf: 'center',
+              }}
+              source={require('./assets/png/newpassword.png')}
             />
           </View>
-          <View>
-            <View
+          <View
+            style={{
+              width: '100%',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+            }}>
+            <TextInput
+              variant="outlined"
+              label={
+                <Text>
+                  <FontAwesome5
+                    name="lock"
+                    color={COLORS.blue}
+                    size={18}
+                    style={{marginLeft: 20}}
+                  />{' '}
+                  New Password
+                </Text>
+              }
+              placeholderTextColor={COLORS.blue}
+              style={{margin: 5, width: '85%'}}
+              color={COLORS.blue}
+            />
+            <TextInput
+              variant="outlined"
+              label={
+                <Text>
+                  <FontAwesome5
+                    name="lock"
+                    color={COLORS.blue}
+                    size={18}
+                    style={{marginLeft: 20}}
+                  />{' '}
+                  Confirm Password
+                </Text>
+              }
+              placeholderTextColor={COLORS.blue}
+              style={{margin: 5, width: '85%'}}
+              color={COLORS.blue}
+            />
+            {/* <View
               style={{
                 borderWidth: 1,
                 borderColor: 'grey',
@@ -79,6 +125,7 @@ const CreateNewPassword = () => {
                   <Text style={{marginTop: 10, color: 'grey'}}>
                     New Password
                   </Text>
+
                   <TextInput
                     placeholder="***********"
                     onChangeText={e => setpassword(e)}
@@ -96,8 +143,8 @@ const CreateNewPassword = () => {
                   style={{padding: 5}}
                 />
               </View>
-            </View>
-
+            </View> */}
+            {/* 
             <View
               style={{
                 marginTop: 15,
@@ -147,7 +194,7 @@ const CreateNewPassword = () => {
                   style={{padding: 5}}
                 />
               </View>
-            </View>
+            </View> */}
           </View>
 
           <View

@@ -10,7 +10,7 @@ const MediumCadList = ({data, headText}) => {
   const Item = ({item}) => (
     <MediumCard
       onPress={() => navigation.push('houses')}
-      title={item.title}
+      title={item.display_name}
       img={item.bg}
       dec={item.dec}
     />
