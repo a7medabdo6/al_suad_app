@@ -25,6 +25,7 @@ import Accordian from '../Components/Accordian';
 import HelpCenterCard from '../Components/Accordian/HelpCenterCard';
 import {useSelector} from 'react-redux';
 import Header from '../Components/Header';
+import font from '../consts/font';
 const FirstRoute = () => {
   //   useEffect(() => {
 
@@ -44,16 +45,12 @@ const FirstRoute = () => {
           }}>
           <View>
             <Accordian
-              title="First Header"
-              body="lorem lorem lorem lorem lorem loremlorem lorem loremlorem lorem 
-            loremlorem lorem loremlorem lorem loremlorem lorem lorem
-            lorem lorem loremlorem lorem loremlorem lorem loremlorem lorem loremlorem lorem lorem"
+              title="What is Al Saud Company?"
+              body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
             />
             <Accordian
-              title="First Header"
-              body="lorem lorem lorem lorem lorem loremlorem lorem loremlorem lorem 
-            loremlorem lorem loremlorem lorem loremlorem lorem lorem
-            lorem lorem loremlorem lorem loremlorem lorem loremlorem lorem loremlorem lorem lorem"
+              title="How to create a request?"
+              body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
             />
             <Accordian
               title="First Header"
@@ -89,7 +86,7 @@ const SecondRoute = () => {
               <AntDesign
                 style={{fontWeight: 'bold', marginRight: 10}}
                 name="customerservice"
-                color={COLORS.red}
+                color={COLORS.blue}
                 size={22}
               />
             }
@@ -103,7 +100,7 @@ const SecondRoute = () => {
               <FontAwesome
                 style={{fontWeight: 'bold', marginRight: 10}}
                 name="whatsapp"
-                color={COLORS.red}
+                color={COLORS.blue}
                 size={22}
               />
             }
@@ -117,7 +114,7 @@ const SecondRoute = () => {
               <FontAwesome
                 style={{fontWeight: 'bold', marginRight: 10}}
                 name="facebook"
-                color={COLORS.red}
+                color={COLORS.blue}
                 size={22}
               />
             }
@@ -131,7 +128,7 @@ const SecondRoute = () => {
               <FontAwesome
                 style={{fontWeight: 'bold', marginRight: 10}}
                 name="twitter"
-                color={COLORS.red}
+                color={COLORS.blue}
                 size={22}
               />
             }
@@ -145,7 +142,7 @@ const SecondRoute = () => {
               <FontAwesome
                 style={{fontWeight: 'bold', marginRight: 10}}
                 name="instagram"
-                color={COLORS.red}
+                color={COLORS.blue}
                 size={22}
               />
             }
@@ -170,6 +167,7 @@ export default class TabViewExample extends React.Component {
               flexDirection: 'row',
               justifyContent: 'center',
               alignItems: 'center',
+              width: font.width * 0.5,
             }}>
             <Text
               style={{
@@ -193,6 +191,7 @@ export default class TabViewExample extends React.Component {
               flexDirection: 'row',
               justifyContent: 'center',
               alignItems: 'center',
+              width: font.width * 0.5,
             }}>
             <Text
               style={{
@@ -230,10 +229,11 @@ export default class TabViewExample extends React.Component {
               <Animated.Text
                 style={{
                   opacity,
+                  paddingBottom: 10,
+                  width: font.width * 0.5,
                   borderBottomColor:
-                    this.state.index == i ? COLORS.blue : 'unset',
-
-                  borderBottomWidth: this.state.index == i ? 2 : 0,
+                    this.state.index == i ? COLORS.blue : COLORS.bottomBorder,
+                  borderBottomWidth: 1,
                 }}>
                 <Text>
                   {route.icon}

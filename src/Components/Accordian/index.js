@@ -14,7 +14,6 @@ const Accordian = ({title, body}) => {
   return (
     <View
       style={{
-        width: '100%',
         width: ScreenWidth,
         display: 'flex',
         justifyContent: 'center',
@@ -22,15 +21,21 @@ const Accordian = ({title, body}) => {
       }}>
       <View
         style={{
-          width: '100%',
-          width: ScreenWidth - 30,
-          borderRadius: 5,
-          marginVertical: 20,
-          paddingVertical: 30,
-          backgroundColor: 'white',
+          width: '90%',
+          borderRadius: 8,
+          marginTop: 20,
+          paddingVertical: 15,
+          backgroundColor: '#FAFAFA',
+          borderWidth: 1,
+          borderColor: COLORS.bottomBorder,
         }}>
-        <Collapse style={{width: '100%', backgroundColor: 'white'}}>
-          <CollapseHeader style={{width: '100%', backgroundColor: 'white'}}>
+        <Collapse style={{width: '100%', backgroundColor: '#FAFAFA'}}>
+          <CollapseHeader
+            style={{
+              width: '100%',
+              backgroundColor: '#FAFAFA',
+              paddingBottom: 10,
+            }}>
             <View
               style={{
                 display: 'flex',
@@ -43,13 +48,22 @@ const Accordian = ({title, body}) => {
               <FontAwesome
                 style={{fontWeight: 'bold'}}
                 name="angle-down"
-                color={COLORS.red}
+                color={'#7C7C7C'}
                 size={22}
               />
             </View>
           </CollapseHeader>
           <CollapseBody>
-            <Text style={{color: 'black', padding: 10}}>{body}</Text>
+            <Text
+              style={{
+                color: 'black',
+                padding: 10,
+                borderTopWidth: 1,
+                borderColor: COLORS.bottomBorder,
+                marginHorizontal: 15,
+              }}>
+              {body}
+            </Text>
           </CollapseBody>
         </Collapse>
       </View>
