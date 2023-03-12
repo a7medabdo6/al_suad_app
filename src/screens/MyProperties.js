@@ -25,6 +25,7 @@ import houses from '../consts/houses';
 import {useMyPropertyApi} from '../apis/Home';
 import NewNavDesign from '../Components/Navigation/NewNavDesign';
 import Header from '../Components/Header';
+import font from '../consts/font';
 const MyProperties = ({}) => {
   const navigation = useNavigation();
   const {mutate: GetmyProp, isLoading} = useMyPropertyApi();
@@ -34,7 +35,7 @@ const MyProperties = ({}) => {
     state => state.MyProperties.myproperties,
   );
   useEffect(() => {
-    GetmyProp({partner_id: 853 || userInfo.partner_id});
+    GetmyProp({partner_id: 852 || userInfo.partner_id});
     return () => {};
   }, []);
   const [data, setData] = useState([
@@ -83,8 +84,9 @@ const MyProperties = ({}) => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{marginVertical: 10, marginHorizontal: 10}}
         vertical
-        data={data || MyPropertiesData}
+        data={MyPropertiesData || data}
         renderItem={({item}) => <PropertyCard item={item} />}
+        ListFooterComponent={() => <View style={style.down} />}
       />
       <NewNavDesign navigation={navigation} index={2} />
     </SafeAreaView>
@@ -227,5 +229,6 @@ const style = StyleSheet.create({
     fontSize: 12,
     marginHorizontal: 3,
   },
+  down: {height: font.height * 0.07},
 });
 export default MyProperties;

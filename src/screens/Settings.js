@@ -80,17 +80,17 @@ const Setting = () => {
               />
               <ArrowIcon
                 title={'My Properties'}
-                // onPress={() => navigation.navigate('RecoveryPassword')}
+                onPress={() => navigation.push('MyProperties')}
                 icon={<Image source={require('../assets/png/building.png')} />}
               />
               <ArrowIcon
                 title={'My Visits'}
-                onPress={() => navigation.navigate('myVisits')}
+                // onPress={() => navigation.navigate('myVisits')}
                 icon={<Image source={require('../assets/png/Calendar.png')} />}
               />
               <ArrowIcon
                 title={'My Favourits'}
-                // onPress={() => navigation.push('myVisits')}
+                onPress={() => navigation.push('Fav')}
                 icon={<Image source={require('../assets/png/heart.png')} />}
               />
             </View>
