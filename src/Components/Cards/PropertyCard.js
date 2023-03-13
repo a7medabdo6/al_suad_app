@@ -39,11 +39,11 @@ const PropertyCard = ({item}) => {
           borderRadius: 15,
           marginTop: 10,
           paddingHorizontal: 10,
-          backgroundColor: COLORS.lightWhite,
+          backgroundColor: COLORS.backgroundLight,
           paddingVertical: 5,
           marginHorizontal: 15,
           borderWidth: 1,
-          borderColor: COLORS.lightBorder,
+          borderColor: COLORS.stock,
         }}>
         <View
           style={{
