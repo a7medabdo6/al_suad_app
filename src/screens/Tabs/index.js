@@ -64,7 +64,7 @@ const FirstRoute = () => {
           justifyContent: 'center',
           alignItems: 'center',
           width: '100%',
-          display: 'flex',
+          // display: 'flex',
         }}>
         {/* {isLoading ? (
           <Spinner />
