@@ -98,7 +98,7 @@ const GetMyFav = async data => {
 const GetReviews = async data => {
   
 
-  return await api.post('api/get_my_favorites', {
+  return await api.post('api/get_property_flat_reviews', {
     params: {
       flat_ids: data.id,
     },
