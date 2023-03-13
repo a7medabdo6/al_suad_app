@@ -6,7 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {setuserInfo} from '../../Store/Message/MessageSlice';
-import {setFav, setHomeData} from '../../Store/HomeData/HomeSlice';
+import {setFav, setHomeData,setReviews} from '../../Store/HomeData/HomeSlice';
 import {setmyproperties} from '../../Store/MyProperty/MyPropertySlice';
 import {setCreateVisit} from '../../Store/CreateVisit/CreateVistSlice';
 import {setMaintainence} from '../../Store/Maintainence/MaintainenceSlice';
@@ -95,6 +95,16 @@ const GetMyFav = async data => {
     },
   });
 };
+const GetReviews = async data => {
+  
+
+  return await api.post('api/get_my_favorites', {
+    params: {
+      flat_ids: data.id,
+    },
+  });
+};
+
 const CreateVist = async data => {
   return await api.post('api/property_create_visit', {
     params: {
@@ -351,6 +361,29 @@ const useFavApi = data => {
     },
   });
 };
+const useReviewsApi = data => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+  return useMutation( GetReviews, {
+    onSuccess: res => {
+      // const result = {
+      //   status: res.status + '-' + res.statusText,
+      //   headers: res.headers,
+      //   data: res.data,
+      // };
+      // console.log(res.data, 'result');
+      dispatch(setReviews(res.data?.result));
+      return res.data;
+    },
+    onError: err => {
+      // console.log(err, 'err');
+      //   dispatch(errorAtLogin(err.response.data.detail));
+      //  return err;
+    },
+  });
+};
+
 const useCreateUserHook = () => {
   const dispatch = useDispatch();
   return useMutation(postCreateUserrequest, {
