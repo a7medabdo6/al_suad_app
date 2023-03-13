@@ -7,6 +7,7 @@ const HomeDataSlice = createSlice({
     DontMakeAnotherCall: false,
     Detailed: null,
     fav: [],
+    reviews:[]
   },
   reducers: {
     setHomeData(state, action) {
@@ -21,6 +22,9 @@ const HomeDataSlice = createSlice({
     setFav(state, action) {
       state.fav = action.payload;
     },
+    setReviews(state, action) {
+      state.reviews = action.payload;
+    },
   },
 });
 
@@ -29,5 +33,6 @@ export const {
   setHomeDetailedData,
   setDontMakeAnotherCall,
   setFav,
+  setReviews
 } = HomeDataSlice.actions;
 export default HomeDataSlice.reducer;
