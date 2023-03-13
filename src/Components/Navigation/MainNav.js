@@ -24,6 +24,7 @@ import RecoveryPassword from '../../screens/RecoveryPassword';
 import ResetNewPassword from '../../screens/ResetPassword';
 import OTPCode from '../../screens/OTPCode';
 import CreateNewPassword from '../../CreateNewPassword';
+import PaymentMethod from '../../screens/PaymentMethod';
 const Stack = createStackNavigator();
 
 export default function MainStack() {
@@ -145,7 +146,6 @@ export default function MainStack() {
             backgroundColor: COLORS.white,
             height: 70,
           },
-
           headerLeft: false,
           headerBackTitleVisible: false,
           headerShown: false,
@@ -153,6 +153,20 @@ export default function MainStack() {
         name="signup"
         component={Signup}
       />
+      <Stack.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.white,
+            height: 70,
+          },
+          headerLeft: false,
+          headerBackTitleVisible: false,
+          headerShown: false,
+        }}
+        name="PaymentMethod"
+        component={PaymentMethod}
+      />
+
       <Stack.Screen
         options={{
           headerStyle: {

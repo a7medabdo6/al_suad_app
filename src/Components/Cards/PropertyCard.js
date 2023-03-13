@@ -25,7 +25,11 @@ const PropertyCard = ({item}) => {
     return diffDays;
   };
   return (
-    <View>
+    <TouchableOpacity
+      onPress={() => {
+        dispatch(setselectedProp(item));
+        navigation.push('PaymentScreen', {flat: item.id, index: 1, item});
+      }}>
       <View
         style={{
           height: 'auto',
@@ -69,7 +73,7 @@ const PropertyCard = ({item}) => {
               }}
               source={
                 item.image_128
-                  ? {uri: `data:image/jpeg;base64,${item.image_128}`}
+                  ? {uri: `data:image/jpeg;base64,${item?.image_128}`}
                   : require('../../assets/unknown.jpg')
               }
               resizeMode="contain"
@@ -249,7 +253,7 @@ const PropertyCard = ({item}) => {
           </View>
         </TouchableOpacity>
       </View> */}
-    </View>
+    </TouchableOpacity>
   );
 };
 

@@ -19,7 +19,7 @@ const UserInfoCard = ({Item}) => {
         borderRadius: 15,
         marginVertical: 10,
         paddingHorizontal: 10,
-        backgroundColor: COLORS.white,
+        backgroundColor: COLORS.light,
         paddingVertical: 5,
         overflow: 'hidden',
       }}>
@@ -123,7 +123,7 @@ const UserInfoCard = ({Item}) => {
       </View>
       <View
         style={{
-          borderBottomColor: 'black',
+          borderBottomColor: COLORS.blue,
           borderBottomWidth: 1,
           width: '90%',
           opacity: 0.3,
@@ -185,7 +185,6 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: COLORS.white,
     borderRadius: 12,
     marginVertical: 10,
     width: '100%',

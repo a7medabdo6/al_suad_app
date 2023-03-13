@@ -13,39 +13,46 @@ import {
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
+import {useEffect} from 'react';
 const ScreenWidth = Dimensions.get('window').width;
 
 const PaymentCard = ({Item}) => {
   const navigation = useNavigation();
-
+  // useEffect(() => {
+  //   console.log('PaymentP', Item);
+  // }, []);
   return (
     <View
       style={{
-        width: ScreenWidth,
+        width: ScreenWidth * 0.9,
+        alignSelf: 'center',
       }}>
-      <View style={style.flexcolstart}>
-        <View style={style.flexRowbtw}>
-          <Text style={{color: COLORS.dark, fontWeight: 'bold'}}>
-            {Item?.name}
-          </Text>
-          {/* <Text style={{color: COLORS.blue, marginHorizontal: 5}}>Paid</Text> */}
-
-          <View style={{marginHorizontal: 5}}>
-            <Text style={{color: COLORS.grey, fontWeight: 'bold'}}>
-              {Item?.date}
-            </Text>
-          </View>
-        </View>
+      <View style={style.row}>
         <View
           style={{
-            borderBottomColor: 'black',
-            borderBottomWidth: 1,
-            width: '95%',
-            opacity: 0.3,
-            marginVertical: 20,
-            marginHorizontal: '2%',
+            height: 20,
+            width: 2.5,
+            backgroundColor: COLORS.primary,
           }}
         />
+        <Text
+          style={{
+            color: COLORS.primary,
+            fontWeight: '700',
+            marginHorizontal: 5,
+          }}>
+          dummy
+        </Text>
+      </View>
+      <View style={style.flexcolstart}>
+        <View style={style.flexRowbtw}>
+          <Text style={style.name}>{Item?.name}</Text>
+          {/* <Text style={{color: COLORS.blue, marginHorizontal: 5}}>Paid</Text> */}
+          <View>
+            <Text style={style.date}>{Item?.date}</Text>
+          </View>
+        </View>
+        <View style={style.midLine} />
         <View
           style={{
             display: 'flex',
@@ -60,48 +67,35 @@ const PaymentCard = ({Item}) => {
               flexDirection: 'column',
               justifyContent: 'flex-start',
               alignItems: 'flex-start',
+              marginHorizontal: 10,
             }}>
             <View
               style={{
                 display: 'flex',
                 flexDirection: 'row',
-                marginVertical: 2,
               }}>
-              <Text
-                style={{
-                  marginHorizontal: 5,
-                  color: COLORS.dark,
-                  fontWeight: 'bold',
-                }}>
-                Amount:
-              </Text>
+              <Text style={style.subTxt}>Rent Value</Text>
             </View>
             <View
               style={{
                 marginVertical: 2,
-                marginHorizontal: 5,
               }}>
               <Text
                 style={{
-                  color: COLORS.grey,
+                  color: COLORS.dark,
                   fontWeight: '400',
                   fontWeight: 'bold',
                 }}>
-                AED {Item?.amount}
+                {Item?.amount} AED
               </Text>
             </View>
           </View>
           {console.log(Item)}
           {Item?.state == 'draft' ? (
             <TouchableOpacity
-              onPress={() => navigation.push('PaymentMethod', {Item})}>
-              <View
-                style={{
-                  backgroundColor: COLORS.backgroundblue,
-                  padding: 10,
-                  borderRadius: 10,
-                }}>
-                <Text style={{color: COLORS.blue}}>Pay Now</Text>
+              onPress={() => navigation.navigate('PaymentMethod', {Item})}>
+              <View style={style.coverBtn}>
+                <Text style={style.txt}>Pay Now</Text>
               </View>
             </TouchableOpacity>
           ) : (
@@ -114,37 +108,58 @@ const PaymentCard = ({Item}) => {
 };
 
 const style = StyleSheet.create({
-  line: {
-    // borderBottomColor: COLORS.grey,
-    // borderColor: 'white',
-    width: '90%',
-    height: 1,
-    borderWidth: 0.5,
-    // opacity: 0.4,
-    marginVertical: 20,
-    marginHorizontal: '5%',
-    // height: 10,
-  },
+  row: {flexDirection: 'row', alignItems: 'center'},
+  line: {backgroundColor: COLORS.light, width: 50, height: 2.5},
+
   flexcolstart: {
-    height: 'auto',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
     borderRadius: 15,
-    marginVertical: 10,
-    paddingHorizontal: 10,
-    backgroundColor: COLORS.white,
-    paddingVertical: 5,
-    width: '92%',
+    backgroundColor: COLORS.backgroundLight,
+    padding: 5,
+    marginTop: 15,
+    paddingBottom: 10,
+    borderWidth: 1,
+    borderColor: COLORS.stock,
   },
   flexRowbtw: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: COLORS.white,
-    borderRadius: 12,
-    marginVertical: 5,
+    margin: 10,
+  },
+  name: {
+    color: COLORS.blue,
+    fontWeight: 'bold',
+    fontSize: 14,
+    fontWeight: '400',
+  },
+  date: {
+    color: COLORS.grey,
+    fontWeight: '400',
+    fontWeight: 'bold',
+    fontSize: 12,
+  },
+  coverBtn: {
+    height: 40,
+    backgroundColor: COLORS.tranparentBlue,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    marginHorizontal: 10,
+  },
+  txt: {color: COLORS.blue, fontSize: 12, fontWeight: '600'},
+  midLine: {
     width: '92%',
+    backgroundColor: COLORS.bottomBorder,
+    height: 1,
+    marginBottom: 10,
+    alignSelf: 'center',
+  },
+  subTxt: {
+    color: COLORS.grey,
+    fontWeight: 'bold',
+    fontSize: 11,
+    fontWeight: '400',
   },
 });
 export default PaymentCard;

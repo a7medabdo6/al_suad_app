@@ -9,85 +9,94 @@ import {
   StyleSheet,
   Pressable,
   Dimensions,
+  TouchableOpacity,
 } from 'react-native';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import NewBottomSheet from '../Sheets/NewBottomSheet';
-const MaintenanceCard = ({openModal, setOpenModal, handleOpenModal, item,setMaintainenceSelceted}) => {
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import {useEffect} from 'react';
+const MaintenanceCard = ({
+  openModal,
+  setOpenModal,
+  handleOpenModal,
+  item,
+  setMaintainenceSelceted,
+}) => {
   const ScreenWidth = Dimensions.get('window').width;
+  // useEffect(() => {
+  //   console.log('Maintainence', item);
+  // }, []);
 
   return (
-    <Pressable
-      onPress={() => {
-        handleOpenModal()
-        setMaintainenceSelceted(item)
-      }}
+    <View
       style={{
-        width: ScreenWidth,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        width: ScreenWidth * 0.9,
+        marginHorizontal: 20,
       }}>
-      <View style={style.flexcolstart}>
-        <View style={style.flexRowbtw}>
-          <Text style={{color: COLORS.dark, fontWeight: 'bold'}}>
-            {item?.name}
-          </Text>
-        </View>
-        <View
-          style={{
-            borderBottomColor: 'black',
-            borderBottomWidth: 1,
-            width: '95%',
-            opacity: 0.3,
-            marginVertical: 10,
-            marginHorizontal: '2%',
-          }}
-        />
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            width: '100%',
-          }}>
+      <View style={style.header}>
+        <View style={style.row}>
           <View
             style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'flex-start',
-              alignItems: 'flex-start',
-            }}>
-            <View
+              height: 20,
+              width: 2.5,
+              backgroundColor: item?.is_solved ? COLORS.blue : COLORS.dark,
+            }}
+          />
+          {item?.is_solved ? (
+            <Text
               style={{
-                marginVertical: 2,
+                color: COLORS.blue,
+                fontWeight: '700',
+
                 marginHorizontal: 5,
               }}>
-              <Text
-                style={{
-                  color: COLORS.grey,
-                  fontWeight: '400',
-                  fontWeight: 'bold',
-                }}>
-                {item?.create_date}
-              </Text>
-            </View>
-          </View>
-
-          <View
-            style={{
-              padding: 10,
-            }}>
-            {item?.is_solved ? (
-              <Text style={{color: COLORS.blue}}>Solved</Text>
-            ) : (
-              <Text style={{color: COLORS.red}}>Pending</Text>
-            )}
-          </View>
+              Solved
+            </Text>
+          ) : (
+            <Text
+              style={{
+                color: COLORS.dark,
+                fontWeight: '700',
+                marginHorizontal: 5,
+              }}>
+              Pending
+            </Text>
+          )}
+        </View>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <AntDesign name="checkcircle" size={10} color={COLORS.blue} />
+          <View style={style.line} />
+          <AntDesign
+            name="checkcircle"
+            size={10}
+            color={item?.is_solved ? COLORS.blue : COLORS.grey}
+          />
         </View>
       </View>
-    </Pressable>
+
+      <View style={style.flexcolstart}>
+        <View style={style.flexRowbtw}>
+          <Text style={style.name}>{item?.name}</Text>
+          <Text style={style.date}>{item?.create_date}</Text>
+        </View>
+        <View style={style.midLine} />
+        <TouchableOpacity
+          onPress={() => {
+            handleOpenModal();
+            setMaintainenceSelceted(item);
+          }}
+          style={{
+            alignItems: 'flex-end',
+            marginHorizontal: 10,
+            marginBottom: 5,
+          }}>
+          <View style={style.coverBtn}>
+            <Text style={style.txt}>View Details</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 
@@ -95,7 +104,6 @@ const style = StyleSheet.create({
   line: {
     // borderBottomColor: COLORS.grey,
     // borderColor: 'white',
-    width: '90%',
     height: 1,
     borderWidth: 0.5,
     // opacity: 0.4,
@@ -104,25 +112,57 @@ const style = StyleSheet.create({
     // height: 10,
   },
   flexcolstart: {
-    height: 'auto',
     flexDirection: 'column',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
     borderRadius: 15,
-    marginVertical: 10,
-    backgroundColor: COLORS.white,
-    paddingVertical: 5,
-    width: '92%',
+    backgroundColor: COLORS.backgroundLight,
+    padding: 5,
+    borderWidth: 1,
+    borderColor: COLORS.stock,
   },
   flexRowbtw: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: COLORS.white,
-    borderRadius: 12,
-    marginVertical: 5,
-    marginHorizontal: 6,
+    margin: 10,
+    // backgroundColor: 'red',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 20,
+    justifyContent: 'space-between',
+    marginHorizontal: 5,
+    marginBottom: 10,
+  },
+  row: {flexDirection: 'row', alignItems: 'center'},
+  line: {backgroundColor: COLORS.light, width: 50, height: 2.5},
+  coverBtn: {
+    width: '35%',
+    height: 40,
+    backgroundColor: COLORS.tranparentBlue,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  txt: {color: COLORS.blue, fontSize: 12, fontWeight: '600'},
+  midLine: {
     width: '92%',
+    backgroundColor: COLORS.bottomBorder,
+    height: 1,
+    marginBottom: 10,
+    alignSelf: 'center',
+  },
+  date: {
+    color: COLORS.grey,
+    fontWeight: '400',
+    fontWeight: 'bold',
+    fontSize: 12,
+  },
+  name: {
+    color: COLORS.grey,
+    fontWeight: 'bold',
+    fontSize: 13,
+    fontWeight: '400',
   },
 });
 export default MaintenanceCard;

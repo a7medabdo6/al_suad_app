@@ -1,19 +1,29 @@
 import React from 'react';
-import {SafeAreaView, StatusBar, Dimensions, StyleSheet} from 'react-native';
+import {
+  SafeAreaView,
+  StatusBar,
+  Dimensions,
+  StyleSheet,
+  View,
+  ScrollView,
+} from 'react-native';
 import {useSelector} from 'react-redux';
+import PropertyCard from '../Components/Cards/PropertyCard';
+import Header from '../Components/Header';
 import COLORS from '../consts/colors';
 
 import Tabs from './Tabs/index';
 const {width} = Dimensions.get('screen');
 
 const PaymentScreen = ({route, navigation}) => {
+  const {item} = route.params;
   // console.log(route.params, 'navigationnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn');
   return (
     <SafeAreaView
       style={{
-        backgroundColor: COLORS.backgroundblue,
+        backgroundColor: COLORS.white,
         flex: 1,
-        flexDirection: 'row',
+        // flexDirection: 'row',
         justifyContent: 'center',
       }}>
       {/* Customise status bar */}
@@ -22,14 +32,17 @@ const PaymentScreen = ({route, navigation}) => {
         backgroundColor={COLORS.white}
         barStyle="dark-content"
       />
-
+      <Header back title={'Property Details'} />
+      {/* <PropertyCard item={item} /> */}
+      <View style={style.down} />
+      <Tabs index={route.params.index} />
       {/* <View
         style={{
           width: '90%',
         }}>
         <PropertyCard />
       </View> */}
-      <Tabs index={route.params.index} />
+
       {/* */}
     </SafeAreaView>
   );
@@ -42,6 +55,7 @@ const style = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
   },
+  down: {height: 20},
   profileImage: {
     height: 50,
     width: 50,

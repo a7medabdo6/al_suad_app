@@ -29,7 +29,7 @@ const DocumentCard = ({item}) => {
         <View style={style.flexcolstart}>
           <Text
             style={{
-              color: COLORS.grey,
+              color: COLORS.dark,
               fontWeight: '200',
               fontWeight: 'bold',
             }}>
@@ -51,10 +51,8 @@ const DocumentCard = ({item}) => {
         style={{
           marginVertical: 2,
           marginHorizontal: 5,
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
+          // flexDirection: 'row',
+          alignItems: 'flex-end',
           width: '30%',
         }}>
         {/* <Text
@@ -65,7 +63,13 @@ const DocumentCard = ({item}) => {
           }}>
           Expired
         </Text> */}
-        {/* <MaterialIcons name="close" color={COLORS.red} size={18} /> */}
+        <View style={style.circle}>
+          <MaterialIcons
+            name="keyboard-arrow-right"
+            color={COLORS.white}
+            size={18}
+          />
+        </View>
       </View>
     </View>
   );
@@ -91,28 +95,33 @@ const style = StyleSheet.create({
     borderRadius: 15,
     marginVertical: 10,
     paddingHorizontal: 10,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.backgroundLight,
     paddingVertical: 5,
   },
   flexRowbtw: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.backgroundLight,
+    borderWidth: 1,
+    borderColor: COLORS.tranparentBlue,
     borderRadius: 12,
     marginVertical: 5,
     marginHorizontal: 6,
-    width: '100%',
+    width: '90%',
     height: 80,
+    alignSelf: 'center',
+    borderWidth: 1,
+    borderColor: COLORS.stock,
   },
+  circle: {backgroundColor: COLORS.blue, padding: 5, borderRadius: 20},
   icon: {
     color: COLORS.dark,
-    borderRadius: 6,
+    borderRadius: 30,
     padding: 15,
     marginHorizontal: 3,
     fontSize: 18,
-    borderColor: COLORS.dark,
-    borderWidth: 1,
+    backgroundColor: COLORS.tranparentBlue,
   },
 });
 export default DocumentCard;

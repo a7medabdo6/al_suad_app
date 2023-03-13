@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import {TabView, SceneMap} from 'react-native-tab-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import COLORS from '../../consts/colors';
 const {width} = Dimensions.get('screen');
 import houses from '../../consts/houses';
@@ -37,13 +38,22 @@ const FirstRoute = () => {
   const {Payments} = useSelector(state => state.Payments);
   useEffect(() => {
     PaymentsForTenantApi({
-      partner_type: userInfo?.partner[0].is_tenant ? 'tenant' : 'owner',
-      partner: userInfo.partner_id,
+      partner_type:
+        'tenant' || userInfo?.partner[0].is_tenant ? 'tenant' : 'owner',
+      partner: 852 || userInfo.partner_id,
       flat: selectedProp.id,
     });
 
     return () => {};
   }, []);
+  const [dummy, setDummy] = useState([
+    {
+      name: 'test',
+      date: '2023-02-23 12:44:51',
+      amount: '1221',
+      state: 'draft',
+    },
+  ]);
   // console.log(userInfo, 'userInfo');
 
   return (
@@ -56,20 +66,20 @@ const FirstRoute = () => {
           width: '100%',
           display: 'flex',
         }}>
-        {isLoading ? (
+        {/* {isLoading ? (
           <Spinner />
-        ) : Payments.length > 0 ? (
-          <FlatList
-            snapToInterval={width - 20}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{marginVertical: 10, marginHorizontal: 10}}
-            vertical
-            data={Payments}
-            renderItem={({item}) => <PaymentCard Item={item} />}
-          />
-        ) : (
+        ) : Payments.length > 0 ? ( */}
+        <FlatList
+          snapToInterval={width - 20}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{marginVertical: 10, marginHorizontal: 10}}
+          vertical
+          data={dummy} //Payments
+          renderItem={({item}) => <PaymentCard Item={item} />}
+        />
+        {/* ) : (
           <Text style={{color: 'black', fontWeight: 'bold'}}>No Data</Text>
-        )}
+        )} */}
       </View>
     </>
   );
@@ -84,8 +94,9 @@ const SecondRoute = () => {
   const [MaintainenceSelceted, setMaintainenceSelceted] = useState({});
   useEffect(() => {
     MaintianenceApi({
-      partner_type: userInfo?.partner[0].is_tenant ? 'tenant' : 'owner',
-      partner: userInfo.partner_id,
+      partner_type:
+        'tenant' || userInfo?.partner[0].is_tenant ? 'tenant' : 'owner',
+      partner: 852 || userInfo.partner_id,
       flat: selectedProp.id,
     });
 
@@ -136,19 +147,15 @@ const SecondRoute = () => {
         <Text style={{color: 'black', fontWeight: 'bold'}}>No Data</Text>
       )}
 
-      <View style={{position: 'absolute', bottom: 0, left: 0, right: 0}}>
+      <View style={{position: 'absolute', bottom: 10, left: '35%'}}>
         <BasicButton
           text="Create Request"
-          color={COLORS.blue}
-          width={150}
+          color={COLORS.primary}
+          width={35}
           onPress={() => navigation.push('CreateRequestScreen')}
-          Icon={
-            <MaterialCommunityIcons
-              color={COLORS.white}
-              size={18}
-              name="plus-circle-outline"
-            />
-          }
+          style={{height: 45}}
+          styleText={{fontSize: 14, marginHorizontal: 5}}
+          Icon={<AntDesign color={COLORS.white} size={12} name="plus" />}
         />
       </View>
 
@@ -176,7 +183,7 @@ const ThirdRoute = () => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{marginVertical: 10, marginHorizontal: 10}}
         vertical
-        data={selectedProp?.contract?.documents}
+        data={[{name: 'dummy', date: '2023-02-23 12:44:51'}]} //selectedProp?.contract?.documents
         renderItem={({item}) => (
           <Pressable onPress={() => navigation.push('PdfView', item)}>
             <DocumentCard item={item} />
@@ -205,14 +212,14 @@ export default class TabViewExample extends React.Component {
             }}>
             <MaterialCommunityIcons
               color={COLORS.blue}
-              size={18}
+              size={15}
               name="credit-card-outline"
             />
             <Text
               style={{
                 color: COLORS.dark,
                 fontWeight: 'bold',
-                marginHorizontal: 5,
+                fontSize: 13,
               }}>
               Payments
             </Text>
@@ -226,21 +233,20 @@ export default class TabViewExample extends React.Component {
         icon: (
           <View
             style={{
-              display: 'flex',
               flexDirection: 'row',
               justifyContent: 'center',
               alignItems: 'center',
             }}>
             <MaterialCommunityIcons
               color={COLORS.blue}
-              size={18}
+              size={15}
               name="hammer-screwdriver"
             />
             <Text
               style={{
                 color: COLORS.dark,
                 fontWeight: 'bold',
-                marginHorizontal: 5,
+                fontSize: 13,
               }}>
               Maintenance
             </Text>
@@ -261,14 +267,14 @@ export default class TabViewExample extends React.Component {
             }}>
             <MaterialCommunityIcons
               color={COLORS.blue}
-              size={18}
+              size={15}
               name="file-document-multiple-outline"
             />
             <Text
               style={{
                 color: COLORS.dark,
                 fontWeight: 'bold',
-                marginHorizontal: 5,
+                fontSize: 13,
               }}>
               Documents
             </Text>
@@ -300,10 +306,9 @@ export default class TabViewExample extends React.Component {
               <Animated.Text
                 style={{
                   opacity,
-                  borderBottomColor:
-                    this.state.index == i ? COLORS.blue : 'unset',
-
-                  borderBottomWidth: this.state.index == i ? 2 : 0,
+                  backgroundColor: this.state.index == i ? COLORS.white : null,
+                  padding: 7,
+                  borderRadius: 8,
                 }}>
                 <Text>
                   {route.icon}
@@ -342,12 +347,14 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     flexDirection: 'row',
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.light,
+    marginHorizontal: 15,
+    borderRadius: 8,
     // paddingTop: StatusBar.currentHeight,
   },
   tabItem: {
     flex: 1,
     alignItems: 'center',
-    padding: 10,
+    paddingVertical: 5,
   },
 });

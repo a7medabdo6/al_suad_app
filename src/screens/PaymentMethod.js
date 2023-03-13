@@ -21,6 +21,7 @@ import {usePaymentApi} from '../apis/Home';
 import {useSelector} from 'react-redux';
 import {useDispatch} from 'react-redux';
 import {setpaymentLink} from '../Store/Payments/PaymentsSlice';
+import Header from '../Components/Header';
 
 const PaymentMethod = ({navigation, route}) => {
   console.log(route.params, 'route.params;');
@@ -30,10 +31,8 @@ const PaymentMethod = ({navigation, route}) => {
   return (
     <SafeAreaView
       style={{
-        backgroundColor: COLORS.backgroundblue,
+        backgroundColor: COLORS.white,
         flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
       }}>
       {/* Customise status bar */}
       <StatusBar
@@ -41,26 +40,18 @@ const PaymentMethod = ({navigation, route}) => {
         backgroundColor={COLORS.white}
         barStyle="dark-content"
       />
-
+      <Header back title={'Payment Details'} />
       <View
         style={{
           width: '90%',
+          alignSelf: 'center',
         }}>
-        <Text
-          style={{
-            fontSize: 18,
-            fontWeight: 'bold',
-            marginTop: 20,
-            marginBottom: 10,
-            color: COLORS.dark,
-          }}>
-          Payment Details
-        </Text>
         <UserInfoCard Item={Item} />
 
         <BasicButton
           text="Pay"
-          width={250}
+          width={100}
+          style={{height: 45, alignItems: 'center'}}
           onPress={() => {
             // console.log(navigation);
             navigation.navigate('PaymentWebView', {id: Item?.id});
