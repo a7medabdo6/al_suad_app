@@ -418,4 +418,5 @@ export {
   usePaymentApi,
   useHomeTypesApi,
   useHomeProjectsApi,
+  useReviewsApi
 };
